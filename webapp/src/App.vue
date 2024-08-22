@@ -1,51 +1,72 @@
 <template>
   <div id="app">
-    <AppSidebar />
-    <div class="content">
+    <SiteHeader />
+    <div class="main-content">
       <router-view />
     </div>
+    <SiteFooter />
   </div>
 </template>
 
 <script>
-import AppSidebar from './components/AppSidebar.vue';
+import SiteFooter from './components/SiteFooter.vue';
+import SiteHeader from './components/SiteHeader.vue';
 
 export default {
   name: 'App',
   components: {
-    AppSidebar,
+    SiteHeader,
+    SiteFooter,
   },
 };
 </script>
 
 <style>
-/* Reset des marges et de la hauteur */
-html,
-body,
 #app {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  min-height: 100vh;
+  background-color: #141419; /* Couleur de fond très sombre, quasi noire avec une légère teinte bleutée */
+  color: #f0f0f0; /* Texte en blanc légèrement gris pour un meilleur contraste */
 }
 
-/* Configuration du layout principal */
-#app {
+.main-content {
   display: flex;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  flex-wrap: wrap;
+  padding: 20px;
+  padding-bottom: 50px;
+  background-color: #141419; /* Fond très sombre pour la zone de contenu */
+  border-radius: 8px;
 }
 
-/* Styles pour la sidebar */
-#app > *:first-child {
-  flex-shrink: 0;
+a {
+  color: #42b883; /* Vert Vue.js pour les liens */
 }
 
-/* Styles pour le contenu principal */
-.content {
-  flex-grow: 1;
-  background-color: #d7d3d3;
+a:hover {
+  color: #38a076; /* Vert légèrement plus sombre au survol */
+}
+
+button {
+  background-color: #42b883; /* Vert Vue.js pour les boutons */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #38a076; /* Vert légèrement plus sombre au survol */
+}
+
+input, textarea {
+  background-color: #1a1a1f; /* Fond extrêmement sombre pour les champs de saisie */
+  color: #ffffff;
+  border: 1px solid #2a2a2f;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #777777; /* Placeholder encore plus sombre pour une intégration parfaite */
 }
 </style>
