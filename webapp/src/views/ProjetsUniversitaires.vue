@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'ProjetsUniversitaires',
+  name: 'ProjetsPersonnels',
   data() {
     return {
       expandedIndex: null,
@@ -101,15 +101,16 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 /* Styles spécifiques pour la page Projets Personnels */
 .card {
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, border 0.3s ease; /* Added transition for border */
+  border: 2px solid transparent; /* Initial transparent border to avoid layout shift */
 }
 .card:hover {
   transform: scale(1.05);
+  border-color: #42b883; /* Green border on hover */
 }
 .modal {
   background-color: rgba(0, 0, 0, 0.8);

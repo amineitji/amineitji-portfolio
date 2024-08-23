@@ -1,6 +1,6 @@
 <template>
   <footer class="footer text-center p-3 bg-dark text-white">
-    &copy; {{ currentYear }}
+    Amine ITJI &copy; {{ currentYear }}
   </footer>
 </template>
 

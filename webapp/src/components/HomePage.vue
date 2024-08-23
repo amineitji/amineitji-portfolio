@@ -8,13 +8,13 @@
         <div class="card-body text-center">
           <p class="card-text">👋 Bonjour, je m'appelle Amine ITJI</p>
           <p class="card-text">
-            Je suis un étudiant en Master 1 Informatique passionné par les nouvelles technologies et toujours à la recherche de nouvelles expériences pour mettre mes compétences en pratique. Avec une solide maîtrise des langages C++, Java, Python, et JavaScript, je suis constamment à l'affût des opportunités qui me permettront d'approfondir mes connaissances et de relever de nouveaux défis 🚀.
+            Je suis un étudiant en Master 1 Informatique avec une passion marquée pour l'Intelligence Artificielle 🤖 et le développement web 🌐. Toujours à l'affût des dernières avancées technologiques, je m'efforce de repousser les limites de mes compétences à travers divers projets personnels et académiques 🚀.
           </p>
           <p class="card-text">
-            En dehors de mes études, j'ai beaucoup de temps libre que je consacre entièrement à mes projets personnels. Que ce soit en développant des applications, en explorant de nouvelles technologies ou en collaborant sur des projets open source, je suis toujours en train de perfectionner mes compétences 💻. Je suis à l'aise avec des outils comme Maven, Django, et Vue.js, et je suis particulièrement habile avec un terminal Linux 🐧.
+            En tant que développeur polyvalent, j'ai des aptitudes en machine learning, analyse d'images 🖼️, et data science 📊, tout en étant à l'aise avec des outils de développement web comme Django et Vue.js 💻. Je combine mes connaissances techniques avec une méthodologie Agile pour mener à bien des projets innovants et collaboratifs.
           </p>
           <p class="card-text">
-            Ma méthodologie de travail est guidée par les principes Agile et je suis familier avec les environnements de collaboration comme GitHub. Mon sens de l'adaptation, mon écoute active et ma passion pour le développement informatique sont autant d'atouts qui me permettent de m'épanouir dans ce domaine en constante évolution 🌱.
+            Ma capacité à m'adapter rapidement et mon enthousiasme pour les défis font de moi un acteur clé dans tout projet, que ce soit dans le domaine de l'IA, du développement logiciel, ou de l'innovation technologique 🌟. Je suis également co-fondateur d'une entreprise où j'ai joué un rôle crucial en tant que développeur fullstack 💼.
           </p>
           <div class="d-flex flex-wrap justify-content-around my-3">
             <a href="https://github.com/yourusername" target="_blank" class="btn btn-outline-light mb-2">

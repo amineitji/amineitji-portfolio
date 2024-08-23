@@ -54,10 +54,7 @@
                   <h5>MASTER INFORMATIQUE</h5>
                   <p>Université Claude Bernard Lyon 1</p>
                   <ul>
-                    <li>Contribution au projet open source CDlib, librairie de détection de communautés dans des réseaux complexes.</li>
-                    <li>Projet : Création d'un chatbot (Eliza) en utilisant la méthodologie Agile et Maven.</li>
-                    <li>Projet : Développement web Back-end et Front. Création d'un site web sécurisé et optimisé.</li>
-                    <li>Projet d’analyse d’image OpenCV.</li>
+                    <li>TODO : faire un resumé</li>
                   </ul>
                 </div>
               </div>
@@ -66,6 +63,9 @@
                 <div class="timeline-content">
                   <h5>LICENCE INFORMATIQUE</h5>
                   <p>Université Claude Bernard Lyon 1</p>
+                  <ul>
+                    <li>TODO : faire un resumé</li>
+                  </ul>
                 </div>
               </div>
               <div class="timeline-item">
@@ -90,10 +90,22 @@
           </div>
           <div class="card-body">
             <p>
-              Je possède une solide maîtrise des langages de programmation tels que C++, Java, Python, et JavaScript. Mon expertise s'étend également aux outils de développement modernes, y compris Maven, Django, et Vue.js. Grâce à une expérience approfondie dans l'utilisation d'un terminal Linux, je suis à l'aise pour naviguer dans les environnements de développement complexes. Par ailleurs, je suis familier avec la méthodologie Agile, ce qui me permet de m'adapter rapidement aux exigences du projet tout en collaborant efficacement au sein d'équipes pluridisciplinaires via des plateformes comme GitHub. Actuellement en freelance, je suis à la recherche d'un CDD ou d'un stage pour l'année 2024/2025 afin de continuer à développer mes compétences en parallèle de mes études. Mon programme universitaire allégé cette année (seulement deux modules à valider, représentant deux jours de cours par mois) me permet d'être pleinement disponible pour relever de nouveaux défis professionnels. Je suis particulièrement intéressé par les opportunités qui me permettront d'appliquer mes connaissances en développement fullstack et de travailler sur des projets innovants.
+              💻 <strong>Compétences techniques :</strong> En tant que passionné par l'intelligence artificielle, je possède des aptitudes en machine learning, détection et analyse d'images, data science, et visualisation de données. J'ai également des compétences avancées en algorithmique, développement logiciel, et je reste constamment à l'affût des innovations technologiques.
+            </p>
+            <p>
+              🌐 <strong>Développement web :</strong> Bien que mon intérêt principal soit l'IA, je suis également compétent en développement web fullstack, avec une expérience significative dans des projets utilisant des technologies comme Django et Vue.js. 
+            </p>
+            <p>
+              🚀 <strong>Co-fondateur et développeur :</strong> En tant que co-fondateur de l'entreprise Aneqqis, je suis le développeur fullstack principal du projet DiagERP, une plateforme pour la génération et la commercialisation de rapports techniques dans le marché de l'immobilier.
+            </p>
+            <p>
+              🔍 <strong>Objectifs professionnels :</strong> Actuellement en freelance, je suis à la recherche d'un CDD ou d'un stage pour l'année 2024/2025, en vue de poursuivre un Master 2 spécialisé en Intelligence Artificielle. Je suis ouvert à des opportunités dans l'IA, le développement web, ou tout autre domaine lié à mes compétences. Mon programme universitaire allégé cette année (seulement deux modules à valider, représentant deux jours de cours par mois) me permet d'être pleinement disponible pour relever de nouveaux défis professionnels. 
+            </p>
+            <p>
+              🌟 <strong>Intérêts :</strong> Je suis particulièrement intéressé par les projets qui me permettront d'explorer davantage l'IA et ses applications, ou encore d'autres projets liant mes compétences en développement fullstack.
             </p>
             <div class="text-center mt-3">
-              <a href="path_to_your_pdf.pdf" class="btn btn-outline-light" download>
+              <a href="path_to_your_pdf.pdf" class="btn btn-outline-light btn-green" download>
                 <i class="bi bi-download"></i> Télécharger mon CV en PDF
               </a>
             </div>
@@ -170,6 +182,18 @@ export default {
 .btn-outline-light:hover {
   background-color: #e0e0e0;
   color: #0f0f1a;
+}
+
+.btn-green {
+  color: #fff;
+  background-color: #42b883;
+  border-color: #3d3d3d;
+}
+
+.btn-green:hover {
+  color: #42b883;
+  background-color: #3d3d3d;
+  border-color: #42b883;
 }
 
 .text-center {
