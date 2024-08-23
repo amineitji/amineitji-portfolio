@@ -10,6 +10,13 @@
           <div class="card-body">
             <div class="timeline">
               <div class="timeline-item">
+                <div class="timeline-date">Juillet 2024 - Aout 2024</div>
+                <div class="timeline-content">
+                  <h5>Préparateur/Convoyeur</h5>
+                  <p>Société de location ‘DLM Location’ - Lyon</p>
+                </div>
+              </div>
+              <div class="timeline-item">
                 <div class="timeline-date">Mai 2023 - Juin 2023</div>
                 <div class="timeline-content">
                   <h5>STAGE - Développeur Fullstack Django/VueJs</h5>
@@ -54,7 +61,9 @@
                   <h5>MASTER INFORMATIQUE</h5>
                   <p>Université Claude Bernard Lyon 1</p>
                   <ul>
-                    <li>TODO : faire un resumé</li>
+                    <li>Gestion de projet et approfondissement des compétences en développement web et réseaux.</li>
+                    <li>Analyse de données, machine learning et simulation d'écosystèmes multi-agents.</li>
+                    <li>Participation à des projets collaboratifs avec gestion via GitLab, organisation Agile et DevOps.</li>
                   </ul>
                 </div>
               </div>
@@ -64,7 +73,9 @@
                   <h5>LICENCE INFORMATIQUE</h5>
                   <p>Université Claude Bernard Lyon 1</p>
                   <ul>
-                    <li>TODO : faire un resumé</li>
+                    <li>Formation en développement logiciel avec C++ et Java, ainsi qu'en développement web.</li>
+                    <li>Études de la gestion de projet et des réseaux informatiques.</li>
+                    <li>Participation à des projets pratiques, renforçant les compétences en collaboration et en gestion du temps.</li>
                   </ul>
                 </div>
               </div>
@@ -105,7 +116,7 @@
               🌟 <strong>Intérêts :</strong> Je suis particulièrement intéressé par les projets qui me permettront d'explorer davantage l'IA et ses applications, ou encore d'autres projets liant mes compétences en développement fullstack.
             </p>
             <div class="text-center mt-3">
-              <a href="path_to_your_pdf.pdf" class="btn btn-outline-light btn-green" download>
+              <a href="CV.pdf" class="btn btn-outline-light btn-green" download>
                 <i class="bi bi-download"></i> Télécharger mon CV en PDF
               </a>
             </div>
@@ -113,8 +124,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Row for Hobbies and Interests -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card bg-dark text-white mb-4">
+          <div class="card-header bg-dark text-center">
+            LOISIRS ET INTÉRÊTS
+          </div>
+          <div class="card-body">
+            <p>
+              ⚽ <strong>Organisation d'événements :</strong> En 2021, j'ai organisé un tournoi de football associatif à la faculté, nommé <strong>Tournoi SIXTE</strong>. Cet événement a rassemblé plusieurs équipes étudiantes pour une journée de compétition amicale. L'organisation incluait la gestion des équipes, la coordination des matchs, et la communication avec les participants. Cet événement a été un succès et a permis de renforcer les liens entre les étudiants. Plus de détails peuvent être trouvés <a href="https://as.univ-lyon1.fr/tournoi-de-sixte-noel-2021/" target="_blank" class="text-white">ici</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+
 
 <script>
 export default {

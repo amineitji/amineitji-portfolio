@@ -1,14 +1,21 @@
 <template>
-  <div class="container mt-4 main-content text-white">
+  <div class="container mt-4">
     <div class="row">
       <div class="col-md-4" v-for="(site, index) in sites" :key="index">
-        <div class="card mb-4 bg-dark text-white">
+        <div 
+          class="card mb-4 text-white bg-dark" 
+          @mouseenter="toggleDetails(index)" 
+          @mouseleave="toggleDetails(index)" 
+          @click="toggleDetails(index)"
+        >
           <img :src="site.image" class="card-img-top" :alt="site.title">
           <div class="card-body">
             <h5 class="card-title">{{ site.title }}</h5>
-            <p class="card-text">{{ site.description }}</p>
             <p class="card-text"><strong>{{ site.price }}</strong></p>
-            <button @click="showDetails(index)" class="btn btn-primary">En savoir plus</button>
+            <div v-if="expandedSite === index">
+              <div v-html="site.description"></div>
+            </div>
+            <div class="arrow-down" v-if="expandedSite !== index">⬇️</div>
           </div>
         </div>
       </div>
@@ -17,39 +24,21 @@
     <!-- Additional Card for Custom Requests -->
     <div class="row mt-4">
       <div class="col-md-12">
-        <div class="card mb-4 bg-dark text-white">
+        <div class="card mb-4 bg-dark text-white no-hover-effect">
           <div class="card-body">
             <h5 class="card-title">Demande spécifique</h5>
             <p class="card-text">
               Pour des projets sur mesure, avec des fonctionnalités avancées comme la gestion de bases de données, des API, et des sites très interactifs, je suis également disponible pour répondre à vos besoins spécifiques.
             </p>
-            <div class="d-flex justify-content-around">
-              <a href="mailto:example@example.com?subject=Demande%20spécifique" class="btn btn-primary">Contactez-moi par email</a>
-              <a href="https://wa.me/1234567890" class="btn btn-success">Contactez-moi sur WhatsApp</a>
+            <div class="d-flex justify-content-around flex-column flex-md-row">
+              <a href="mailto:amineitji@gmail.com" class="btn btn-outline-danger mb-2">
+                <i class="bi bi-envelope-fill"></i> amineitji@gmail.com
+              </a>
+              <a href="https://wa.me/33782293620" target="_blank" class="btn btn-outline-success mb-2">
+                <i class="bi bi-whatsapp"></i> +33 7 82 29 36 20
+              </a>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Modal for detailed information -->
-    <div v-if="selectedSite !== null" class="modal fade show d-block" tabindex="-1" role="dialog" @click.self="closeDetails">
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header justify-content-center">
-            <h5 class="modal-title">{{ sites[selectedSite].title }}</h5>
-            <button type="button" class="close custom-close-button" aria-label="Close" @click="closeDetails">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>
-              {{ sites[selectedSite].description }}. Pour commander ce site, vous pouvez me contacter par email ou WhatsApp. Nous pourrons discuter de vos besoins spécifiques, du temps nécessaire pour réaliser votre projet, ainsi que des exigences particulières que vous pourriez avoir.
-            </p>
-            <div class="d-flex justify-content-around mt-3">
-              <a :href="`mailto:example@example.com?subject=Commande%20${sites[selectedSite].title}&body=${sites[selectedSite].emailBody}`" class="btn btn-primary">Contactez-moi par email</a>
-              <a href="https://wa.me/1234567890" class="btn btn-success">Contactez-moi sur WhatsApp</a>
-            </div>
           </div>
         </div>
       </div>
@@ -62,104 +51,139 @@ export default {
   name: 'OrderSite',
   data() {
     return {
+      expandedSite: null, // -1 signifie qu'aucune carte n'est sélectionnée
       sites: [
         {
           title: 'Site Vitrine Basic',
-          description: 'Formule de base pour un site vitrine simple. Parfait pour les petites entreprises.',
+          description: `
+            <p>💻 La formule Basic est parfaite pour ceux qui cherchent à obtenir rapidement un site vitrine fonctionnel et élégant. En moins d'une semaine, je vous propose :</p>
+            <ul>
+              <li>🗂️ Un menu de navigation clair pour guider vos visiteurs.</li>
+              <li>🖼️ Des sections incluant des images attrayantes, des cartes informatives, et du texte bien structuré.</li>
+              <li>🚀 Le déploiement du site sur un serveur de votre choix (achat du nom de domaine à votre charge).</li>
+            </ul>
+            <p>Cette formule est idéale pour les petites entreprises ou les projets nécessitant une présence en ligne rapide et efficace.</p>
+          `,
           price: 'À partir de 500€',
-          image: 'https://via.placeholder.com/300x200',
+          image: 'Basic.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Basic". Veuillez me contacter pour discuter des détails.'
         },
         {
           title: 'Site Vitrine Avancé',
-          description: 'Formule avancée pour un site vitrine plus complexe avec des fonctionnalités supplémentaires.',
+          description: `
+            <p>🌟 La formule Avancé vous offre tout ce que propose la formule Basic, mais avec des fonctionnalités supplémentaires pour rendre votre site encore plus attractif :</p>
+            <ul>
+              <li>🎨 Un design plus sophistiqué avec une attention particulière aux détails esthétiques.</li>
+              <li>📍 L'intégration d'une carte interactive pour situer facilement votre commerce ou bureau.</li>
+              <li>🎥 Une section vidéo pour présenter vos produits ou services de manière dynamique.</li>
+              <li>✨ Des fonctionnalités supplémentaires telles qu'une galerie d'images, des formulaires de contact personnalisés, et des animations subtiles.</li>
+            </ul>
+            <p>Ce site, prêt en environ deux semaines, est idéal pour les entreprises qui souhaitent se démarquer avec un site moderne et complet.</p>
+          `,
           price: 'À partir de 1000€',
-          image: 'https://via.placeholder.com/300x200',
+          image: 'Avance.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Avancé". Veuillez me contacter pour discuter des détails.'
         },
         {
           title: 'Site Vitrine Premium',
-          description: 'Formule premium pour un site vitrine haut de gamme avec des personnalisations avancées.',
+          description: `
+            <p>🏆 La formule Premium est conçue pour ceux qui veulent le nec plus ultra en matière de site vitrine. En plus des avantages de la formule Avancé, vous bénéficierez de :</p>
+            <ul>
+              <li>🎨 Un style sur mesure qui correspond parfaitement à l'image de votre marque.</li>
+              <li>💡 Des éléments innovants tels que des effets visuels, des animations, et des transitions fluides pour une expérience utilisateur exceptionnelle.</li>
+              <li>🔗 Une interactivité accrue avec des fonctionnalités avancées comme des filtres de produits, des sliders personnalisés, ou des intégrations API spécifiques.</li>
+              <li>👥 Un accompagnement personnalisé tout au long du processus de création pour s'assurer que le site répond à toutes vos attentes.</li>
+            </ul>
+            <p>Ce projet, qui peut prendre jusqu'à quatre semaines, est parfait pour les entreprises souhaitant un site unique, entièrement personnalisé, prêt à impressionner en ligne.</p>
+          `,
           price: 'À partir de 2000€',
-          image: 'https://via.placeholder.com/300x200',
+          image: 'Premium.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Premium". Veuillez me contacter pour discuter des détails.'
         }
-      ],
-      selectedSite: null,
+      ]
     };
   },
   methods: {
-    showDetails(index) {
-      this.selectedSite = index;
-    },
-    closeDetails() {
-      this.selectedSite = null;
+    toggleDetails(index) {
+      this.expandedSite = this.expandedSite === index ? null : index;
     }
   }
 };
 </script>
 
 <style scoped>
-.main-content {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  flex: 1;
-}
-
-.row {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
+/* Styles spécifiques pour la page OrderSite */
 .card {
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease, border 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
 }
-
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  border-color: #42b883;
 }
 
-.card-img-top {
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
+/* Fleche vers le bas */
+.arrow-down {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  color: #42b883;
 }
 
-.btn-primary {
-  background-color: #1e88e5;
-  border-color: #1e88e5;
+/* Specific card that should not have hover effects */
+.no-hover-effect {
+  cursor: default;
+  transition: none;
+  border: none;
+}
+.no-hover-effect:hover {
+  transform: none;
+  border-color: transparent;
 }
 
-.btn-primary:hover {
-  background-color: #1565c0;
-  border-color: #1565c0;
+.modal {
+  background-color: rgba(0, 0, 0, 0.8);
 }
-
-.btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
-}
-
 .modal-content {
   background-color: #343a40;
 }
 
+/* Custom close button */
 .custom-close-button {
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
+  border-radius: 10%;
+  background-color: #ff5c5c;
   color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-close-button:hover {
+  background-color: #ff1c1c;
+}
+
+/* Center content */
+.modal-header,
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Larger modal */
+.modal-dialog.modal-xl {
+  max-width: 90%;
 }
 </style>

@@ -17,17 +17,17 @@
             Ma capacité à m'adapter rapidement et mon enthousiasme pour les défis font de moi un acteur clé dans tout projet, que ce soit dans le domaine de l'IA, du développement logiciel, ou de l'innovation technologique 🌟. Je suis également co-fondateur d'une entreprise où j'ai joué un rôle crucial en tant que développeur fullstack 💼.
           </p>
           <div class="d-flex flex-wrap justify-content-around my-3">
-            <a href="https://github.com/yourusername" target="_blank" class="btn btn-outline-light mb-2">
+            <a href="https://github.com/amineitji" target="_blank" class="btn btn-outline-light mb-2">
               <i class="bi bi-github"></i> GitHub
             </a>
-            <a href="https://linkedin.com/in/yourusername" target="_blank" class="btn btn-outline-primary mb-2">
+            <a href="https://fr.linkedin.com/in/amine-itji-5a8696268" target="_blank" class="btn btn-outline-primary mb-2">
               <i class="bi bi-linkedin"></i> LinkedIn
             </a>
-            <a href="mailto:your-email@gmail.com" class="btn btn-outline-danger mb-2">
-              <i class="bi bi-envelope-fill"></i> Gmail
+            <a href="mailto:amineitji@gmail.com" class="btn btn-outline-danger mb-2">
+              <i class="bi bi-envelope-fill"></i> amineitji@gmail.com
             </a>
-            <a href="https://wa.me/yourphonenumber" target="_blank" class="btn btn-outline-success mb-2">
-              <i class="bi bi-whatsapp"></i> WhatsApp
+            <a href="https://wa.me/33782293620" target="_blank" class="btn btn-outline-success mb-2">
+              <i class="bi bi-whatsapp"></i> +33 7 82 29 36 20
             </a>
           </div>
           <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnhiYmFrNTN4bzk4bXdwaXhxdjVpMHY1bWtiMWJ1dmRieXA0b2IzMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zOvBKUUEERdNm/giphy.gif" alt="Funny IT Gif" class="img-fluid rounded mt-3 mx-auto d-block">
