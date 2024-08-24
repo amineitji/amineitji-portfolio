@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12" v-for="(article, index) in allArticles" :key="index">
         <div class="card mb-4 text-white bg-dark" @click="openArticle(index)">
-          <img :src="article.imageSrc" class="card-img-top" alt="Image">
+          <img v-if="article.imageSrc" :src="article.imageSrc" class="card-img-top" alt="Image principale">
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
           </div>
@@ -22,10 +22,11 @@
             </button>
           </div>
           <div class="modal-body text-center">
-            <img v-if="allArticles[expandedIndex].text[1]" :src="allArticles[expandedIndex].text[1].src" :alt="allArticles[expandedIndex].text[1].alt" class="img-fluid mb-3">
-            <p v-for="(paragraph, idx) in allArticles[expandedIndex].text" :key="idx" class="text-center">
-              <span v-if="typeof paragraph === 'string'">{{ paragraph }}</span>
-            </p>
+            <div v-for="(paragraph, idx) in allArticles[expandedIndex].text" :key="idx" class="text-center">
+              <p v-if="typeof paragraph === 'string'">{{ paragraph }}</p>
+              <img v-else-if="!paragraph.type || paragraph.type === 'image'" :src="paragraph.src" :alt="paragraph.alt" class="img-fluid mb-3">
+              <iframe v-else-if="paragraph.type === 'video'" :src="paragraph.src" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -35,19 +36,47 @@
 
 <script>
 export default {
-  name: 'ProjetsPersonnels',
+  name: 'ProjetsUniversitaires',
   data() {
     return {
       expandedIndex: null,
       allArticles: [
         {
-          title: "Projet en équipe de 6 personnes - Développement d'une Application Web de Calcul d'Empreinte Carbone",
+          title: "Rapport Général du Projet : Application Web de Calcul d'Empreinte Carbone",
           imageSrc: "web_dev_co2.png",
           text: [
-            "Dans le cadre de l'unité d'enseignement Projet transversal (M1if10) du Master 1 Informatique de l'Université Claude Bernard Lyon 1, nous avons collaboré à la création d'une application web de calcul d'empreinte carbone.",
-            { src: "https://via.placeholder.com/400", alt: "Image du projet CO2" },
-            "Mon rôle de développeur backend a inclus l'établissement d'un système d'authentification sécurisé, le développement d'une API fonctionnelle, ainsi que l'implémentation de tests et de documentation.",
-            "Ce projet a été une opportunité unique pour appliquer nos connaissances académiques dans un contexte professionnel simulé, en mettant l'accent sur la qualité et la sécurité du développement logiciel."
+            "Dans le cadre de l'unité d'enseignement Projet transversal (M1if10) du Master 1 Informatique de l'Université Claude Bernard Lyon 1, nous avons travaillé en collaboration pour développer une application web dédiée au calcul de l'empreinte carbone. Ce projet a été une opportunité unique pour appliquer nos connaissances académiques dans un contexte professionnel simulé, en mettant l'accent sur la qualité et la sécurité du développement logiciel.",
+            "Notre application vise à proposer une solution accessible et personnalisée pour le suivi des émissions de gaz à effet de serre (GES). Contrairement aux outils existants, souvent trop généraux et fastidieux à utiliser, notre application permet à l'utilisateur de suivre précisément l'empreinte carbone d'événements spécifiques, tels que des trajets, des habitudes alimentaires, ou l'utilisation du multimédia. L'utilisateur peut choisir la fréquence de ces événements et comparer ses émissions à celles d'autres utilisateurs.",
+            "En tant que développeur backend, j'ai joué un rôle clé dans la réalisation de ce projet. Mon travail s'est concentré sur les aspects suivants :",
+            "J'ai développé un système d'authentification robuste permettant aux utilisateurs de créer et de gérer leurs comptes en toute sécurité. Ce système repose sur les fonctionnalités avancées de Django, garantissant ainsi une gestion efficace des sessions et des permissions.",
+            "J'ai conçu et implémenté une API fonctionnelle qui permet aux différents modules de l'application de communiquer efficacement. Cette API repose sur Django REST Framework, offrant une interface flexible et performante pour gérer les requêtes des utilisateurs et l'enregistrement des données.",
+            "J'ai également supervisé la mise en place et la gestion de la base de données, utilisant PostgreSQL pour assurer la robustesse et la scalabilité des données stockées. La structure de la base de données a été soigneusement conçue pour optimiser les performances et la facilité d'accès aux informations.",
+            "Pour garantir la qualité et la fiabilité du code, j'ai développé une suite de tests unitaires et fonctionnels, couvrant l'ensemble des fonctionnalités critiques du backend. De plus, j'ai rédigé une documentation détaillée, facilitant la compréhension et la maintenance du code par les autres membres de l'équipe.",
+            { "src": "Accueil_co2.png", "alt": "Page d'accueil" },
+            "L'utilisateur peut créer un compte ou se connecter pour accéder aux fonctionnalités de l'application.",
+            { "src": "signup_co2.png", "alt": "Page de création de compte" },
+            "Une fois connecté, l'utilisateur accède à un tableau de bord offrant divers liens pour effectuer son bilan CO2 et visualiser ses émissions globales.",
+            { "src": "web_dev_co2.png", "alt": "Page Dashboard" },
+            "L'utilisateur peut ajouter un traqueur spécifique, par exemple, pour un trajet, et calculer l'émission en CO2 en fonction du mode de transport choisi.",
+            { "src": "trip_tracker_co2.png", "alt": "Page ajout de traqueur pour le transport" },
+            "Ce projet de développement d'une application web de calcul d'empreinte carbone a été une expérience enrichissante, nous permettant d'appliquer nos compétences techniques dans un contexte concret et collaboratif. Mon travail sur le backend, en utilisant Django et PostgreSQL, a permis de mettre en place une infrastructure solide, sécurisée et évolutive, répondant aux besoins de l'application. Grâce à cette application, nous espérons faciliter la prise de conscience des utilisateurs sur leur impact environnemental, en leur offrant un outil simple et personnalisé pour suivre leurs émissions de GES.",
+            "Ce rapport présente un aperçu général de notre travail, mais l'application est encore en développement, et nous continuons à améliorer et à enrichir ses fonctionnalités pour répondre aux attentes des utilisateurs.",
+            "2024",
+          ]
+        },
+        {
+          "title": "Contribution à la librairie python de recherche CDlib",
+          "imageSrc": "cdlib.png",
+          "text": [
+            "Ce projet vise à enrichir la librairie Python CDlib, spécialisée dans l'analyse des communautés dans les réseaux complexes.",
+            { "src": "cdlib_new.png", "alt": "Présentation de CDlib" },
+            "Sous la supervision de Rémy Cazabet, j'ai développé de nouvelles fonctionnalités pour améliorer la visualisation des communautés, telles que plot_network_clusters et plot_community_graph.",
+            "Les nouvelles fonctionnalités incluent des paramètres comme show_edge_widths, show_edge_weights, et show_node_sizes, offrant des options de visualisation plus approfondies.",
+            { "src": "Figure_2_ouverture.png", "alt": "Visualisation des communautés" },
+            "En plus des améliorations apportées, une nouvelle fonction, plot_network_highlighted_clusters, a été créée pour mettre en évidence les clusters avec des représentations visuelles plus intuitives.",
+            "Enfin, la documentation des nouvelles fonctionnalités a été mise à jour pour faciliter leur utilisation par la communauté.",
+            { "src": "Figure_3_ouverture.png", "alt": "Documentation CDlib" },
+            "L'objectif est de consolider CDlib en tant qu'outil incontournable pour l'analyse et la visualisation des réseaux dans l'écosystème Python."
           ]
         },
         {
@@ -55,39 +84,24 @@ export default {
           imageSrc: "eliza_gpt.png",
           text: [
             "Le projet consiste à améliorer un chatbot inspiré de ChatGPT en raffinant sa structure de code initiale, en étendant ses fonctionnalités en utilisant les principes MVC et GRASP.",
-            { src: "https://via.placeholder.com/400", alt: "Image du Chatbot" },
             "En mettant en place des tests automatisés avec JUnit et Maven, et en promouvant le développement piloté par les tests avec GitLab-CI.",
             "Il offre une expérience complète du cycle de vie du développement logiciel, avec un accent sur les compétences professionnelles en ingénierie logicielle."
           ]
         },
         {
-          title: "Contribution à la librairie python de recherche CDlib",
-          imageSrc: "cdlib.png",
-          text: [
-            "Ce projet vise à enrichir la librairie Python CDlib, spécialisée dans l'analyse des communautés dans les réseaux complexes.",
-            { src: "https://via.placeholder.com/400", alt: "Image CDlib" },
-            "Les contributions incluent le développement de nouvelles visualisations de communautés, l'extension de fonctionnalités existantes et l'amélioration de la documentation.",
-            "L'objectif est de consolider CDlib en tant qu'outil pour l'analyse et la visualisation de réseaux dans l'écosystème Python."
-          ]
-        },
-        {
           title: "Projet en binome - Simulation d’un écosystème",
-          imageSrc: "https://via.placeholder.com/300",
+          imageSrc: "netlogo.png",
           text: [
             "Simulation NetLogo des interactions entre les abeilles, les fleurs, les prédateurs et les ruches dans un environnement dynamique.",
-            { src: "https://via.placeholder.com/400", alt: "Image de l'écosystème" },
+            {
+              type: "video",
+              src: "https://www.youtube.com/embed/kZcpo4sGe6g",
+              alt: "Vidéo de l'écosystème"
+            },
             "Chaque agent est caractérisé par des attributs spécifiques qui influent sur son comportement et sa contribution à l'écosystème simulé.",
             "L'analyse des comportements individuels des agents permet de mieux comprendre les mécanismes de collecte de pollen, la survie des abeilles et la gestion des ressources au sein des colonies."
           ]
         },
-        {
-          title: "Titre 5",
-          imageSrc: "https://via.placeholder.com/300",
-          text: [
-            "Ceci est le contenu du cinquième article.",
-            { src: "https://via.placeholder.com/400", alt: "Image du cinquième projet" }
-          ]
-        }
       ]
     };
   },
@@ -101,16 +115,17 @@ export default {
   }
 };
 </script>
+
 <style scoped>
-/* Styles spécifiques pour la page Projets Personnels */
+/* Styles spécifiques pour la page Projets Universitaires */
 .card {
   cursor: pointer;
-  transition: transform 0.3s ease, border 0.3s ease; /* Added transition for border */
-  border: 2px solid transparent; /* Initial transparent border to avoid layout shift */
+  transition: transform 0.3s ease, border 0.3s ease;
+  border: 2px solid transparent;
 }
 .card:hover {
   transform: scale(1.05);
-  border-color: #42b883; /* Green border on hover */
+  border-color: #42b883;
 }
 .modal {
   background-color: rgba(0, 0, 0, 0.8);
@@ -154,5 +169,34 @@ export default {
 /* Larger modal */
 .modal-dialog.modal-xl {
   max-width: 90%;
+}
+
+/* Responsive and larger image size with rounded corners and gray border */
+.modal-body img {
+  width: 100%;
+  max-width: 700px; /* Set a larger max-width for bigger images */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image fits within the given dimensions */
+  border-radius: 15px; /* Rounded corners */
+  border: 3px solid #343a40; /* Gray border */
+  margin-bottom: 20px; /* Add some space below the image */
+}
+
+.modal-body iframe {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 15px;
+  border: 3px solid #343a40;
+  margin-bottom: 20px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .modal-body img,
+  .modal-body iframe {
+    max-width: 90%; /* Make the image and video take up more space on smaller screens */
+    border-radius: 10px; /* Slightly reduce corner rounding for smaller screens */
+    border: 2px solid #343a40; /* Slightly thinner border on smaller screens */
+  }
 }
 </style>

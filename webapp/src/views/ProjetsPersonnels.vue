@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12" v-for="(article, index) in allArticles" :key="index">
         <div class="card mb-4 text-white bg-dark" @click="openArticle(index)">
-          <img :src="article.imageSrc" class="card-img-top" alt="Image">
+          <img v-if="article.imageSrc" :src="article.imageSrc" class="card-img-top" alt="Image principale">
           <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
           </div>
@@ -22,10 +22,11 @@
             </button>
           </div>
           <div class="modal-body text-center">
-            <img v-if="allArticles[expandedIndex].text[1]" :src="allArticles[expandedIndex].text[1].src" :alt="allArticles[expandedIndex].text[1].alt" class="img-fluid mb-3">
-            <p v-for="(paragraph, idx) in allArticles[expandedIndex].text" :key="idx" class="text-center">
-              <span v-if="typeof paragraph === 'string'">{{ paragraph }}</span>
-            </p>
+            <div v-for="(paragraph, idx) in allArticles[expandedIndex].text" :key="idx" class="text-center">
+              <p v-if="typeof paragraph === 'string'">{{ paragraph }}</p>
+              <img v-else-if="!paragraph.type || paragraph.type === 'image'" :src="paragraph.src" :alt="paragraph.alt" class="img-fluid mb-3">
+              <iframe v-else-if="paragraph.type === 'video'" :src="paragraph.src" width="100%" height="400px" frameborder="0" allowfullscreen></iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -35,59 +36,29 @@
 
 <script>
 export default {
-  name: 'ProjetsPersonnels',
+  name: 'ProjetsUniversitaires',
   data() {
     return {
       expandedIndex: null,
       allArticles: [
         {
-          title: "Projet en équipe de 6 personnes - Développement d'une Application Web de Calcul d'Empreinte Carbone",
-          imageSrc: "web_dev_co2.png",
+          title: "Machine Learning - Prédiction du Succès des Films au Box-Office Local, Étranger et Mondial",
+          imageSrc: "ml_movies.png",
           text: [
-            "Dans le cadre de l'unité d'enseignement Projet transversal (M1if10) du Master 1 Informatique de l'Université Claude Bernard Lyon 1, nous avons collaboré à la création d'une application web de calcul d'empreinte carbone.",
-            { src: "https://via.placeholder.com/400", alt: "Image du projet CO2" },
-            "Mon rôle de développeur backend a inclus l'établissement d'un système d'authentification sécurisé, le développement d'une API fonctionnelle, ainsi que l'implémentation de tests et de documentation.",
-            "Ce projet a été une opportunité unique pour appliquer nos connaissances académiques dans un contexte professionnel simulé, en mettant l'accent sur la qualité et la sécurité du développement logiciel."
-          ]
+            "Ce projet vise à prédire les revenus domestiques, étrangers et mondiaux des films à l'aide de modèles de régression d'arbres de décision. En utilisant un ensemble de données détaillé sur les films, les modèles ont été optimisés via la validation croisée et GridSearchCV. Les résultats montrent une performance particulièrement élevée pour les prédictions mondiales, indiquant que l'approche IA numérique est efficace pour ce type de tâche. Le projet est disponible en open-source sur mon GitHub. ",         ]
         },
         {
-          title: "Refactoring d'un Chatbot inspiré de ChatGPT : MVC, GRASP, et Tests Automatisés",
-          imageSrc: "eliza_gpt.png",
+          title: "Développement d'une Application Web avec Django et VueJs",
+          imageSrc: "diagERP.png",
           text: [
-            "Le projet consiste à améliorer un chatbot inspiré de ChatGPT en raffinant sa structure de code initiale, en étendant ses fonctionnalités en utilisant les principes MVC et GRASP.",
-            { src: "https://via.placeholder.com/400", alt: "Image du Chatbot" },
-            "En mettant en place des tests automatisés avec JUnit et Maven, et en promouvant le développement piloté par les tests avec GitLab-CI.",
-            "Il offre une expérience complète du cycle de vie du développement logiciel, avec un accent sur les compétences professionnelles en ingénierie logicielle."
+            "Pendant mon stage chez Aneqqis (entreprise dont je suis co-fondateur), j'ai developpé entièrement une application web en utilisant Django pour le backend et Vite.js pour le frontend, incluant également le déploiement final. J'ai mis en place un système d'authentification robuste avec double authentification par email, intégré Stripe pour la gestion sécurisée des paiements, et développé un module automatisé de génération de documents immobiliers. ",
+            {
+              type: "video",
+              src: "https://www.youtube.com/embed/PiKLRnlXitk",
+              alt: "Vidéo de presentation"
+            },
           ]
         },
-        {
-          title: "Contribution à la librairie python de recherche CDlib",
-          imageSrc: "cdlib.png",
-          text: [
-            "Ce projet vise à enrichir la librairie Python CDlib, spécialisée dans l'analyse des communautés dans les réseaux complexes.",
-            { src: "https://via.placeholder.com/400", alt: "Image CDlib" },
-            "Les contributions incluent le développement de nouvelles visualisations de communautés, l'extension de fonctionnalités existantes et l'amélioration de la documentation.",
-            "L'objectif est de consolider CDlib en tant qu'outil pour l'analyse et la visualisation de réseaux dans l'écosystème Python."
-          ]
-        },
-        {
-          title: "Projet en binome - Simulation d’un écosystème",
-          imageSrc: "https://via.placeholder.com/300",
-          text: [
-            "Simulation NetLogo des interactions entre les abeilles, les fleurs, les prédateurs et les ruches dans un environnement dynamique.",
-            { src: "https://via.placeholder.com/400", alt: "Image de l'écosystème" },
-            "Chaque agent est caractérisé par des attributs spécifiques qui influent sur son comportement et sa contribution à l'écosystème simulé.",
-            "L'analyse des comportements individuels des agents permet de mieux comprendre les mécanismes de collecte de pollen, la survie des abeilles et la gestion des ressources au sein des colonies."
-          ]
-        },
-        {
-          title: "Titre 5",
-          imageSrc: "https://via.placeholder.com/300",
-          text: [
-            "Ceci est le contenu du cinquième article.",
-            { src: "https://via.placeholder.com/400", alt: "Image du cinquième projet" }
-          ]
-        }
       ]
     };
   },
@@ -101,16 +72,17 @@ export default {
   }
 };
 </script>
+
 <style scoped>
-/* Styles spécifiques pour la page Projets Personnels */
+/* Styles spécifiques pour la page Projets Universitaires */
 .card {
   cursor: pointer;
-  transition: transform 0.3s ease, border 0.3s ease; /* Added transition for border */
-  border: 2px solid transparent; /* Initial transparent border to avoid layout shift */
+  transition: transform 0.3s ease, border 0.3s ease;
+  border: 2px solid transparent;
 }
 .card:hover {
   transform: scale(1.05);
-  border-color: #42b883; /* Green border on hover */
+  border-color: #42b883;
 }
 .modal {
   background-color: rgba(0, 0, 0, 0.8);
@@ -154,5 +126,34 @@ export default {
 /* Larger modal */
 .modal-dialog.modal-xl {
   max-width: 90%;
+}
+
+/* Responsive and larger image size with rounded corners and gray border */
+.modal-body img {
+  width: 100%;
+  max-width: 700px; /* Set a larger max-width for bigger images */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image fits within the given dimensions */
+  border-radius: 15px; /* Rounded corners */
+  border: 3px solid #343a40; /* Gray border */
+  margin-bottom: 20px; /* Add some space below the image */
+}
+
+.modal-body iframe {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 15px;
+  border: 3px solid #343a40;
+  margin-bottom: 20px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .modal-body img,
+  .modal-body iframe {
+    max-width: 90%; /* Make the image and video take up more space on smaller screens */
+    border-radius: 10px; /* Slightly reduce corner rounding for smaller screens */
+    border: 2px solid #343a40; /* Slightly thinner border on smaller screens */
+  }
 }
 </style>
