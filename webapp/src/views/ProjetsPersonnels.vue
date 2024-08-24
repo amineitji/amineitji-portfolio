@@ -68,7 +68,7 @@ export default {
     },
     closeArticle() {
       this.expandedIndex = null;
-    }
+    } 
   }
 };
 </script>
