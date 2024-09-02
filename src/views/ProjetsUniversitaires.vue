@@ -76,7 +76,8 @@ export default {
             "En plus des améliorations apportées, une nouvelle fonction, plot_network_highlighted_clusters, a été créée pour mettre en évidence les clusters avec des représentations visuelles plus intuitives.",
             "Enfin, la documentation des nouvelles fonctionnalités a été mise à jour pour faciliter leur utilisation par la communauté.",
             { "src": "Figure_3_ouverture.png", "alt": "Documentation CDlib" },
-            "L'objectif est de consolider CDlib en tant qu'outil incontournable pour l'analyse et la visualisation des réseaux dans l'écosystème Python."
+            "L'objectif est de consolider CDlib en tant qu'outil incontournable pour l'analyse et la visualisation des réseaux dans l'écosystème Python.",
+            "2024",
           ]
         },
         {
@@ -85,7 +86,8 @@ export default {
           text: [
             "Le projet consiste à améliorer un chatbot inspiré de ChatGPT en raffinant sa structure de code initiale, en étendant ses fonctionnalités en utilisant les principes MVC et GRASP.",
             "En mettant en place des tests automatisés avec JUnit et Maven, et en promouvant le développement piloté par les tests avec GitLab-CI.",
-            "Il offre une expérience complète du cycle de vie du développement logiciel, avec un accent sur les compétences professionnelles en ingénierie logicielle."
+            "Il offre une expérience complète du cycle de vie du développement logiciel, avec un accent sur les compétences professionnelles en ingénierie logicielle.",
+            "2024",
           ]
         },
         {
@@ -99,9 +101,23 @@ export default {
               alt: "Vidéo de l'écosystème"
             },
             "Chaque agent est caractérisé par des attributs spécifiques qui influent sur son comportement et sa contribution à l'écosystème simulé.",
-            "L'analyse des comportements individuels des agents permet de mieux comprendre les mécanismes de collecte de pollen, la survie des abeilles et la gestion des ressources au sein des colonies."
+            "L'analyse des comportements individuels des agents permet de mieux comprendre les mécanismes de collecte de pollen, la survie des abeilles et la gestion des ressources au sein des colonies.",
+            "2024",
           ]
         },
+        {
+          "title": "Projet en binôme - Création du jeu Rush Hour et Complexité de Solution",
+          "imageSrc": "rush.png",
+          "text": [
+            "Ce projet avait pour objectif de créer une version numérique du jeu de casse-tête Rush Hour en utilisant la bibliothèque SDL2 en C++. Le but du jeu est de sortir une voiture d'un garage en déplaçant les autres voitures qui bloquent son passage. Le développement a été réalisé en C++ avec une approche orientée objet, permettant une gestion efficace de la mémoire et une modularité accrue du code.",
+            { "src": "diagramme_classes.png", "alt": "Diagramme des classes pour le projet Rush Hour" },
+            "Le programme final inclut deux algorithmes de recherche pour trouver la solution la plus optimale au casse-tête : un parcours en largeur (BFS) et un parcours A* (A-Star). Ces algorithmes ont été implémentés pour minimiser le nombre de coups nécessaires pour résoudre une partie donnée, rendant le jeu non seulement jouable, mais aussi intelligent dans sa capacité à offrir des solutions optimisées.",
+            { "src": "rush_hour.gif", "alt": "Animation du jeu Rush Hour en action" },
+            "En conclusion, ce projet a permis de mettre en pratique des concepts avancés de programmation, tels que la gestion de mémoire, l'algorithmie de recherche, et la programmation orientée objet, tout en développant un jeu interactif et engageant. Le projet représente un excellent exercice de conception logicielle et d'application de la théorie algorithmique dans un contexte ludique.",
+            "2023"
+          ]
+        },
+
       ]
     };
   },

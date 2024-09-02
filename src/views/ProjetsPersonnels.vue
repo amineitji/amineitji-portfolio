@@ -41,12 +41,22 @@ export default {
     return {
       expandedIndex: null,
       allArticles: [
-        {
-          title: "Machine Learning - Prédiction du Succès des Films au Box-Office Local, Étranger et Mondial",
-          imageSrc: "ml_movies.png",
-          text: [
-            "Ce projet vise à prédire les revenus domestiques, étrangers et mondiaux des films à l'aide de modèles de régression d'arbres de décision. En utilisant un ensemble de données détaillé sur les films, les modèles ont été optimisés via la validation croisée et GridSearchCV. Les résultats montrent une performance particulièrement élevée pour les prédictions mondiales, indiquant que l'approche IA numérique est efficace pour ce type de tâche. Le projet est disponible en open-source sur mon GitHub. ",         ]
-        },
+      {
+        "title": "Machine Learning - Prédiction du Succès des Films au Box-Office Local, Étranger et Mondial",
+        "imageSrc": "ml_movies.png",
+        "text": [
+          "Ce projet se concentre sur la prédiction des revenus des films au box-office, en tenant compte des revenus domestiques, étrangers et mondiaux. Pour accomplir cela, des modèles de régression d'arbres de décision ont été employés. L'ensemble de données utilisé, movies.csv, contient des informations variées sur les films, telles que le studio principal, le score Rotten Tomatoes, le genre, et le budget.",
+          "Dans une première étape, un soin particulier a été apporté au choix et au pré-traitement des données. Les colonnes catégorielles telles que LeadStudio, Story et Genre ont été encodées en valeurs numériques, permettant ainsi leur utilisation dans les modèles de machine learning. Les valeurs manquantes pour les colonnes cibles ont été supprimées afin d'éviter les erreurs lors de l'entraînement. Les données ont ensuite été divisées en un ensemble d'entraînement (80%) et un ensemble de test (20%) à l'aide de la fonction train_test_split, assurant une évaluation objective des modèles.",
+          "L'entraînement des modèles de régression d'arbres de décision a été réalisé en utilisant la technique de k-folds (5 plis) pour optimiser les hyperparamètres (max_depth, min_samples_split, min_samples_leaf) à travers GridSearchCV. Cette méthode a permis de tester plusieurs combinaisons de paramètres, assurant la robustesse des résultats. Les performances des modèles ont ensuite été évaluées à l'aide des métriques Mean Squared Error (MSE) et R^2 Score. Les résultats ont montré une excellente performance pour les prédictions mondiales avec un R^2 Score de 0.9261, tandis que les prédictions pour les revenus domestiques ont également montré de bonnes performances avec un R^2 Score de 0.8654. Cependant, les prédictions des revenus étrangers ont été plus complexes avec un R^2 Score de 0.7709.",
+          { "src": "metrics_analysis.png", "alt": "Analyse des métriques" },
+          "Les choix de paramètres ont été justifiés par les résultats de GridSearchCV, en se concentrant sur la minimisation de l'erreur quadratique moyenne et l'évitement du surajustement tout en capturant la complexité des données. Le choix des hyperparamètres max_depth, min_samples_split, et min_samples_leaf a été crucial pour permettre au modèle de bien généraliser sur de nouvelles données tout en capturant les nuances des données d'entraînement.",
+          { "src": "WorldGross_real_vs_pred.png", "alt": "Graphique des valeurs réelles vs prédites pour WorldGross" },
+          "En conclusion, les modèles de régression d'arbres de décision se sont révélés efficaces pour prédire les revenus des films, particulièrement pour les prédictions mondiales. Le projet, disponible en open-source sur GitHub, ouvre la voie à des améliorations futures pour mieux capter les dynamiques du box-office mondial.",
+          "2024"
+        ]
+      },
+
+
         {
           title: "Développement d'une Application Web avec Django et VueJs",
           imageSrc: "diagERP.png",
@@ -57,6 +67,7 @@ export default {
               src: "https://www.youtube.com/embed/PiKLRnlXitk",
               alt: "Vidéo de presentation"
             },
+            "2023",
           ]
         },
       ]
