@@ -14,17 +14,19 @@
             <p class="card-text"><strong>{{ site.price }}</strong></p>
             <div v-if="expandedSite === index">
               <div v-html="site.description"></div>
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" width="100%" height="200" src="https://www.youtube.com/embed/SX99LCO1OZI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
             </div>
             <div class="arrow-down" v-if="expandedSite !== index">⬇️</div>
           </div>
         </div>
       </div>
     </div>
-    
     <!-- Additional Card for Custom Requests -->
     <div class="row mt-4">
       <div class="col-md-12">
-        <div class="card mb-4 bg-dark text-white no-hover-effect">
+        <div class="card mb-4 bg-dark text-white">
           <div class="card-body">
             <h5 class="card-title">Demande spécifique</h5>
             <p class="card-text">
@@ -34,17 +36,19 @@
               <a href="mailto:amineitji@gmail.com" class="btn btn-outline-danger mb-2">
                 <i class="bi bi-envelope-fill"></i> amineitji@gmail.com
               </a>
-              <a href="https://wa.me/33782293620" target="_blank" class="btn btn-outline-success mb-2">
-                <i class="bi bi-whatsapp"></i> +33 7 82 29 36 20
-              </a>
             </div>
 
           </div>
         </div>
       </div>
     </div>
+
+
+    
   </div>
 </template>
+
+
 
 <script>
 export default {

@@ -26,9 +26,6 @@
             <a href="mailto:amineitji@gmail.com" class="btn btn-outline-danger mb-2">
               <i class="bi bi-envelope-fill"></i> amineitji@gmail.com
             </a>
-            <a href="https://wa.me/33782293620" target="_blank" class="btn btn-outline-success mb-2">
-              <i class="bi bi-whatsapp"></i> +33 7 82 29 36 20
-            </a>
           </div>
           <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnhiYmFrNTN4bzk4bXdwaXhxdjVpMHY1bWtiMWJ1dmRieXA0b2IzMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zOvBKUUEERdNm/giphy.gif" alt="Funny IT Gif" class="img-fluid rounded mt-3 mx-auto d-block">
         </div>
