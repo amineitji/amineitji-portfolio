@@ -41,6 +41,18 @@ export default {
     return {
       expandedIndex: null,
       allArticles: [
+
+      {
+          title: "Webscraping et Visualisation de Performances de Joueurs de Football",
+          imageSrc: "whoscored.png",
+          text: [
+            "Ce projet permet d'extraire et de visualiser les performances de joueurs de football à partir des données de match récupérées depuis WhoScored. Il analyse les données spécifiques à chaque joueur, telles que les passes, les tirs, les dribbles, les interceptions, et génère des visualisations graphiques comme des cartes de chaleur et des diagrammes pour illustrer les actions sur le terrain. Le projet télécharge également automatiquement la photo du joueur à partir de Transfermarkt pour accompagner les visualisations. Parmi les principales fonctionnalités, le projet offre l'extraction des statistiques et événements d'un joueur depuis les fichiers HTML des matchs de WhoScored, la génération de graphiques représentant les passes, l'activité offensive, l'activité défensive et les zones de jeu du joueur, ainsi que l'adaptation des graphiques selon le poste du joueur (attaquant, milieu, défenseur). Il inclut également le téléchargement automatique de la photo du joueur pour personnaliser les visuels. Le projet est disponible sur mon GitHub, où vous pouvez consulter le code et les instructions pour l'utiliser.",
+            { "src": "whoscored.png", "alt": "Exemple de visualisation" },
+            "2024",
+          ]
+        },
+
+
       {
         "title": "Machine Learning - Prédiction du Succès des Films au Box-Office Local, Étranger et Mondial",
         "imageSrc": "ml_movies.png",
@@ -70,6 +82,8 @@ export default {
             "2023",
           ]
         },
+
+
       ]
     };
   },
