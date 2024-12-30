@@ -6,15 +6,20 @@
           BIENVENUE SUR MON SITE
         </div>
         <div class="card-body text-center">
+          <img 
+            src="https://media.licdn.com/dms/image/v2/D4E03AQE3PrNtqhlw7w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1721847794814?e=2147483647&v=beta&t=-EYtas69BGrXW4KCc708xDpqTbBRHuMtL3f6Oknw4CI" 
+            alt="Profile Picture" 
+            class="profile-img rounded-circle mb-3">
           <p class="card-text">👋 Bonjour, je m'appelle Amine ITJI</p>
           <p class="card-text">
-            Je suis un étudiant en Master 1 Informatique avec une passion marquée pour l'Intelligence Artificielle 🤖 et le développement web 🌐. Toujours à l'affût des dernières avancées technologiques, je m'efforce de repousser les limites de mes compétences à travers divers projets personnels et académiques 🚀.
+            Je suis un étudiant en Master 1 Informatique avec une passion marquée pour l'Intelligence Artificielle 🤖 et le développement web 🌐.
+            Toujours à l'affût des dernières avancées technologiques, je m'efforce de repousser les limites de mes compétences à travers divers projets personnels et académiques 🚀.
           </p>
           <p class="card-text">
-            En tant que développeur polyvalent, j'ai des aptitudes en machine learning, analyse d'images 🖼️, et data science 📊, tout en étant à l'aise avec des outils de développement web comme Django et Vue.js 💻. Je combine mes connaissances techniques avec une méthodologie Agile pour mener à bien des projets innovants et collaboratifs.
+            En tant que développeur polyvalent, j'ai des aptitudes en machine learning, analyse d'images 🖼️, et data science 📊, tout en étant à l'aise avec des outils de développement web comme Django et Vue.js 💻.
           </p>
           <p class="card-text">
-            Ma capacité à m'adapter rapidement et mon enthousiasme pour les défis font de moi un acteur clé dans tout projet, que ce soit dans le domaine de l'IA, du développement logiciel, ou de l'innovation technologique 🌟. Je suis également co-fondateur d'une entreprise où j'ai joué un rôle crucial en tant que développeur fullstack 💼.
+            Ma capacité à m'adapter rapidement et mon enthousiasme pour les défis font de moi un acteur clé dans tout projet, que ce soit dans le domaine de l'IA, du développement logiciel, ou de l'innovation technologique 🌟.
           </p>
           <div class="d-flex flex-wrap justify-content-around my-3">
             <a href="https://github.com/amineitji" target="_blank" class="btn btn-outline-light mb-2">
@@ -27,7 +32,6 @@
               <i class="bi bi-envelope-fill"></i> amineitji@gmail.com
             </a>
           </div>
-          <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnhiYmFrNTN4bzk4bXdwaXhxdjVpMHY1bWtiMWJ1dmRieXA0b2IzMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zOvBKUUEERdNm/giphy.gif" alt="Funny IT Gif" class="img-fluid rounded mt-3 mx-auto d-block">
         </div>
       </div>
     </div>
@@ -37,7 +41,11 @@
 <script>
 export default {
   name: 'HomePage',
-  components: {},
+  data() {
+    return {
+      gifs: []
+    };
+  }
 };
 </script>
 
@@ -75,11 +83,10 @@ export default {
   gap: 10px;
 }
 
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.profile-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid #42b883;
 }
 </style>

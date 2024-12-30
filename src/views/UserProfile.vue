@@ -10,6 +10,13 @@
           <div class="card-body">
             <div class="timeline">
               <div class="timeline-item">
+                <div class="timeline-date">Novembre 2024 - Décembre 2024</div>
+                <div class="timeline-content">
+                  <h5>Monteur PC</h5>
+                  <p>Société LDLC - Lyon</p>
+                </div>
+              </div>
+              <div class="timeline-item">
                 <div class="timeline-date">Juillet 2024 - Aout 2024</div>
                 <div class="timeline-content">
                   <h5>Préparateur/Convoyeur</h5>
@@ -142,8 +149,6 @@
     </div>
   </div>
 </template>
-
-
 
 <script>
 export default {
