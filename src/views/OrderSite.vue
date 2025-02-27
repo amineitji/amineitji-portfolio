@@ -68,7 +68,7 @@ export default {
             </ul>
             <p>Cette formule est idéale pour les petites entreprises ou les projets nécessitant une présence en ligne rapide et efficace.</p>
           `,
-          price: 'À partir de 200€',
+          price: 'À partir de 500€',
           image: 'Basic.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Basic". Veuillez me contacter pour discuter des détails.'
         },
@@ -84,7 +84,7 @@ export default {
             </ul>
             <p>Ce site, prêt en environ deux semaines, est idéal pour les entreprises qui souhaitent se démarquer avec un site moderne et complet.</p>
           `,
-          price: 'À partir de 300€',
+          price: 'À partir de 750€',
           image: 'Avance.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Avancé". Veuillez me contacter pour discuter des détails.'
         },
@@ -100,7 +100,7 @@ export default {
             </ul>
             <p>Ce projet, qui peut prendre jusqu'à quatre semaines, est parfait pour les entreprises souhaitant un site unique, entièrement personnalisé, prêt à impressionner en ligne.</p>
           `,
-          price: 'À partir de 500€',
+          price: 'À partir de 1000€',
           image: 'Premium.png',
           emailBody: 'Je souhaite commander la formule "Site Vitrine Premium". Veuillez me contacter pour discuter des détails.'
         }
