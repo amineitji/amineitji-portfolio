@@ -10,10 +10,23 @@
           <div class="card-body">
             <div class="timeline">
               <div class="timeline-item">
+                <div class="timeline-date">Janvier 2025 - Mars 2025</div>
+                <div class="timeline-content">
+                  <h5>STAGE - Digitalisation des inspections (KIZEO)</h5>
+                  <p>ALSTOM - Villeurbanne</p>
+                  <ul>
+                    <li>Mise en place de differents formulaires d'inspections sur KIZEO.</li>
+                    <li>Présentation régulière du travail réalisé aux responsables.</li>
+                    <li>Travail en méthodologie Agile via Teams.</li>
+                    <li>Travail collaboratif avec les différents responsables.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="timeline-item">
                 <div class="timeline-date">Novembre 2024 - Décembre 2024</div>
                 <div class="timeline-content">
                   <h5>Monteur PC</h5>
-                  <p>Société LDLC - Lyon</p>
+                  <p>LDLC - Lyon</p>
                 </div>
               </div>
               <div class="timeline-item">

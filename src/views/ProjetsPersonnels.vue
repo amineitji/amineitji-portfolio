@@ -43,10 +43,55 @@ export default {
       allArticles: [
 
       {
+          title: "Comment j’utilise l’IA pour analyser un match de foot à partir d’une simple vidéo",
+          imageSrc: "football_analysis.gif",
+          text: [
+              "YOLO est un modèle de détection d'objets qui analyse chaque image de la vidéo et localise en temps réel les objets, comme des humains, un ballon ou même des voitures.",
+              " ",
+              "J'ai donc utilisé ce modèle pour le personnaliser dans le monde du football !",
+              " ",
+              "Une fois que YOLO détecte les joueurs, il faut les attribuer à une équipe. J'utilise donc le KMeans, cet algorithme de clustering permet de regrouper les joueurs en fonction des couleurs dominantes de leurs maillots.",
+              " ",
+              "On peut aussi détecter les lignes du terrain en utilisant HoughLines pour détecter les segments blancs du terrain. La transformation de Hough est une technique mathématique qui permet de détecter des formes géométriques, comme des lignes droites, dans une image.",
+              " ",
+              "C’est ici que ça devient vraiment intéressant ! En utilisant l’homographie, on peut projeter toutes les coordonnées détectées sur un plan 2D. Ce qui permet de suivre l’évolution du match et de localiser chaque événement sur un schéma, comme on peut le voir sur Whoscored.",
+              " ",
+              "Ce projet démontre qu’avec l’IA, et certains outils mathématiques, on peut aller bien au-delà de ce qu’on imagine dans l’analyse sportive. Suivre les performances des joueurs, analyser les tactiques des équipes, ou même recréer un match en 2D pour une analyse détaillée.",
+              " ",
+              { "src": "match_projection.png", "alt": "Exemple de projection 2D d'un match" },
+              " ",
+              "2025",
+          ]
+      },
+
+      {
+          title: "Comprendre et prédire la réussite d'un penalty avec l'IA",
+          imageSrc: "NeymarPen.gif",
+          text: [
+              "Ce projet explore l'utilisation du Machine Learning pour prédire l'issue d’un penalty dans les cinq grands championnats européens (Ligue 1, Premier League, Bundesliga, Serie A, La Liga) sur la saison 2019/2020.",
+              " ",
+              "Les facteurs influençant la réussite d’un penalty incluent la minute du match, la position du tireur, le lieu du match, le dernier but marqué, et si le penalty est décisif ou non.",
+              " ",
+              "Un modèle de Random Forest Classifier a été utilisé pour prédire si un penalty serait marqué ou non. Ce modèle a atteint une précision de 77,78% sur un jeu de test, en apprenant des tendances et relations dans les données.",
+              { "src": "RandomForestClassifier.png", "alt": "Random Forest Classifier" },
+              "Le projet ouvre la voie à une analyse plus approfondie, incluant des données de position des tirs, le contexte du match, et l’état psychologique des joueurs.",
+              " ",
+              "De plus, la théorie des jeux de Nash pourrait être utilisée pour affiner les stratégies des tireurs et des gardiens pendant une séance de tirs au but.",
+              " ",
+              { "src": "penalty_var.png", "alt": "Exemple de visualisation de données de penalty" },
+              " ",
+              "2025",
+          ]
+      },
+      {
           title: "Webscraping et Visualisation de Performances de Joueurs de Football",
           imageSrc: "whoscored.png",
           text: [
-            "Ce projet permet d'extraire et de visualiser les performances de joueurs de football à partir des données de match récupérées depuis WhoScored. Il analyse les données spécifiques à chaque joueur, telles que les passes, les tirs, les dribbles, les interceptions, et génère des visualisations graphiques comme des cartes de chaleur et des diagrammes pour illustrer les actions sur le terrain. Le projet télécharge également automatiquement la photo du joueur à partir de Transfermarkt pour accompagner les visualisations. Parmi les principales fonctionnalités, le projet offre l'extraction des statistiques et événements d'un joueur depuis les fichiers HTML des matchs de WhoScored, la génération de graphiques représentant les passes, l'activité offensive, l'activité défensive et les zones de jeu du joueur, ainsi que l'adaptation des graphiques selon le poste du joueur (attaquant, milieu, défenseur). Il inclut également le téléchargement automatique de la photo du joueur pour personnaliser les visuels. Le projet est disponible sur mon GitHub, où vous pouvez consulter le code et les instructions pour l'utiliser.",
+            "Ce projet permet d'extraire et de visualiser les performances de joueurs de football à partir des données de match récupérées depuis WhoScored. Il analyse les données spécifiques à chaque joueur, telles que les passes, les tirs, les dribbles, les interceptions, et génère des visualisations graphiques comme des cartes de chaleur et des diagrammes pour illustrer les actions sur le terrain. Le projet télécharge également automatiquement la photo du joueur à partir de Transfermarkt pour accompagner les visualisations.",
+            " ",
+            "Parmi les principales fonctionnalités, le projet offre l'extraction des statistiques et événements d'un joueur depuis les fichiers HTML des matchs de WhoScored, la génération de graphiques représentant les passes, l'activité offensive, l'activité défensive et les zones de jeu du joueur, ainsi que l'adaptation des graphiques selon le poste du joueur (attaquant, milieu, défenseur). Il inclut également le téléchargement automatique de la photo du joueur pour personnaliser les visuels.",
+            " ",
+            "Le projet est disponible sur mon GitHub, où vous pouvez consulter le code et les instructions pour l'utiliser.",
             { "src": "whoscored.png", "alt": "Exemple de visualisation" },
             "2024",
           ]
