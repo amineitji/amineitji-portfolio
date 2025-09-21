@@ -6,9 +6,8 @@
       <div class="gradient-overlay"></div>
     </div>
     
-    <!-- Section principale avec animation d'entrée -->
+    <!-- Section héro principale -->
     <div class="hero-section animated-entry">
-      <!-- Effets de lumière -->
       <div class="blur-effect purple" style="top: 15%; left: 10%;"></div>
       <div class="blur-effect green" style="bottom: 25%; right: 15%;"></div>
       <div class="blur-effect cyan" style="top: 60%; left: 60%;"></div>
@@ -30,49 +29,255 @@
           <span class="wave-emoji">👋</span> Bonjour, je m'appelle <span class="highlight-name">Amine ITJI</span>
         </h1>
         
-        <h2 class="title-text">Développeur IA & Web</h2>
+        <h2 class="title-text">Développeur IA & Web • Master Intelligence Artificielle</h2>
         
-        <div class="tech-pills">
-          <div class="tech-pill">Python</div>
-          <div class="tech-pill">Vue.js</div>
-          <div class="tech-pill">Machine Learning</div>
-          <div class="tech-pill">Django</div>
-          <div class="tech-pill">Data Science</div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <a href="mailto:amineitji@gmail.com">amineitji@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Lyon/Paris/Genève</span>
+          </div>
+        </div>
+        
+        <div class="status-badge">
+          <span class="status-icon">🎯</span>
+          <span class="status-text">Recherche stage de fin d'études (5-6 mois) • Mars 2026</span>
         </div>
         
         <div class="about-text">
           <p class="paragraph">
-            Je suis un étudiant en <span class="text-highlight">Master 1 Informatique</span> avec une passion marquée pour l'Intelligence Artificielle <span class="emoji">🤖</span> et le développement web <span class="emoji">🌐</span>. Toujours à l'affût des dernières avancées technologiques, je m'efforce de repousser les limites de mes compétences à travers divers projets personnels et académiques <span class="emoji">🚀</span>.
+            Étudiant en <span class="text-highlight">Master 2 Intelligence Artificielle</span> avec une spécialisation en Intelligence Artificielle. 
+            Passionné par le développement web full-stack et les technologies d'IA, avec une expérience pratique en 
+            <span class="text-highlight">Django/Vue.js</span>, machine learning et computer vision.
           </p>
           
           <p class="paragraph">
-            En tant que développeur polyvalent, j'ai des aptitudes en machine learning, analyse d'images <span class="emoji">🖼️</span>, et data science <span class="emoji">📊</span>, tout en étant à l'aise avec des outils de développement web comme Django et Vue.js <span class="emoji">💻</span>.
-          </p>
-          
-          <p class="paragraph">
-            Ma capacité à m'adapter rapidement et mon enthousiasme pour les défis font de moi un acteur clé dans tout projet, que ce soit dans le domaine de l'IA, du développement logiciel, ou de l'innovation technologique <span class="emoji">🌟</span>.
+            Co-fondateur d'<span class="text-highlight">Aneqqis</span>, où j'ai développé une plateforme e-commerce complète 
+            pour les rapports ERP. Expérience en DevOps avec GitHub Actions, déploiement AWS, et intégration de 
+            services tiers comme Stripe.
           </p>
         </div>
         
         <!-- Boutons de contact avec animations -->
         <div class="contact-buttons">
           <a href="https://github.com/amineitji" target="_blank" class="contact-btn github-btn">
-            <span class="btn-icon"><i class="bi bi-github"></i></span>
+            <span class="btn-icon">🔗</span>
             <span class="btn-text">GitHub</span>
             <span class="btn-effect"></span>
           </a>
           
           <a href="https://fr.linkedin.com/in/amine-itji-5a8696268" target="_blank" class="contact-btn linkedin-btn">
-            <span class="btn-icon"><i class="bi bi-linkedin"></i></span>
+            <span class="btn-icon">💼</span>
             <span class="btn-text">LinkedIn</span>
             <span class="btn-effect"></span>
           </a>
           
           <a href="mailto:amineitji@gmail.com" class="contact-btn email-btn">
-            <span class="btn-icon"><i class="bi bi-envelope-fill"></i></span>
-            <span class="btn-text">amineitji@gmail.com</span>
+            <span class="btn-icon">📧</span>
+            <span class="btn-text">Me contacter</span>
             <span class="btn-effect"></span>
           </a>
+          
+          <a href="/CV.pdf" download="CV_Amine_ITJI.pdf" class="contact-btn cv-btn">
+            <span class="btn-icon">📄</span>
+            <span class="btn-text">Télécharger CV</span>
+            <span class="btn-effect"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Formation & Expérience -->
+    <div class="experience-section animated-entry" style="animation-delay: 0.3s;">
+      <div class="section-grid">
+        <!-- Formation -->
+        <div class="info-card education-card">
+          <div class="card-icon">🎓</div>
+          <h3 class="card-title">Formation</h3>
+          
+          <div class="timeline-compact">
+            <div class="timeline-item current">
+              <div class="timeline-marker active"></div>
+              <div class="timeline-content">
+                <h4>Master en Informatique</h4>
+                <p class="institution">Université Claude Bernard Lyon 1</p>
+                <p class="period">Sept. 2023 – Juin 2026</p>
+                <div class="status-current">Spécialisation IA • Programme allégé</div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Licence en Informatique</h4>
+                <p class="institution">Université Claude Bernard Lyon 1</p>
+                <p class="period">Sept. 2020 – Juin 2023</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expérience -->
+        <div class="info-card experience-card">
+          <div class="card-icon">💼</div>
+          <h3 class="card-title">Expérience Récente</h3>
+          
+          <div class="timeline-compact">
+            <div class="timeline-item current">
+              <div class="timeline-marker active"></div>
+              <div class="timeline-content">
+                <h4>Développeur Web Freelance</h4>
+                <p class="institution">Travailleur Indépendant</p>
+                <p class="period">Juin 2023 – Présent</p>
+                <div class="tech-highlights">Django • Vue.js • AWS • DevOps</div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h4>Stage - Digitalisation KIZEO</h4>
+                <p class="institution">ALSTOM</p>
+                <p class="period">Jan. 2025 – Mars 2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Compétences Techniques -->
+    <div class="skills-section animated-entry" style="animation-delay: 0.5s;">
+      <div class="skills-container">
+        <h3 class="section-title">Compétences Techniques</h3>
+        
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h4 class="category-label">Langages</h4>
+            <div class="tech-tags">
+              <span class="tech-tag primary">Python</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">Java</span>
+              <span class="tech-tag">C/C++</span>
+              <span class="tech-tag">SQL</span>
+              <span class="tech-tag">R</span>
+            </div>
+          </div>
+          
+          <div class="skill-category">
+            <h4 class="category-label">Frameworks</h4>
+            <div class="tech-tags">
+              <span class="tech-tag primary">Django</span>
+              <span class="tech-tag primary">Vue.js</span>
+            </div>
+          </div>
+          
+          <div class="skill-category">
+            <h4 class="category-label">DevOps & Cloud</h4>
+            <div class="tech-tags">
+              <span class="tech-tag">AWS</span>
+              <span class="tech-tag">Docker</span>
+              <span class="tech-tag">GitHub Actions</span>
+              <span class="tech-tag">Nginx</span>
+            </div>
+          </div>
+          
+          <div class="skill-category">
+            <h4 class="category-label">IA & Data Science</h4>
+            <div class="tech-tags">
+              <span class="tech-tag ai">Scikit-learn</span>
+              <span class="tech-tag ai">OpenCV</span>
+              <span class="tech-tag ai">Pandas</span>
+              <span class="tech-tag ai">NumPy</span>
+              <span class="tech-tag">Matplotlib</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Projets Phares -->
+    <div class="projects-section animated-entry" style="animation-delay: 0.7s;">
+      <div class="projects-container">
+        <h3 class="section-title">Projets Phares</h3>
+        
+        <div class="projects-grid">
+          <div class="project-card featured">
+            <div class="project-icon">🏢</div>
+            <h4 class="project-title">ANEQQIS E-commerce</h4>
+            <p class="project-description">
+              Plateforme e-commerce complète pour rapports ERP avec Django/Vue.js, 
+              intégration Stripe et déploiement AWS.
+            </p>
+            <div class="project-tech">
+              <span class="project-tag">Django</span>
+              <span class="project-tag">Vue.js</span>
+              <span class="project-tag">AWS</span>
+            </div>
+            <div class="project-status">2023 – Présent • Co-fondateur</div>
+          </div>
+          
+          <div class="project-card">
+            <div class="project-icon">⚽</div>
+            <h4 class="project-title">Analyse Football IA</h4>
+            <p class="project-description">
+              Système d'analyse de matchs avec YOLO pour détection de joueurs, 
+              clustering KMeans et mapping 2D des coordonnées.
+            </p>
+            <div class="project-tech">
+              <span class="project-tag ai">YOLO</span>
+              <span class="project-tag ai">OpenCV</span>
+              <span class="project-tag">Python</span>
+            </div>
+            <div class="project-status">2025 • Computer Vision</div>
+          </div>
+          
+          <div class="project-card">
+            <div class="project-icon">📊</div>
+            <h4 class="project-title">Web Scraping Football</h4>
+            <p class="project-description">
+              Extraction et visualisation des performances de joueurs depuis WhoScored 
+              avec génération de cartes de chaleur.
+            </p>
+            <div class="project-tech">
+              <span class="project-tag">BeautifulSoup</span>
+              <span class="project-tag">Selenium</span>
+              <span class="project-tag">Matplotlib</span>
+            </div>
+            <div class="project-status">2024 • Data Science</div>
+          </div>
+        </div>
+        
+        <div class="projects-cta">
+          <router-link to="/projets" class="projects-link">
+            <span class="link-text">Voir tous mes projets</span>
+            <span class="link-arrow">→</span>
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Call-to-Action -->
+    <div class="cta-section animated-entry" style="animation-delay: 0.9s;">
+      <div class="cta-card">
+        <h3 class="cta-title">Prêt pour un nouveau défi</h3>
+        <p class="cta-description">
+          Recherche activement un stage de fin d'études de 5-6 mois à partir de mars 2026 
+          en Intelligence Artificielle, Machine Learning ou développement full-stack.
+        </p>
+        <div class="cta-buttons">
+          <a href="mailto:amineitji@gmail.com?subject=Opportunité de stage&body=Bonjour Amine,%0D%0A%0D%0AJe vous contacte concernant une opportunité de stage.%0D%0A%0D%0ACordialement" 
+             class="cta-primary">
+            <span class="btn-icon">🚀</span>
+            <span class="btn-text">Discutons de votre projet</span>
+          </a>
+          <router-link to="/services" class="cta-secondary">
+            <span class="btn-text">Mes services</span>
+            <span class="btn-arrow">→</span>
+          </router-link>
         </div>
       </div>
     </div>
@@ -88,17 +293,21 @@ export default {
 <style scoped>
 /* Variables */
 :root {
-  --neon-green: #42b883;
-  --neon-blue: #00d8ff;
-  --neon-purple: #bd34fe;
-  --dark-bg: #0a0b13;
-  --card-bg: #12141f;
-  --text-primary: #f0f0f0;
-  --text-secondary: #b4b4b8;
-  --border-color: #2a2d36;
+  --primary-blue: #2563eb;
+  --accent-cyan: #06b6d4;
+  --success-green: #10b981;
+  --warning-amber: #f59e0b;
+  --dark-bg: #030712;
+  --card-bg: #111827;
+  --border-color: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
   --linkedin-color: #0077b5;
   --github-color: #f5f5f5;
   --email-color: #ea4335;
+  --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Base Styles */
@@ -126,17 +335,13 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="none"/><circle cx="10%" cy="20%" r="1.5" fill="%2342b883" opacity="0.7"/><circle cx="15%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="20%" cy="15%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="25%" cy="10%" r="0.5" fill="%2342b883" opacity="0.8"/><circle cx="30%" cy="30%" r="1" fill="%2300d8ff" opacity="0.7"/><circle cx="35%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="40%" cy="20%" r="1.5" fill="%2300d8ff" opacity="0.7"/><circle cx="45%" cy="15%" r="0.6" fill="%2342b883" opacity="0.8"/><circle cx="50%" cy="40%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="55%" cy="35%" r="0.6" fill="%2342b883" opacity="0.8"/><circle cx="60%" cy="30%" r="1" fill="%2300d8ff" opacity="0.7"/><circle cx="65%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="70%" cy="20%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="75%" cy="15%" r="0.5" fill="%2342b883" opacity="0.8"/><circle cx="80%" cy="10%" r="1.5" fill="%2300d8ff" opacity="0.7"/><circle cx="85%" cy="40%" r="0.7" fill="%2342b883" opacity="0.8"/><circle cx="90%" cy="35%" r="1" fill="%2300d8ff" opacity="0.7"/><circle cx="95%" cy="30%" r="0.6" fill="%2342b883" opacity="0.8"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="none"/><circle cx="10%" cy="20%" r="1.5" fill="%2342b883" opacity="0.7"/><circle cx="15%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="20%" cy="15%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="25%" cy="10%" r="0.5" fill="%2342b883" opacity="0.8"/></svg>');
   animation: moveParticles 150s linear infinite;
 }
 
 @keyframes moveParticles {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
 .gradient-overlay {
@@ -145,7 +350,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(10, 11, 19, 0.5) 0%, rgba(10, 11, 19, 0.95) 100%);
+  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.5) 0%, rgba(3, 7, 18, 0.95) 100%);
   z-index: 1;
 }
 
@@ -172,7 +377,7 @@ export default {
   align-items: center;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 0 auto 80px;
   position: relative;
   z-index: 1;
 }
@@ -180,7 +385,7 @@ export default {
 /* Profile Card */
 .profile-card {
   width: 100%;
-  background: rgba(18, 20, 31, 0.8);
+  background: rgba(17, 24, 39, 0.8);
   border-radius: 24px;
   padding: 40px;
   backdrop-filter: blur(10px);
@@ -192,10 +397,6 @@ export default {
   text-align: center;
 }
 
-.neon-border {
-  position: relative;
-}
-
 .neon-border::before {
   content: '';
   position: absolute;
@@ -203,7 +404,7 @@ export default {
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-blue), var(--neon-purple), var(--neon-green));
+  background: linear-gradient(45deg, var(--primary-blue), var(--accent-cyan), var(--success-green), var(--primary-blue));
   background-size: 400% 400%;
   z-index: -1;
   border-radius: 26px;
@@ -223,7 +424,7 @@ export default {
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+  background: var(--gradient-primary);
   opacity: 0.8;
 }
 
@@ -244,14 +445,14 @@ export default {
   z-index: 1;
   border: 4px solid transparent;
   background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
-              linear-gradient(to right, var(--neon-green), var(--neon-blue)) border-box;
+              var(--gradient-primary) border-box;
   animation: pulse 4s infinite;
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(66, 184, 131, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(66, 184, 131, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(66, 184, 131, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
 }
 
 .profile-img-border {
@@ -261,7 +462,7 @@ export default {
   right: -10px;
   bottom: -10px;
   border-radius: 50%;
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+  background: var(--gradient-primary);
   z-index: 0;
   opacity: 0.5;
   filter: blur(15px);
@@ -299,71 +500,60 @@ export default {
 }
 
 .highlight-name {
-  background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   font-weight: 700;
-  animation: colorShift 5s ease infinite;
-}
-
-@keyframes colorShift {
-  0% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(30deg); }
-  100% { filter: hue-rotate(0deg); }
 }
 
 .title-text {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--text-secondary);
   margin-bottom: 25px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
   font-weight: 300;
 }
 
-/* Tech Pills */
-.tech-pills {
+/* Contact Info */
+.contact-info {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
   justify-content: center;
-  margin-bottom: 30px;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
 }
 
-.tech-pill {
-  padding: 8px 18px;
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.contact-item a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.contact-item a:hover {
+  color: var(--accent-cyan);
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-green);
+  padding: 10px 20px;
   border-radius: 30px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
   font-size: 0.9rem;
   font-weight: 500;
-  background: rgba(66, 184, 131, 0.1);
-  color: var(--neon-green);
-  border: 1px solid rgba(66, 184, 131, 0.3);
-  box-shadow: 0 0 10px rgba(66, 184, 131, 0.1);
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.tech-pill::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(66, 184, 131, 0.3), transparent);
-  transition: all 0.7s;
-}
-
-.tech-pill:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(66, 184, 131, 0.3);
-  background: rgba(66, 184, 131, 0.2);
-}
-
-.tech-pill:hover::before {
-  left: 100%;
 }
 
 /* About Text */
@@ -376,26 +566,12 @@ export default {
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: 20px;
-  font-size: 1.05rem;
-  transition: all 0.3s;
-}
-
-.paragraph:hover {
-  color: var(--text-primary);
+  font-size: 1rem;
 }
 
 .text-highlight {
-  color: var(--neon-green);
+  color: var(--accent-cyan);
   font-weight: 600;
-}
-
-.emoji {
-  display: inline-block;
-  transition: all 0.3s;
-}
-
-.paragraph:hover .emoji {
-  transform: scale(1.3) rotate(10deg);
 }
 
 /* Contact Buttons */
@@ -415,20 +591,14 @@ export default {
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   border: 1px solid;
-  background: rgba(18, 20, 31, 0.7);
+  background: rgba(17, 24, 39, 0.7);
   z-index: 1;
 }
 
-.btn-icon {
-  margin-right: 10px;
-  font-size: 1.2rem;
-  transition: all 0.3s;
-}
-
-.contact-btn:hover .btn-icon {
-  transform: scale(1.2);
+.contact-btn:hover {
+  transform: translateY(-3px);
 }
 
 .github-btn {
@@ -438,9 +608,7 @@ export default {
 
 .github-btn:hover {
   background: rgba(245, 245, 245, 0.1);
-  border-color: rgba(245, 245, 245, 0.5);
   box-shadow: 0 5px 15px rgba(245, 245, 245, 0.1);
-  transform: translateY(-5px);
 }
 
 .linkedin-btn {
@@ -450,9 +618,7 @@ export default {
 
 .linkedin-btn:hover {
   background: rgba(0, 119, 181, 0.1);
-  border-color: rgba(0, 119, 181, 0.5);
   box-shadow: 0 5px 15px rgba(0, 119, 181, 0.1);
-  transform: translateY(-5px);
 }
 
 .email-btn {
@@ -462,28 +628,398 @@ export default {
 
 .email-btn:hover {
   background: rgba(234, 67, 53, 0.1);
-  border-color: rgba(234, 67, 53, 0.5);
   box-shadow: 0 5px 15px rgba(234, 67, 53, 0.1);
-  transform: translateY(-5px);
 }
 
-.btn-effect {
+.cv-btn {
+  color: var(--accent-cyan);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.cv-btn:hover {
+  background: rgba(6, 182, 212, 0.1);
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.1);
+}
+
+/* Experience Section */
+.experience-section {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 32px;
+}
+
+.info-card {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.info-card:hover {
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Timeline Compact */
+.timeline-compact {
+  position: relative;
+  padding-left: 24px;
+}
+
+.timeline-compact::before {
+  content: '';
   position: absolute;
-  display: block;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: width 0.6s, height 0.6s, opacity 0.6s;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary-blue), var(--accent-cyan));
+  opacity: 0.6;
 }
 
-.contact-btn:active .btn-effect {
-  width: 500px;
-  height: 500px;
-  opacity: 1;
-  transition: width 0.6s, height 0.6s, opacity 0.4s;
+.timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+}
+
+.timeline-item:not(:last-child) {
+  border-bottom: 1px dashed rgba(209, 213, 219, 0.1);
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -24px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: 2px solid var(--card-bg);
+  margin-top: 4px;
+}
+
+.timeline-marker.active {
+  background: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.timeline-content h4 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.institution {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.period {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.status-current,
+.tech-highlights {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-blue);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+/* Skills Section */
+.skills-section {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.skills-container {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.skill-category {
+  text-align: center;
+}
+
+.category-label {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tech-tag {
+  background: rgba(55, 65, 81, 0.5);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.tech-tag.primary {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--primary-blue);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.tech-tag.ai {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success-green);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.tech-tag:hover {
+  transform: translateY(-2px);
+}
+
+/* Projects Section */
+.projects-section {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.projects-container {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.project-card {
+  background: rgba(3, 7, 18, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  transition: var(--transition);
+}
+
+.project-card:hover {
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+.project-card.featured {
+  border-color: var(--success-green);
+}
+
+.project-card.featured:hover {
+  border-color: var(--success-green);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.2);
+}
+
+.project-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.project-title {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.project-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.project-tag {
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--accent-cyan);
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.project-tag.ai {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-green);
+}
+
+.project-status {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.projects-cta {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.projects-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.projects-link:hover {
+  color: var(--primary-blue);
+  transform: translateX(5px);
+}
+
+/* CTA Section */
+.cta-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.cta-card {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+
+.cta-title {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.cta-description {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.cta-primary,
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.cta-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+}
+
+.cta-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.cta-secondary:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+  transform: translateY(-2px);
 }
 
 /* Blur effects */
@@ -498,17 +1034,17 @@ export default {
 }
 
 .blur-effect.green {
-  background: var(--neon-green);
+  background: var(--success-green);
   animation: floatAnimation 8s ease-in-out infinite;
 }
 
 .blur-effect.purple {
-  background: var(--neon-purple);
+  background: var(--primary-blue);
   animation: floatAnimation 10s ease-in-out infinite reverse;
 }
 
 .blur-effect.cyan {
-  background: var(--neon-blue);
+  background: var(--accent-cyan);
   animation: floatAnimation 12s ease-in-out infinite;
 }
 
@@ -546,6 +1082,46 @@ export default {
     width: 150px;
     height: 150px;
     margin-bottom: 20px;
+  }
+  
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 20px 10px;
+  }
+  
+  .section-grid {
+    gap: 20px;
+  }
+  
+  .info-card {
+    padding: 20px;
+  }
+  
+  .skills-container,
+  .projects-container {
+    padding: 20px;
   }
 }
 </style>
