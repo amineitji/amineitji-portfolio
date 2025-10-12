@@ -333,7 +333,7 @@ export default {
 .menu-icon.is-active span:nth-child(1) {
   top: 8px;
   transform: rotate(135deg);
-  background: var(--primary-blue);
+  background: var(--text-primary);
 }
 
 .menu-icon.is-active span:nth-child(2) {
@@ -344,7 +344,7 @@ export default {
 .menu-icon.is-active span:nth-child(3) {
   top: 8px;
   transform: rotate(-135deg);
-  background: var(--primary-blue);
+  background: var(--text-primary);
 }
 
 /* Contact mobile */
@@ -392,7 +392,13 @@ export default {
   
   .navbar-toggler {
     display: block;
-    z-index: 1001;
+    z-index: 1002;
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+  }
+  
+  .navbar-toggler:hover {
+    background: rgba(37, 99, 235, 0.2);
   }
   
   .navbar-menu {
@@ -401,14 +407,15 @@ export default {
     right: -100%;
     width: 100%;
     height: 100vh;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
+    background: rgba(3, 7, 18, 0.98);
+    backdrop-filter: blur(30px);
     transition: right 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    z-index: 1000;
   }
   
   .navbar-menu.is-open {
