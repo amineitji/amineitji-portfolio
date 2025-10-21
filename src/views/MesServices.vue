@@ -333,7 +333,7 @@
         <div class="webapp-header">
           <div class="webapp-badge">Django + Vue.js</div>
           <h3 class="webapp-title">Solutions Web Sur Mesure</h3>
-          <div class="webapp-price">100€/jour TJM</div>
+          <div class="webapp-price">150€/jour TJM</div>
         </div>
 
         <div class="webapp-preview">
