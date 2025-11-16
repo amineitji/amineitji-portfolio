@@ -19,7 +19,7 @@
         <div class="profile-img-container">
           <div class="profile-img-border"></div>
           <img
-            src="https://media.licdn.com/dms/image/v2/D4E03AQE3PrNtqhlw7w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1721847794814?e=2147483647&v=beta&t=-EYtas69BGrXW4KCc708xDpqTbBRHuMtL3f6Oknw4CI"
+            src="https://media.licdn.com/dms/image/v2/D4E35AQGffjKwzNjWXw/profile-framedphoto-shrink_200_200/B4EZpzzLjaGoAY-/0/1762879388153?e=1763895600&v=beta&t=AM3ExIha8uK6BrSoHZ1eQ8Ku_L-BHVavMW4gecjsSXI"
             alt="Amine ITJI"
             class="profile-img"
           />
