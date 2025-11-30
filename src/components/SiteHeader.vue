@@ -1,6 +1,5 @@
 <template>
   <nav class="navbar">
-    <!-- Logo scientifique -->
     <div class="logo">
       <div class="logo-container">
         <span class="logo-text">AI</span>
@@ -8,7 +7,6 @@
       </div>
     </div>
     
-    <!-- Hamburger Menu pour Mobile -->
     <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-label="Toggle navigation">
       <div class="menu-icon" :class="{ 'is-active': isCollapsed }">
         <span></span>
@@ -17,7 +15,6 @@
       </div>
     </button>
     
-    <!-- Menu de navigation -->
     <div :class="['navbar-menu', { 'is-open': isCollapsed }]">
       <ul class="nav-links">
         <li class="nav-item" v-for="item in navItems" :key="item.name">
@@ -34,19 +31,17 @@
         </li>
       </ul>
       
-      <!-- Contact rapide dans le menu mobile -->
       <div class="mobile-contact" v-if="isCollapsed">
         <a href="mailto:amineitji@gmail.com" class="mobile-contact-btn">
           <span class="contact-icon">📧</span>
-          <span class="contact-text">Contact</span>
+          <span class="contact-text">Demander un devis</span>
         </a>
       </div>
     </div>
     
-    <!-- Indicateur de disponibilité -->
     <div class="availability-indicator">
       <div class="status-dot"></div>
-      <span class="status-text">Disponible pour stage</span>
+      <span class="status-text">Disponible pour missions</span>
     </div>
   </nav>
 </template>
@@ -68,8 +63,6 @@ export default {
   methods: {
     toggleNavbar() {
       this.isCollapsed = !this.isCollapsed;
-      
-      // Empêcher le défilement du body quand le menu est ouvert
       if (this.isCollapsed) {
         document.body.style.overflow = 'hidden';
       } else {
@@ -89,14 +82,12 @@ export default {
       }
     }
   },
-  // S'assurer que le overflow est réinitialisé lors de la navigation
   watch: {
     $route() {
       this.isCollapsed = false;
       document.body.style.overflow = '';
     }
   },
-  // S'assurer que tout est nettoyé lors de la destruction du composant
   beforeUnmount() {
     document.body.style.overflow = '';
   }

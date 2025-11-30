@@ -1,457 +1,197 @@
 <template>
   <div class="services-container">
-    <!-- Effet de particules -->
     <div class="particles-container">
       <div class="particles"></div>
       <div class="gradient-overlay"></div>
     </div>
 
-    <!-- Header Section -->
     <div class="services-header animated-entry">
       <h1 class="main-title">
-        <span class="title-icon">🎨</span>
-        Mes Services Web
+        <span class="title-icon">🛠️</span>
+        Mes Services & Tarifs
       </h1>
       <p class="main-subtitle">
-        Solutions clés en main pour votre présence en ligne<br/>
-        <strong>Sites Vitrines • Applications Web • Déploiement professionnel</strong>
+        Des solutions web professionnelles adaptées à votre budget.<br/>
+        <strong>Développement sur mesure • Qualité Freelance • Suivi personnalisé</strong>
       </p>
     </div>
 
-    <!-- Templates Vitrines -->
     <div class="templates-section animated-entry" style="animation-delay: 0.2s;">
       <h2 class="section-title">
         <span class="section-icon">🌐</span>
-        Sites Vitrines Vue.js
+        Création de Sites Web
       </h2>
       
       <div class="templates-grid">
         
-        <!-- Template Basic -->
         <div class="template-card basic-theme" @click="openPreview('basic')">
           <div class="card-glow basic-glow"></div>
           
           <div class="template-header">
             <div class="template-level">
-              <span class="level-badge basic-badge">🟩 BASIC</span>
+              <span class="level-badge basic-badge">STARTER</span>
             </div>
-            <h2 class="template-name">Essentiel</h2>
-            <div class="template-price">200€</div>
-            <p class="template-tagline">Rapide et efficace</p>
+            <h2 class="template-name">Pack Présence</h2>
+            <div class="template-price">600€</div>
+            <p class="template-tagline">Idéal pour démarrer</p>
           </div>
 
           <div class="preview-mockup">
-            <div class="browser-chrome">
-              <div class="chrome-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="chrome-url">monsite.fr</div>
-              <div class="theme-toggle">
-                <span class="theme-icon">☀️</span>
-              </div>
-            </div>
-            
-            <div class="pages-container">
-              <div class="pages-scroll">
-                <div v-for="(page, idx) in ['Accueil', 'À propos', 'Services', 'Contact']" 
-                     :key="idx" 
-                     class="page-slide light-theme">
-                  <div class="page-label">{{ page }}</div>
-                  <div class="page-content">
-                    <div v-if="idx === 0" class="hero-mini">
-                      <div class="hero-logo"></div>
-                      <div class="hero-title"></div>
-                      <div class="hero-subtitle"></div>
-                      <div class="hero-cta"></div>
-                    </div>
-                    <div v-else-if="idx === 2" class="services-grid">
-                      <div v-for="i in 3" :key="i" class="service-item">
-                        <div class="service-icon"></div>
-                        <div class="service-title"></div>
-                        <div class="service-desc"></div>
-                      </div>
-                    </div>
-                    <div v-else-if="idx === 3" class="contact-form">
-                      <div class="form-input"></div>
-                      <div class="form-input"></div>
-                      <div class="form-input large"></div>
-                      <div class="form-submit"></div>
-                    </div>
-                    <div v-else class="about-content">
-                      <div class="about-text">
-                        <div class="text-bar"></div>
-                        <div class="text-bar"></div>
-                        <div class="text-bar short"></div>
-                      </div>
-                      <div class="about-img"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="page-dots">
-                <span v-for="i in 4" :key="i" 
-                      :class="['dot', { active: i === 1 }]"></span>
-              </div>
-            </div>
+             <div class="browser-chrome"><div class="chrome-url">votre-site.fr</div></div>
+             <div style="padding:20px; text-align:center; color:#888;">Aperçu du site vitrine</div>
           </div>
 
           <div class="template-features">
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">4 pages (Accueil, À propos, Services, Contact)</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Configuration JSON simple</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Design responsive & SEO basique</span>
-            </div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Site One-Page ou jusqu'à 3 pages</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Design Responsive (Mobile/PC)</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Formulaire de contact + Maps</div>
           </div>
 
           <div class="template-meta">
-            <div class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              <span class="meta-text">3-5 jours</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-icon">📄</span>
-              <span class="meta-text">4 pages</span>
-            </div>
+            <div class="meta-item"><span class="meta-icon">⏱️</span> 1 semaine</div>
           </div>
 
           <button class="template-cta basic-cta">
-            <span class="cta-text">Voir en détail</span>
+            <span class="cta-text">Voir les détails</span>
             <span class="cta-arrow">→</span>
           </button>
         </div>
 
-        <!-- Template Avancé -->
         <div class="template-card avance-theme" @click="openPreview('avance')">
           <div class="card-glow avance-glow"></div>
           
           <div class="template-header">
             <div class="template-level">
-              <span class="level-badge avance-badge">🟦 AVANCÉ</span>
+              <span class="level-badge avance-badge">BUSINESS</span>
             </div>
-            <h2 class="template-name">Performance</h2>
-            <div class="template-price">350€</div>
-            <p class="template-tagline">Élégant et dynamique</p>
+            <h2 class="template-name">Pack Pro</h2>
+            <div class="template-price">950€</div>
+            <p class="template-tagline">Pour les entreprises exigeantes</p>
           </div>
 
           <div class="preview-mockup">
-            <div class="browser-chrome">
-              <div class="chrome-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="chrome-url">monsite.fr</div>
-              <div class="theme-toggle">
-                <span class="theme-icon">🌙</span>
-              </div>
-            </div>
-            
-            <div class="pages-container">
-              <div class="pages-scroll">
-                <div v-for="(page, idx) in ['Accueil', 'Services', 'Projets', 'Galerie', 'Localisation', 'Contact']" 
-                     :key="idx" 
-                     class="page-slide dark-theme">
-                  <div class="page-label dark">{{ page }}</div>
-                  <div class="page-content">
-                    <div v-if="idx === 0" class="hero-mini">
-                      <div class="hero-logo shimmer"></div>
-                      <div class="hero-title shimmer"></div>
-                      <div class="hero-cta pulse"></div>
-                    </div>
-                    <div v-else-if="idx === 3" class="gallery-grid">
-                      <div class="gallery-item large"></div>
-                      <div v-for="i in 3" :key="i" class="gallery-item"></div>
-                    </div>
-                    <div v-else-if="idx === 4" class="map-container">
-                      <div class="map-marker"></div>
-                    </div>
-                    <div v-else-if="idx === 5" class="contact-form">
-                      <div class="form-input"></div>
-                      <div class="form-input"></div>
-                      <div class="form-submit"></div>
-                    </div>
-                    <div v-else class="services-grid">
-                      <div v-for="i in 3" :key="i" class="service-item">
-                        <div class="service-icon"></div>
-                        <div class="service-title"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="page-dots">
-                <span v-for="i in 6" :key="i" 
-                      :class="['dot', { active: i === 1 }]"></span>
-              </div>
-            </div>
+             <div class="browser-chrome"><div class="chrome-url">votre-entreprise.com</div></div>
+             <div style="padding:20px; text-align:center; color:#888;">Aperçu du site complet</div>
           </div>
 
           <div class="template-features">
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Tout du Basic + Galerie & Maps</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Animations & transitions</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Thème personnalisable & SEO avancé</span>
-            </div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Jusqu'à 7 pages personnalisées</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Animations & Design Premium</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Optimisation SEO Avancée</div>
           </div>
 
           <div class="template-meta">
-            <div class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              <span class="meta-text">7-10 jours</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-icon">📄</span>
-              <span class="meta-text">6+ pages</span>
-            </div>
+            <div class="meta-item"><span class="meta-icon">⏱️</span> 2 semaines</div>
           </div>
 
           <button class="template-cta avance-cta">
-            <span class="cta-text">Voir en détail</span>
+            <span class="cta-text">Voir les détails</span>
             <span class="cta-arrow">→</span>
           </button>
         </div>
 
-        <!-- Template Premium -->
         <div class="template-card premium-theme featured" @click="openPreview('premium')">
-          <div class="popular-ribbon">POPULAIRE</div>
+          <div class="popular-ribbon">SUR MESURE</div>
           <div class="card-glow premium-glow"></div>
           
           <div class="template-header">
             <div class="template-level">
-              <span class="level-badge premium-badge">🟥 PREMIUM</span>
+              <span class="level-badge premium-badge">EXCELLENCE</span>
             </div>
-            <h2 class="template-name">Excellence</h2>
-            <div class="template-price">500€+</div>
-            <p class="template-tagline">Complet et modulaire</p>
+            <h2 class="template-name">Pack Expert</h2>
+            <div class="template-price">Sur Devis</div>
+            <p class="template-tagline">Applications & Besoins complexes</p>
           </div>
 
           <div class="preview-mockup">
-            <div class="browser-chrome">
-              <div class="chrome-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="chrome-url">monsite.fr</div>
-              <div class="theme-toggle">
-                <span class="theme-icon">☀️</span>
-              </div>
-            </div>
-            
-            <div class="pages-container">
-              <div class="pages-scroll">
-                <div v-for="(page, idx) in ['Accueil', 'Services', 'Équipe', 'Blog', 'FAQ', 'Contact']" 
-                     :key="idx" 
-                     class="page-slide light-theme premium">
-                  <div class="page-label">{{ page }}</div>
-                  <div class="page-content">
-                    <div v-if="idx === 0" class="hero-mini premium">
-                      <div class="hero-gradient"></div>
-                      <div class="hero-logo shimmer"></div>
-                      <div class="hero-title shimmer"></div>
-                      <div class="hero-cta pulse"></div>
-                    </div>
-                    <div v-else-if="idx === 1" class="modules-grid">
-                      <div v-for="i in 6" :key="i" class="module-item">
-                        <div class="module-icon"></div>
-                        <div class="module-title"></div>
-                      </div>
-                    </div>
-                    <div v-else-if="idx === 2" class="team-grid">
-                      <div v-for="i in 3" :key="i" class="team-member">
-                        <div class="member-avatar"></div>
-                        <div class="member-name"></div>
-                      </div>
-                    </div>
-                    <div v-else class="services-grid">
-                      <div v-for="i in 3" :key="i" class="service-item">
-                        <div class="service-icon"></div>
-                        <div class="service-title"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="page-dots">
-                <span v-for="i in 6" :key="i" 
-                      :class="['dot', { active: i === 1 }]"></span>
-              </div>
-            </div>
+             <div class="browser-chrome"><div class="chrome-url">app.votre-startup.io</div></div>
+             <div style="padding:20px; text-align:center; color:#888;">Aperçu application web</div>
           </div>
 
           <div class="template-features">
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Architecture modulaire • 7+ pages activables</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">✓</span>
-              <span class="feature-text">Blog Markdown • Analytics • SEO complet</span>
-            </div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Développement Web App (SaaS)</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> E-commerce / Espace membre</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Intégration IA / API</div>
           </div>
 
           <div class="template-meta">
-            <div class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              <span class="meta-text">2-3 semaines</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-icon">📄</span>
-              <span class="meta-text">7+ pages</span>
-            </div>
+            <div class="meta-item"><span class="meta-icon">⏱️</span> 3+ semaines</div>
+            <div class="meta-item"><span class="meta-icon">💰</span> Dès 1500€</div>
           </div>
 
           <button class="template-cta premium-cta">
-            <span class="cta-text">Voir en détail</span>
+            <span class="cta-text">Demander un devis</span>
             <span class="cta-arrow">→</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- WebApp Django + Vue.js -->
     <div class="webapp-section animated-entry" style="animation-delay: 0.4s;">
       <h2 class="section-title">
-        <span class="section-icon">🚀</span>
-        Application Web Full-Stack
+        <span class="section-icon">💼</span>
+        Missions Freelance & TJM
       </h2>
       
       <div class="webapp-card">
         <div class="webapp-header">
-          <div class="webapp-badge">Django + Vue.js</div>
-          <h3 class="webapp-title">Solutions Web Sur Mesure</h3>
-          <div class="webapp-price">150€/jour TJM</div>
-        </div>
-
-        <div class="webapp-preview">
-          <div class="browser-chrome">
-            <div class="chrome-dots">
-              <span></span><span></span><span></span>
-            </div>
-            <div class="chrome-url">votre-app.fr</div>
-          </div>
-          <div class="webapp-mockup">
-            <div class="webapp-sidebar">
-              <div class="sidebar-item"></div>
-              <div class="sidebar-item"></div>
-              <div class="sidebar-item"></div>
-              <div class="sidebar-item"></div>
-            </div>
-            <div class="webapp-main">
-              <div class="dashboard-header"></div>
-              <div class="dashboard-stats">
-                <div class="stat-card"></div>
-                <div class="stat-card"></div>
-                <div class="stat-card"></div>
-              </div>
-              <div class="dashboard-chart"></div>
-            </div>
-          </div>
+          <div class="webapp-badge">Expertise Technique</div>
+          <h3 class="webapp-title">Développement Full-Stack & Data</h3>
+          <div class="webapp-price">350€ / Jour</div>
+          <p style="color:var(--text-secondary); margin-top:5px; font-size:0.9rem;">Tarif Journalier Moyen (TJM) • Facturation à la mission possible</p>
         </div>
 
         <div class="webapp-content">
           <div class="webapp-features">
             <div class="webapp-col">
-              <h4>Backend</h4>
+              <h4>Développement Back-end</h4>
               <ul>
-                <li>API REST Django</li>
-                <li>Auth JWT</li>
-                <li>PostgreSQL</li>
-                <li>Tests auto</li>
+                <li>API REST Django / Python</li>
+                <li>Base de données PostgreSQL</li>
+                <li>Architecture Cloud (AWS)</li>
               </ul>
             </div>
             <div class="webapp-col">
-              <h4>Frontend</h4>
+              <h4>Développement Front-end</h4>
               <ul>
-                <li>Vue.js moderne</li>
-                <li>Interface réactive</li>
-                <li>State management</li>
-                <li>PWA possible</li>
+                <li>Vue.js 3 / JavaScript</li>
+                <li>Interfaces Réactives</li>
+                <li>Intégration Maquettes</li>
               </ul>
             </div>
             <div class="webapp-col">
-              <h4>Déploiement</h4>
+              <h4>Intelligence Artificielle</h4>
               <ul>
-                <li>AWS (EC2, RDS, S3)</li>
-                <li>HTTPS & sécurité</li>
-                <li>CI/CD Pipeline</li>
-                <li>Gestion DNS</li>
+                <li>Scripts d'analyse de données</li>
+                <li>Computer Vision (YOLO, OpenCV)</li>
+                <li>Intégration de modèles ML</li>
               </ul>
             </div>
           </div>
           
           <div class="webapp-pricing">
             <div class="pricing-item">
-              <span class="pricing-duration">MVP (1 mois)</span>
-              <span class="pricing-amount">~2000€</span>
+              <span class="pricing-duration">MVP (Prototype rapide)</span>
+              <span class="pricing-amount">Sur devis (~2500€)</span>
             </div>
             <div class="pricing-item">
-              <span class="pricing-duration">App complète (2 mois)</span>
-              <span class="pricing-amount">~4000€</span>
-            </div>
-            <div class="pricing-item">
-              <span class="pricing-duration">Solution enterprise (3 mois)</span>
-              <span class="pricing-amount">~6000€</span>
+              <span class="pricing-duration">Application Métier Complète</span>
+              <span class="pricing-amount">Sur devis (~4500€+)</span>
             </div>
           </div>
           
           <a :href="getWebAppMailto()" class="webapp-cta">
-            <span class="btn-icon">📧</span>
-            <span class="btn-text">Demander un devis</span>
+            <span class="btn-icon">🤝</span>
+            <span class="btn-text">Discuter de votre projet</span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Réalisations -->
-    <div class="portfolio-section animated-entry" style="animation-delay: 0.6s;">
-      <h2 class="section-title">
-        <span class="section-icon">💼</span>
-        Réalisations
-      </h2>
-      
-      <div class="portfolio-grid">
-        <a v-for="(project, index) in portfolioProjects" 
-           :key="index" 
-           :href="project.url" 
-           target="_blank" 
-           class="portfolio-item">
-          <div class="portfolio-content">
-            <h4 class="portfolio-title">{{ project.title }}</h4>
-            <p class="portfolio-type">{{ project.type }}</p>
-            <div class="portfolio-tags">
-              <span v-for="tag in project.tags" :key="tag" class="portfolio-tag">
-                {{ tag }}
-              </span>
-            </div>
-          </div>
-          <div class="portfolio-link">
-            <span>Visiter →</span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Modal Preview -->
     <div v-if="selectedTemplate" class="modal-backdrop" @click="closePreview"></div>
     <div v-if="selectedTemplate" class="template-modal">
       <div class="modal-wrapper">
-        <button class="modal-close" @click="closePreview">
-          <span>✕</span>
-        </button>
+        <button class="modal-close" @click="closePreview"><span>✕</span></button>
         
         <div class="modal-content">
           <div class="modal-header" :class="`${selectedTemplate}-theme`">
@@ -461,7 +201,7 @@
           
           <div class="modal-body">
             <div class="modal-section">
-              <h3>📋 Fonctionnalités incluses</h3>
+              <h3>📋 Ce qui est inclus</h3>
               <ul class="modal-features">
                 <li v-for="(feature, idx) in getTemplateData().features" :key="idx">
                   <span class="check">✓</span> {{ feature }}
@@ -469,30 +209,10 @@
               </ul>
             </div>
             
-            <div class="modal-section">
-              <h3>🛠️ Technologies</h3>
-              <div class="modal-tech">
-                <span v-for="tech in getTemplateData().tech" :key="tech" class="tech-badge">
-                  {{ tech }}
-                </span>
-              </div>
-            </div>
-            
-            <div class="modal-grid">
-              <div class="modal-info-item">
-                <div class="info-label">⏱️ Délai</div>
-                <div class="info-value">{{ getTemplateData().timeline }}</div>
-              </div>
-              <div class="modal-info-item">
-                <div class="info-label">📄 Pages</div>
-                <div class="info-value">{{ getTemplateData().pages }}</div>
-              </div>
-            </div>
-            
             <div class="modal-cta">
               <a :href="getVitrineMailto()" class="modal-btn" :class="`${selectedTemplate}-btn`">
-                <span class="btn-icon">📧</span>
-                <span class="btn-text">Commander ce template</span>
+                <span class="btn-icon">📩</span>
+                <span class="btn-text">Commander ce pack</span>
               </a>
             </div>
           </div>
@@ -504,81 +224,46 @@
 
 <script>
 export default {
-  name: 'ServicesTemplatesMixed',
+  name: 'ServicesPage',
   data() {
     return {
       selectedTemplate: null,
-      portfolioProjects: [
-        {
-          title: 'DIAGERP',
-          type: 'Django + Vue.js',
-          tags: ['Django', 'Vue.js', 'Stripe', 'AWS'],
-          url: 'https://diagerp.fr/'
-        },
-        {
-          title: 'DiagImmoMarches',
-          type: 'Django + Vue.js',
-          tags: ['Django', 'PostgreSQL', 'REST API'],
-          url: 'https://diagimmomarches.fr/'
-        },
-        {
-          title: 'CC2 Dynamique',
-          type: 'Site Vitrine Vue.js',
-          tags: ['Vue.js', 'Vite', 'Render'],
-          url: 'https://cc2-dynamique-des-connaissances.onrender.com/'
-        }
-      ],
       templatesData: {
         basic: {
-          title: 'Template Basic - Essentiel',
-          price: '200€',
-          timeline: '3-5 jours',
-          pages: '4',
+          title: 'Pack Présence - Starter',
+          price: '600€',
           features: [
-            'Structure 4 pages (Accueil, À propos, Services, Contact)',
-            'Configuration via fichier content.json unique',
-            'Formulaire de contact Formspree.io intégré',
-            'SEO basique (meta title + description)',
-            'Design 100% responsive',
-            'Déploiement gratuit sur Render ou Vercel',
-            'Documentation complète incluse'
-          ],
-          tech: ['Vue 3', 'Vite', 'Bootstrap 5', 'Formspree']
+            'Site Vitrine jusqu\'à 3 pages (Accueil, Services, Contact)',
+            'Design moderne et responsive (Mobile Friendly)',
+            'Formulaire de contact fonctionnel',
+            'Intégration Google Maps et Réseaux Sociaux',
+            'Hébergement et nom de domaine configurés',
+            'Optimisation SEO de base'
+          ]
         },
         avance: {
-          title: 'Template Avancé - Performance',
-          price: '350€',
-          timeline: '7-10 jours',
-          pages: '7',
+          title: 'Pack Pro - Business',
+          price: '950€',
           features: [
-            'Toutes les fonctionnalités du Basic',
-            'Pages Projets & Galerie dynamiques',
-            'Google Map intégrée via iframe',
-            'Animations Bootstrap et transitions CSS',
-            'Carrousel et galerie photo interactive',
-            'Personnalisation des couleurs via theme.json',
-            'SEO avancé avec meta tags dynamiques',
-            'Documentation détaillée'
-          ],
-          tech: ['Vue 3', 'Vite', 'Bootstrap 5', 'Google Maps', 'Animations CSS']
+            'Tout du Pack Présence + jusqu\'à 7 pages',
+            'Design Premium avec animations fluides',
+            'Galerie photos/projets dynamique',
+            'Blog ou section actualités simple',
+            'Optimisation SEO avancée et performances',
+            'Maintenance technique offerte 1 mois'
+          ]
         },
         premium: {
-          title: 'Template Premium - Excellence',
-          price: '500€+',
-          timeline: '2-3 semaines',
-          pages: '7+',
+          title: 'Pack Expert - Sur Mesure',
+          price: 'Sur Devis (dès 1500€)',
           features: [
-            'Architecture modulaire avec config.json',
-            '7+ pages activables à la demande',
-            'Blog statique avec fichiers Markdown',
-            'Gestion complète du contenu via JSON/Markdown',
-            'Thème complet (couleurs + polices personnalisables)',
-            'Sitemap automatique et SEO avancé',
-            'Google Analytics intégré (optionnel)',
-            'Formulaire de contact dynamique personnalisable',
-            'Documentation complète et support'
-          ],
-          tech: ['Vue 3', 'Vite', 'Bootstrap 5', 'Vue Router', 'Markdown', 'SEO Tools']
+            'Application Web complète ou Site complexe',
+            'Fonctionnalités sur mesure (Espace membre, Réservation...)',
+            'Back-office d\'administration',
+            'Intégration API ou Intelligence Artificielle',
+            'Architecture évolutive et sécurisée',
+            'Accompagnement et formation complets'
+          ]
         }
       }
     };
@@ -588,52 +273,19 @@ export default {
       this.selectedTemplate = template;
       document.body.style.overflow = 'hidden';
     },
-    
     closePreview() {
       this.selectedTemplate = null;
       document.body.style.overflow = '';
     },
-    
     getTemplateData() {
       return this.templatesData[this.selectedTemplate];
     },
-    
     getVitrineMailto() {
       const templateName = this.selectedTemplate ? this.getTemplateData().title : '';
-      const subject = `Commande Template - ${templateName}`;
-      const body = `Bonjour Amine,
-
-Je souhaite commander le template "${templateName}".
-
-Informations sur mon projet:
-- Nom de l'entreprise: 
-- Type d'activité: 
-- Fonctionnalités souhaitées: 
-- Date de livraison souhaitée: 
-
-Merci de me recontacter pour discuter des détails.
-
-Cordialement`;
-      
-      return `mailto:amineitji@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return `mailto:amineitji@gmail.com?subject=Devis - ${templateName}&body=Bonjour Amine, je suis intéressé par le ${templateName}...`;
     },
-    
     getWebAppMailto() {
-      const subject = 'Projet Application Web Django + Vue.js';
-      const body = `Bonjour Amine,
-
-Je souhaite développer une application web sur mesure.
-
-Description de mon projet:
-- Objectif de l'application: 
-- Fonctionnalités principales: 
-- Nombre d'utilisateurs attendus: 
-- Budget approximatif: 
-- Délai souhaité: 
-
-Cordialement`;
-      
-      return `mailto:amineitji@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return `mailto:amineitji@gmail.com?subject=Projet Freelance&body=Bonjour Amine, j'ai un projet de développement...`;
     }
   },
   beforeUnmount() {

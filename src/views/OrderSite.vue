@@ -1,13 +1,11 @@
 <template>
   <div class="order-page-container">
-    <!-- Titre de section avec effet néon -->
     <div class="section-header">
-      <h2 class="section-title">Nos formules de sites web</h2>
-      <div class="section-subtitle">Des solutions adaptées à vos besoins</div>
+      <h2 class="section-title">Formules Sites Internet</h2>
+      <div class="section-subtitle">Lancez votre activité avec un site professionnel</div>
       <div class="title-underline"></div>
     </div>
     
-    <!-- Cartes de forfaits avec animations -->
     <div class="pricing-cards">
       <div 
         v-for="(site, index) in sites" 
@@ -16,72 +14,31 @@
         :class="{ 'expanded': expandedSite === index }"
         @click="toggleDetails(index)"
       >
-        <!-- Badge de prix avec effet -->
         <div class="price-badge">
           <span class="price-text">{{ site.price }}</span>
           <div class="price-glow"></div>
         </div>
         
-        <!-- En-tête de la carte -->
         <div class="card-header-wrapper">
           <img :src="site.image" class="card-image" :alt="site.title">
           <div class="card-image-overlay"></div>
           <h3 class="card-title">{{ site.title }}</h3>
         </div>
         
-        <!-- Contenu détaillé avec animation -->
         <div class="card-content" :class="{ 'visible': expandedSite === index }">
           <div class="card-description" v-html="site.description"></div>
           
-          <div class="video-container" v-if="expandedSite === index">
-            <iframe 
-              width="100%" 
-              height="200" 
-              src="https://www.youtube.com/embed/SX99LCO1OZI" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen
-            ></iframe>
-          </div>
-          
-          <!-- Bouton de contact -->
-          <a :href="'mailto:amineitji@gmail.com?subject=Commande: ' + site.title + '&body=' + site.emailBody" class="contact-button">
+          <a :href="'mailto:amineitji@gmail.com?subject=Commande: ' + site.title" class="contact-button">
             <span class="button-text">Commander</span>
             <span class="button-icon">✉️</span>
-            <div class="button-effect"></div>
           </a>
         </div>
         
-        <!-- Indicateur d'expansion -->
         <div class="expand-indicator" v-if="expandedSite !== index">
           <span class="expand-text">Voir détails</span>
-          <div class="expand-arrow">
-            <span class="arrow-down"></span>
-          </div>
+          <div class="expand-arrow"><span class="arrow-down"></span></div>
         </div>
       </div>
-    </div>
-    
-    <!-- Carte pour les demandes spécifiques -->
-    <div class="custom-request-card">
-      <div class="custom-card-content">
-        <div class="custom-card-header">
-          <div class="custom-icon">🛠️</div>
-          <h3 class="custom-title">Demande spécifique</h3>
-        </div>
-        
-        <p class="custom-description">
-          Pour des projets sur mesure, avec des fonctionnalités avancées comme la gestion de bases de données, des API, et des sites très interactifs, je suis également disponible pour répondre à vos besoins spécifiques.
-        </p>
-        
-        <a href="mailto:amineitji@gmail.com?subject=Demande spécifique de site web" class="custom-contact-button">
-          <span class="button-icon"><i class="bi bi-envelope-fill"></i></span>
-          <span class="button-text">amineitji@gmail.com</span>
-          <div class="button-effect"></div>
-        </a>
-      </div>
-      
-      <div class="glow-effect custom-glow"></div>
     </div>
   </div>
 </template>
@@ -94,51 +51,49 @@ export default {
       expandedSite: null,
       sites: [
         {
-          title: 'Site Vitrine Basic',
-          description: `
-            <p>💻 La formule Basic est parfaite pour ceux qui cherchent à obtenir rapidement un site vitrine fonctionnel et élégant. En moins d'une semaine, je vous propose :</p>
-            <ul>
-              <li>🗂️ Un menu de navigation clair pour guider vos visiteurs.</li>
-              <li>🖼️ Des sections incluant des images attrayantes, des cartes informatives, et du texte bien structuré.</li>
-              <li>🚀 Le déploiement du site sur un serveur de votre choix (achat du nom de domaine à votre charge).</li>
-            </ul>
-            <p>Cette formule est idéale pour les petites entreprises ou les projets nécessitant une présence en ligne rapide et efficace.</p>
-          `,
-          price: 'À partir de 500€',
+          title: 'Pack Présence',
+          price: '600€',
           image: 'Basic.png',
-          emailBody: 'Je souhaite commander la formule "Site Vitrine Basic". Veuillez me contacter pour discuter des détails.'
+          description: `
+            <p><strong>L'essentiel pour être visible.</strong></p>
+            <ul>
+              <li>Site vitrine One-Page ou jusqu'à 3 pages</li>
+              <li>Design responsive adapté aux mobiles</li>
+              <li>Formulaire de contact & Liens réseaux sociaux</li>
+              <li>Mise en ligne incluse</li>
+            </ul>
+            <p>Délai moyen : 1 semaine.</p>
+          `
         },
         {
-          title: 'Site Vitrine Avancé',
-          description: `
-            <p>🌟 La formule Avancé vous offre tout ce que propose la formule Basic, mais avec des fonctionnalités supplémentaires pour rendre votre site encore plus attractif :</p>
-            <ul>
-              <li>🎨 Un design plus sophistiqué avec une attention particulière aux détails esthétiques.</li>
-              <li>📍 L'intégration d'une carte interactive pour situer facilement votre commerce ou bureau.</li>
-              <li>🎥 Une section vidéo pour présenter vos produits ou services de manière dynamique.</li>
-              <li>✨ Des fonctionnalités supplémentaires telles qu'une galerie d'images, des formulaires de contact personnalisés, et des animations subtiles.</li>
-            </ul>
-            <p>Ce site, prêt en environ deux semaines, est idéal pour les entreprises qui souhaitent se démarquer avec un site moderne et complet.</p>
-          `,
-          price: 'À partir de 750€',
+          title: 'Pack Pro',
+          price: '950€',
           image: 'Avance.png',
-          emailBody: 'Je souhaite commander la formule "Site Vitrine Avancé". Veuillez me contacter pour discuter des détails.'
+          description: `
+            <p><strong>Pour présenter votre activité en détail.</strong></p>
+            <ul>
+              <li>Jusqu'à 7 pages avec design soigné</li>
+              <li>Galerie photos, Blog ou Carte interactive</li>
+              <li>Optimisation SEO pour le référencement Google</li>
+              <li>Animations fluides pour une image moderne</li>
+            </ul>
+            <p>Délai moyen : 2 semaines.</p>
+          `
         },
         {
-          title: 'Site Vitrine Premium',
-          description: `
-            <p>🏆 La formule Premium est conçue pour ceux qui veulent le nec plus ultra en matière de site vitrine. En plus des avantages de la formule Avancé, vous bénéficierez de :</p>
-            <ul>
-              <li>🎨 Un style sur mesure qui correspond parfaitement à l'image de votre marque.</li>
-              <li>💡 Des éléments innovants tels que des effets visuels, des animations, et des transitions fluides pour une expérience utilisateur exceptionnelle.</li>
-              <li>🔗 Une interactivité accrue avec des fonctionnalités avancées comme des filtres de produits, des sliders personnalisés, ou des intégrations API spécifiques.</li>
-              <li>👥 Un accompagnement personnalisé tout au long du processus de création pour s'assurer que le site répond à toutes vos attentes.</li>
-            </ul>
-            <p>Ce projet, qui peut prendre jusqu'à quatre semaines, est parfait pour les entreprises souhaitant un site unique, entièrement personnalisé, prêt à impressionner en ligne.</p>
-          `,
-          price: 'À partir de 1000€',
+          title: 'Pack Expert',
+          price: 'Sur Devis',
           image: 'Premium.png',
-          emailBody: 'Je souhaite commander la formule "Site Vitrine Premium". Veuillez me contacter pour discuter des détails.'
+          description: `
+            <p><strong>Solutions complexes et sur mesure.</strong></p>
+            <ul>
+              <li>Site E-commerce ou Application Web (SaaS)</li>
+              <li>Fonctionnalités avancées (Espace client, Réservations...)</li>
+              <li>Intégration d'API ou d'Intelligence Artificielle</li>
+              <li>Architecture technique robuste (Django/Vue.js)</li>
+            </ul>
+            <p>Délai : Selon le projet (dès 1500€).</p>
+          `
         }
       ]
     };

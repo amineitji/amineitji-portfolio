@@ -1,12 +1,10 @@
 <template>
   <div class="home-container">
-    <!-- Effet de particules et d'illumination -->
     <div class="particles-container">
       <div class="particles"></div>
       <div class="gradient-overlay"></div>
     </div>
     
-    <!-- Section héro principale -->
     <div class="hero-section animated-entry">
       <div class="blur-effect purple" style="top: 15%; left: 10%;"></div>
       <div class="blur-effect green" style="bottom: 25%; right: 15%;"></div>
@@ -15,21 +13,20 @@
       <div class="profile-card neon-border">
         <div class="card-header-line"></div>
         
-        <!-- Photo de profil avec animation -->
         <div class="profile-img-container">
           <div class="profile-img-border"></div>
           <img
-            src="https://media.licdn.com/dms/image/v2/D4E35AQGffjKwzNjWXw/profile-framedphoto-shrink_200_200/B4EZpzzLjaGoAY-/0/1762879388153?e=1763895600&v=beta&t=AM3ExIha8uK6BrSoHZ1eQ8Ku_L-BHVavMW4gecjsSXI"
+            src="pp.jpeg"
             alt="Amine ITJI"
             class="profile-img"
           />
         </div>
         
         <h1 class="greeting">
-          <span class="wave-emoji">👋</span> Bonjour, je m'appelle <span class="highlight-name">Amine ITJI</span>
+          <span class="wave-emoji">👋</span> Bonjour, je suis <span class="highlight-name">Amine ITJI</span>
         </h1>
         
-        <h2 class="title-text">Développeur IA & Web • Master Intelligence Artificielle</h2>
+        <h2 class="title-text">Développeur Freelance Full-Stack & Expert IA</h2>
         
         <div class="contact-info">
           <div class="contact-item">
@@ -38,34 +35,32 @@
           </div>
           <div class="contact-item">
             <span class="contact-icon">📍</span>
-            <span>Lyon/Paris/Genève</span>
+            <span>Lyon / Remote</span>
           </div>
         </div>
         
         <div class="status-badge">
-          <span class="status-icon">🎯</span>
-          <span class="status-text">Recherche stage de fin d'études (5-6 mois) • Mars 2026</span>
+          <span class="status-icon">🚀</span>
+          <span class="status-text">Ouvert aux projets : Sites Vitrines & Web Apps</span>
         </div>
         
         <div class="about-text">
           <p class="paragraph">
-            Étudiant en <span class="text-highlight">Master 2 Intelligence Artificielle</span> avec une spécialisation en Intelligence Artificielle. 
-            Passionné par le développement web full-stack et les technologies d'IA, avec une expérience pratique en 
-            <span class="text-highlight">Django/Vue.js</span>, machine learning et computer vision.
+            Développeur et étudiant en <span class="text-highlight">Master 2 Intelligence Artificielle</span>.
+            Je conçois des solutions web modernes et performantes pour les entreprises et entrepreneurs.
+            Expertise en <span class="text-highlight">Django/Vue.js</span> et Data Science.
           </p>
           
           <p class="paragraph">
-            Co-fondateur d'<span class="text-highlight">Aneqqis</span>, où j'ai développé une plateforme e-commerce complète 
-            pour les rapports ERP. Expérience en DevOps avec GitHub Actions, déploiement AWS, et intégration de 
-            services tiers comme Stripe.
+            Besoin d'un site vitrine, d'un e-commerce ou d'une application métier intégrant de l'IA ?
+            Je vous accompagne de la conception au déploiement.
           </p>
         </div>
         
-        <!-- Boutons de contact avec animations -->
         <div class="contact-buttons">
-          <a href="https://github.com/amineitji" target="_blank" class="contact-btn github-btn">
-            <span class="btn-icon">🔗</span>
-            <span class="btn-text">GitHub</span>
+           <a href="mailto:amineitji@gmail.com?subject=Demande de devis" class="contact-btn email-btn">
+            <span class="btn-icon">📩</span>
+            <span class="btn-text">Demander un devis</span>
             <span class="btn-effect"></span>
           </a>
           
@@ -75,25 +70,17 @@
             <span class="btn-effect"></span>
           </a>
           
-          <a href="mailto:amineitji@gmail.com" class="contact-btn email-btn">
-            <span class="btn-icon">📧</span>
-            <span class="btn-text">Me contacter</span>
-            <span class="btn-effect"></span>
-          </a>
-          
-          <a href="/CV.pdf" download="CV_Amine_ITJI.pdf" class="contact-btn cv-btn">
-            <span class="btn-icon">📄</span>
-            <span class="btn-text">Télécharger CV</span>
+          <a href="https://github.com/amineitji" target="_blank" class="contact-btn github-btn">
+            <span class="btn-icon">🔗</span>
+            <span class="btn-text">GitHub</span>
             <span class="btn-effect"></span>
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Section Formation & Expérience -->
     <div class="experience-section animated-entry" style="animation-delay: 0.3s;">
       <div class="section-grid">
-        <!-- Formation -->
         <div class="info-card education-card">
           <div class="card-icon">🎓</div>
           <h3 class="card-title">Formation</h3>
@@ -102,10 +89,10 @@
             <div class="timeline-item current">
               <div class="timeline-marker active"></div>
               <div class="timeline-content">
-                <h4>Master en Informatique</h4>
+                <h4>Master 2 Intelligence Artificielle</h4>
                 <p class="institution">Université Claude Bernard Lyon 1</p>
-                <p class="period">Sept. 2023 – Juin 2026</p>
-                <div class="status-current">Spécialisation IA • Programme allégé</div>
+                <p class="period">En cours (2025-2026)</p>
+                <div class="status-current">Machine Learning • Deep Learning</div>
               </div>
             </div>
             
@@ -120,19 +107,18 @@
           </div>
         </div>
 
-        <!-- Expérience -->
         <div class="info-card experience-card">
           <div class="card-icon">💼</div>
-          <h3 class="card-title">Expérience Récente</h3>
+          <h3 class="card-title">Activité</h3>
           
           <div class="timeline-compact">
             <div class="timeline-item current">
               <div class="timeline-marker active"></div>
               <div class="timeline-content">
-                <h4>Développeur Web Freelance</h4>
-                <p class="institution">Travailleur Indépendant</p>
-                <p class="period">Juin 2023 – Présent</p>
-                <div class="tech-highlights">Django • Vue.js • AWS • DevOps</div>
+                <h4>Freelance Full-Stack & IA</h4>
+                <p class="institution">Auto-entrepreneur</p>
+                <p class="period">Depuis Juin 2023</p>
+                <div class="tech-highlights">Sites Web • SaaS • Scripts IA</div>
               </div>
             </div>
             
@@ -149,29 +135,29 @@
       </div>
     </div>
 
-    <!-- Section Compétences Techniques -->
     <div class="skills-section animated-entry" style="animation-delay: 0.5s;">
       <div class="skills-container">
         <h3 class="section-title">Compétences Techniques</h3>
-        
         <div class="skills-grid">
           <div class="skill-category">
-            <h4 class="category-label">Langages</h4>
+            <h4 class="category-label">Web Full-Stack</h4>
             <div class="tech-tags">
-              <span class="tech-tag primary">Python</span>
+              <span class="tech-tag primary">Vue.js 3</span>
+              <span class="tech-tag primary">Django</span>
               <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">Java</span>
-              <span class="tech-tag">C/C++</span>
+              <span class="tech-tag">HTML/CSS</span>
               <span class="tech-tag">SQL</span>
-              <span class="tech-tag">R</span>
             </div>
           </div>
           
           <div class="skill-category">
-            <h4 class="category-label">Frameworks</h4>
+            <h4 class="category-label">Data & IA</h4>
             <div class="tech-tags">
-              <span class="tech-tag primary">Django</span>
-              <span class="tech-tag primary">Vue.js</span>
+              <span class="tech-tag ai">Python</span>
+              <span class="tech-tag ai">Scikit-learn</span>
+              <span class="tech-tag ai">OpenCV</span>
+              <span class="tech-tag ai">Pandas</span>
+              <span class="tech-tag">YOLO</span>
             </div>
           </div>
           
@@ -180,74 +166,62 @@
             <div class="tech-tags">
               <span class="tech-tag">AWS</span>
               <span class="tech-tag">Docker</span>
-              <span class="tech-tag">GitHub Actions</span>
-              <span class="tech-tag">Nginx</span>
-            </div>
-          </div>
-          
-          <div class="skill-category">
-            <h4 class="category-label">IA & Data Science</h4>
-            <div class="tech-tags">
-              <span class="tech-tag ai">Scikit-learn</span>
-              <span class="tech-tag ai">OpenCV</span>
-              <span class="tech-tag ai">Pandas</span>
-              <span class="tech-tag ai">NumPy</span>
-              <span class="tech-tag">Matplotlib</span>
+              <span class="tech-tag">Git</span>
+              <span class="tech-tag">CI/CD</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Section Projets Phares -->
     <div class="projects-section animated-entry" style="animation-delay: 0.7s;">
       <div class="projects-container">
-        <h3 class="section-title">Projets Phares</h3>
+        <h3 class="section-title">Réalisations Récentes</h3>
         
         <div class="projects-grid">
           <div class="project-card featured">
             <div class="project-icon">🏢</div>
             <h4 class="project-title">ANEQQIS E-commerce</h4>
             <p class="project-description">
-              Plateforme e-commerce complète pour rapports ERP avec Django/Vue.js, 
-              intégration Stripe et déploiement AWS.
+              Plateforme SaaS complète pour rapports ERP. Architecture Django/Vue.js avec 
+              paiements Stripe et génération automatique de documents PDF.
             </p>
             <div class="project-tech">
-              <span class="project-tag">Django</span>
+              <span class="project-tag">SaaS</span>
               <span class="project-tag">Vue.js</span>
-              <span class="project-tag">AWS</span>
+              <span class="project-tag">Stripe</span>
             </div>
-            <div class="project-status">2023 – Présent • Co-fondateur</div>
+            <div class="project-status">Projet Client</div>
           </div>
           
           <div class="project-card">
             <div class="project-icon">⚽</div>
-            <h4 class="project-title">Analyse Football IA</h4>
+            <h4 class="project-title">Football Analytics AI</h4>
             <p class="project-description">
-              Système d'analyse de matchs avec YOLO pour détection de joueurs, 
-              clustering KMeans et mapping 2D des coordonnées.
+              Système de Computer Vision utilisant YOLO pour le tracking de joueurs
+              et la génération de statistiques de match en temps réel.
             </p>
             <div class="project-tech">
-              <span class="project-tag ai">YOLO</span>
+              <span class="project-tag ai">YOLO v8</span>
               <span class="project-tag ai">OpenCV</span>
               <span class="project-tag">Python</span>
             </div>
-            <div class="project-status">2025 • Computer Vision</div>
+            <div class="project-status">R&D</div>
           </div>
           
           <div class="project-card">
-            <div class="project-icon">📊</div>
-            <h4 class="project-title">Web Scraping Football</h4>
+            <div class="project-icon">🌐</div>
+            <h4 class="project-title">Sites Vitrines Premium</h4>
             <p class="project-description">
-              Extraction et visualisation des performances de joueurs depuis WhoScored 
-              avec génération de cartes de chaleur.
+              Collection de templates performants et animés pour artisans et PME.
+              Optimisés SEO et 100% responsive.
             </p>
             <div class="project-tech">
-              <span class="project-tag">BeautifulSoup</span>
-              <span class="project-tag">Selenium</span>
-              <span class="project-tag">Matplotlib</span>
+              <span class="project-tag">Vite</span>
+              <span class="project-tag">Animations</span>
+              <span class="project-tag">SEO</span>
             </div>
-            <div class="project-status">2024 • Data Science</div>
+            <div class="project-status">Freelance</div>
           </div>
         </div>
         
@@ -260,22 +234,21 @@
       </div>
     </div>
 
-    <!-- Section Call-to-Action -->
     <div class="cta-section animated-entry" style="animation-delay: 0.9s;">
       <div class="cta-card">
-        <h3 class="cta-title">Prêt pour un nouveau défi</h3>
+        <h3 class="cta-title">Vous avez un projet en tête ?</h3>
         <p class="cta-description">
-          Recherche activement un stage de fin d'études de 5-6 mois à partir de mars 2026 
-          en Intelligence Artificielle, Machine Learning ou développement full-stack.
+          Discutons de vos besoins. Que ce soit pour un site vitrine, une web app ou un module IA,
+          je vous propose une solution adaptée et un devis gratuit.
         </p>
         <div class="cta-buttons">
-          <a href="mailto:amineitji@gmail.com?subject=Opportunité de stage&body=Bonjour Amine,%0D%0A%0D%0AJe vous contacte concernant une opportunité de stage.%0D%0A%0D%0ACordialement" 
+          <a href="mailto:amineitji@gmail.com?subject=Demande de devis" 
              class="cta-primary">
             <span class="btn-icon">🚀</span>
-            <span class="btn-text">Discutons de votre projet</span>
+            <span class="btn-text">Lancer mon projet</span>
           </a>
           <router-link to="/services" class="cta-secondary">
-            <span class="btn-text">Mes services</span>
+            <span class="btn-text">Voir mes tarifs</span>
             <span class="btn-arrow">→</span>
           </router-link>
         </div>

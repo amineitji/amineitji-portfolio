@@ -1,42 +1,32 @@
 <template>
   <div class="profile-container">
-    <!-- Effet de particules et d'illumination -->
     <div class="particles-container">
       <div class="particles"></div>
       <div class="gradient-overlay"></div>
     </div>
 
-    <!-- Section principale -->
     <div class="section-intro animated-entry">
-      <!-- Effets de flou -->
       <div class="blur-effect purple" style="top: 15%; left: 10%;"></div>
-      <div class="blur-effect green" style="bottom: 25%; right: 15%;"></div>
-      <div class="blur-effect cyan" style="top: 60%; left: 60%;"></div>
       
-      <!-- Parcours Professionnel et Scolaire -->
       <div class="grid">
-        <!-- Parcours Professionnel -->
         <div class="info-card timeline-card neon-border">
           <div class="card-header-line"></div>
-          <h3 class="card-title">
-            <span class="title-icon">💼</span>
-            Parcours Professionnel
-          </h3>
+          <h3 class="card-title"><span class="title-icon">💼</span> Parcours Professionnel</h3>
           <div class="timeline">
+            
             <div class="timeline-item current">
               <div class="timeline-marker active"></div>
-              <div class="timeline-date">Mars 2026 - Recherche active</div>
+              <div class="timeline-date">Depuis Juin 2023</div>
               <div class="timeline-content">
-                <h4>STAGE DE FIN D'ÉTUDES RECHERCHÉ</h4>
-                <p class="company">Intelligence Artificielle • Développement • Data Science</p>
+                <h4>FREELANCE FULL-STACK & IA</h4>
+                <p class="company">Auto-entrepreneur</p>
                 <ul class="timeline-details">
-                  <li>Durée : 5-6 mois à partir de mars 2026</li>
-                  <li>Domaines : IA, Machine Learning, Computer Vision, NLP</li>
-                  <li>Ou développement web full-stack avec Django/Vue.js</li>
-                  <li>Ouvert aux secteurs de la recherche et de l'industrie</li>
+                  <li>Développement de sites web et applications sur mesure (Vue.js / Django)</li>
+                  <li>Création de scripts d'automatisation et d'analyse de données (Python)</li>
+                  <li>Accompagnement technique de clients et déploiement cloud</li>
                 </ul>
                 <div class="availability-badge">
-                  <span class="badge-text">Disponible pour entretiens</span>
+                  <span class="badge-text">Disponible pour missions</span>
                 </div>
               </div>
             </div>
@@ -45,101 +35,56 @@
               <div class="timeline-marker"></div>
               <div class="timeline-date">Janvier 2025 - Mars 2025</div>
               <div class="timeline-content">
-                <h4>STAGE - Digitalisation des inspections (KIZEO)</h4>
+                <h4>Stage - Digitalisation & Web</h4>
                 <p class="company">ALSTOM - Villeurbanne</p>
                 <ul class="timeline-details">
-                  <li>Mise en place de différents formulaires d'inspections sur KIZEO</li>
-                  <li>Présentation régulière du travail réalisé aux responsables</li>
-                  <li>Travail en méthodologie Agile via Teams</li>
-                  <li>Collaboration avec les différents responsables qualité</li>
+                  <li>Digitalisation des processus d'inspection (KIZEO)</li>
+                  <li>Développement d'outils internes et reporting</li>
                 </ul>
               </div>
             </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-date">Novembre 2024 - Décembre 2024</div>
-              <div class="timeline-content">
-                <h4>Monteur PC</h4>
-                <p class="company">LDLC - Lyon</p>
-                <ul class="timeline-details">
-                  <li>Assemblage de configurations personnalisées</li>
-                  <li>Test et validation des systèmes</li>
-                </ul>
-              </div>
-            </div>
-            
+
             <div class="timeline-item">
               <div class="timeline-marker"></div>
               <div class="timeline-date">Mai 2023 - Juin 2023</div>
               <div class="timeline-content">
-                <h4>STAGE - Développeur Fullstack Django/Vue.js</h4>
-                <p class="company">Société 'ANEQQIS' - Paris</p>
+                <h4>Stage - Développeur Fullstack</h4>
+                <p class="company">ANEQQIS - Paris</p>
                 <ul class="timeline-details">
-                  <li>Création autonome du front et back-end d'un site de génération de rapports</li>
-                  <li>Intégration de paiements Stripe et authentification sécurisée</li>
-                  <li>Travail en méthodologie Agile via Azure DevOps</li>
-                  <li>Déploiement et mise en production</li>
+                  <li>Création complète d'un SaaS (Django/Vue.js)</li>
+                  <li>Intégration Stripe et génération de PDF</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Parcours Scolaire -->
         <div class="info-card timeline-card neon-border">
           <div class="card-header-line"></div>
-          <h3 class="card-title">
-            <span class="title-icon">🎓</span>
-            Parcours Académique
-          </h3>
+          <h3 class="card-title"><span class="title-icon">🎓</span> Parcours Académique</h3>
           <div class="timeline">
             <div class="timeline-item current">
               <div class="timeline-marker active"></div>
-              <div class="timeline-date">Sept. 2024 - Juin 2026</div>
+              <div class="timeline-date">2024 - 2026</div>
               <div class="timeline-content">
                 <h4>MASTER 2 INTELLIGENCE ARTIFICIELLE</h4>
                 <p class="company">Université Claude Bernard Lyon 1</p>
                 <ul class="timeline-details">
-                  <li>Spécialisation en Machine Learning et Deep Learning</li>
-                  <li>Computer Vision et traitement d'images</li>
-                  <li>Natural Language Processing et analyse de texte</li>
-                  <li>Algorithmes d'optimisation et méthodes d'ensemble</li>
-                  <li>Projets de recherche appliquée en IA</li>
-                </ul>
-                <div class="academic-status">
-                  <span class="status-label">Statut :</span>
-                  <span class="status-value">Programme allégé (2 jours/mois)</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-date">Sept. 2023 - Juin 2024</div>
-              <div class="timeline-content">
-                <h4>MASTER 1 INFORMATIQUE</h4>
-                <p class="company">Université Claude Bernard Lyon 1</p>
-                <ul class="timeline-details">
-                  <li>Analyse de données et machine learning</li>
-                  <li>Simulation d'écosystèmes multi-agents</li>
-                  <li>Gestion de projet et développement collaboratif</li>
-                  <li>Contributions open source (CDlib)</li>
+                  <li>Spécialisation Machine Learning & Deep Learning</li>
+                  <li>Computer Vision, NLP et Data Science</li>
+                  <li>Projets de recherche appliquée</li>
                 </ul>
               </div>
             </div>
             
             <div class="timeline-item">
               <div class="timeline-marker"></div>
-              <div class="timeline-date">Sept. 2020 - Juin 2023</div>
+              <div class="timeline-date">2020 - 2023</div>
               <div class="timeline-content">
-                <h4>LICENCE INFORMATIQUE</h4>
+                <h4>Licence Informatique</h4>
                 <p class="company">Université Claude Bernard Lyon 1</p>
                 <ul class="timeline-details">
-                  <li>Programmation C++, Java, Python</li>
-                  <li>Développement web et bases de données</li>
-                  <li>Algorithmique et structures de données</li>
-                  <li>Réseaux et systèmes distribués</li>
+                  <li>Bases solides en algorithmique et développement</li>
                 </ul>
               </div>
             </div>
@@ -148,243 +93,38 @@
       </div>
     </div>
 
-    <!-- Compétences et Expertise -->
-    <div class="section-skills animated-entry" style="animation-delay: 0.2s;">
-      <div class="info-card expertise-card neon-border">
-        <div class="card-header-line"></div>
-        <h3 class="card-title">
-          <span class="title-icon">🧠</span>
-          Expertises Techniques
-        </h3>
-        
-        <div class="expertise-grid">
-          <div class="expertise-category">
-            <h4 class="category-title">Intelligence Artificielle</h4>
-            <div class="skills-list">
-              <div class="skill-item">
-                <span class="skill-name">Machine Learning</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Computer Vision</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Deep Learning</span>
-                <span class="skill-level">Avancé</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">NLP</span>
-                <span class="skill-level">Intermédiaire</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="expertise-category">
-            <h4 class="category-title">Développement Web</h4>
-            <div class="skills-list">
-              <div class="skill-item">
-                <span class="skill-name">Django</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Vue.js</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">REST API</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">PostgreSQL</span>
-                <span class="skill-level">Avancé</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="expertise-category">
-            <h4 class="category-title">Data Science</h4>
-            <div class="skills-list">
-              <div class="skill-item">
-                <span class="skill-name">Python</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Pandas/NumPy</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Scikit-learn</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Matplotlib/Seaborn</span>
-                <span class="skill-level">Avancé</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="expertise-category">
-            <h4 class="category-title">Outils & Méthodologies</h4>
-            <div class="skills-list">
-              <div class="skill-item">
-                <span class="skill-name">Git/GitLab</span>
-                <span class="skill-level">Expert</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Docker</span>
-                <span class="skill-level">Intermédiaire</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Agile/Scrum</span>
-                <span class="skill-level">Avancé</span>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">AWS</span>
-                <span class="skill-level">Intermédiaire</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="tech-stack-section">
-          <h4 class="stack-title">Stack Technique Principal</h4>
-          <div class="tech-badges">
-            <span class="tech-tag primary">Python</span>
-            <span class="tech-tag primary">Vue.js</span>
-            <span class="tech-tag primary">Django</span>
-            <span class="tech-tag ai">Scikit-learn</span>
-            <span class="tech-tag ai">OpenCV</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">AWS</span>
-            <span class="tech-tag">Git</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Objectifs et Disponibilité -->
     <div class="section-objectives animated-entry" style="animation-delay: 0.4s;">
       <div class="info-card objectives-card neon-border">
         <div class="card-header-line"></div>
-        <h3 class="card-title">
-          <span class="title-icon">🎯</span>
-          Objectifs & Disponibilité
-        </h3>
+        <h3 class="card-title"><span class="title-icon">🎯</span> Mon Offre de Service</h3>
         
         <div class="objectives-grid">
           <div class="objective-item primary">
-            <div class="objective-icon">🔬</div>
+            <div class="objective-icon">💻</div>
             <div class="objective-content">
-              <h4>Recherche de Stage</h4>
-              <p>
-                Actuellement à la recherche d'un stage de fin d'études de 5-6 mois 
-                à partir de <strong>mars 2026</strong> dans les domaines de l'Intelligence Artificielle, 
-                du Machine Learning, ou du développement logiciel.
-              </p>
-              <div class="preferred-domains">
-                <span class="domain-tag">Computer Vision</span>
-                <span class="domain-tag">NLP</span>
-                <span class="domain-tag">Data Science</span>
-                <span class="domain-tag">Web Development</span>
-              </div>
+              <h4>Développement Web</h4>
+              <p>Sites vitrines modernes, plateformes E-commerce, applications SaaS. Je transforme vos idées en produits digitaux performants.</p>
             </div>
           </div>
           
           <div class="objective-item">
-            <div class="objective-icon">⚡</div>
+            <div class="objective-icon">🤖</div>
             <div class="objective-content">
-              <h4>Disponibilité Actuelle</h4>
-              <p>
-                Programme universitaire allégé (2 jours par mois) permettant une 
-                disponibilité quasi-complète pour missions freelance ou projets collaboratifs.
-              </p>
-            </div>
-          </div>
-          
-          <div class="objective-item">
-            <div class="objective-icon">🚀</div>
-            <div class="objective-content">
-              <h4>Projets d'Intérêt</h4>
-              <p>
-                Particulièrement intéressé par les projets innovants en IA, 
-                l'analyse d'images/vidéos, les applications web avancées, 
-                et les solutions d'automatisation intelligente.
-              </p>
-            </div>
-          </div>
-          
-          <div class="objective-item">
-            <div class="objective-icon">🤝</div>
-            <div class="objective-content">
-              <h4>Collaboration</h4>
-              <p>
-                Expérience en travail collaboratif avec méthodologies Agile, 
-                communication régulière, et accompagnement technique complet.
-              </p>
+              <h4>Solutions IA</h4>
+              <p>Intégration d'intelligence artificielle, analyse d'images (Computer Vision) ou automatisation de tâches complexes.</p>
             </div>
           </div>
         </div>
         
         <div class="cta-container">
-          <a href="mailto:amineitji@gmail.com?subject=Opportunité de stage ou collaboration&body=Bonjour Amine,%0D%0A%0D%0AJe vous contacte concernant une opportunité de stage ou de collaboration.%0D%0A%0D%0ADétails de l'opportunité:%0D%0A- Type: %0D%0A- Durée: %0D%0A- Domaine: %0D%0A- Description: %0D%0A%0D%0ACordialement" 
-             class="contact-btn primary">
+          <a href="mailto:amineitji@gmail.com?subject=Proposition de mission" class="contact-btn primary">
             <span class="btn-icon">📧</span>
-            <span class="btn-text">Me contacter pour une opportunité</span>
+            <span class="btn-text">Me contacter pour un projet</span>
           </a>
           <a href="/CV.pdf" download="CV_Amine_ITJI.pdf" class="contact-btn cv-btn">
             <span class="btn-icon">📄</span>
-            <span class="btn-text">Télécharger mon CV</span>
+            <span class="btn-text">Télécharger CV</span>
           </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Projets et Réalisations -->
-    <div class="section-achievements animated-entry" style="animation-delay: 0.6s;">
-      <div class="info-card achievements-card neon-border">
-        <div class="card-header-line"></div>
-        <h3 class="card-title">
-          <span class="title-icon">⭐</span>
-          Réalisations Marquantes
-        </h3>
-        
-        <div class="achievements-grid">
-          <div class="achievement-item">
-            <div class="achievement-header">
-              <span class="achievement-icon">🏆</span>
-              <h4>Co-fondateur Aneqqis</h4>
-            </div>
-            <p>Développement complet d'une plateforme SaaS pour l'immobilier avec Django/Vue.js, 
-               intégration Stripe, et déploiement en production.</p>
-          </div>
-          
-          <div class="achievement-item">
-            <div class="achievement-header">
-              <span class="achievement-icon">🔬</span>
-              <h4>Contribution Open Source</h4>
-            </div>
-            <p>Contribution à la librairie Python CDlib pour l'analyse de réseaux complexes, 
-               avec développement de nouvelles fonctionnalités de visualisation.</p>
-          </div>
-          
-          <div class="achievement-item">
-            <div class="achievement-header">
-              <span class="achievement-icon">🤖</span>
-              <h4>Projets IA Innovants</h4>
-            </div>
-            <p>Développement de systèmes d'analyse vidéo avec YOLO, prédiction de performances sportives, 
-               et applications de computer vision pour l'analyse de matchs de football.</p>
-          </div>
-          
-          <div class="achievement-item">
-            <div class="achievement-header">
-              <span class="achievement-icon">🌱</span>
-              <h4>Impact Environnemental</h4>
-            </div>
-            <p>Conception d'une application web collaborative pour le calcul et suivi 
-               personnalisé de l'empreinte carbone avec backend Django.</p>
-          </div>
         </div>
       </div>
     </div>
