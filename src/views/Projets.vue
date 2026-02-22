@@ -1,993 +1,530 @@
 <template>
-  <div class="projects-container">
-    <!-- Effet de particules et d'illumination -->
-    <div class="particles-container">
-      <div class="particles"></div>
-      <div class="gradient-overlay"></div>
-    </div>
+  <div class="projects-page">
 
-    <!-- Filtres et contrôles simplifiés -->
-    <div class="controls-panel animated-entry">
-      <div class="blur-effect purple" style="top: 15%; left: 10%;"></div>
-      
-      <div class="filters-section">
-        <div class="filter-group">
-          <select v-model="selectedCategory" class="filter-select">
-            <option value="">Toutes les catégories</option>
-            <option v-for="category in categories" :key="category" :value="category">
-              {{ category }}
-            </option>
-          </select>
-        </div>
-        
-        <div class="filter-group">
-          <select v-model="sortBy" class="filter-select">
-            <option value="date">Date (récent d'abord)</option>
-            <option value="date-asc">Date (ancien d'abord)</option>
-            <option value="title">Titre (A-Z)</option>
-            <option value="category">Catégorie</option>
-          </select>
-        </div>
-        
-        <button @click="resetFilters" class="reset-btn">
-          <span class="btn-icon">⟲</span>
-          Réinitialiser
-        </button>
+    <header class="page-hero fu">
+      <span class="eyebrow">{{ t.eyebrow }}</span>
+      <h1 class="s-title" style="margin-top:12px;">{{ t.title }}</h1>
+      <p class="s-sub" style="margin-top:10px;max-width:540px;">{{ t.sub }}</p>
+    </header>
+
+    <section class="featured-section fu" style="animation-delay:.08s;">
+      <div class="featured-grid">
+        <a
+          v-for="p in featuredProjects"
+          :key="p.name"
+          :href="p.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="featured-card"
+        >
+          <div class="fc-visual" :style="{ background: p.gradient }">
+            <div class="fc-logo">
+              <span v-html="p.icon"></span>
+              <strong>{{ p.name }}</strong>
+            </div>
+            <div class="fc-hover">{{ t.visit }} →</div>
+          </div>
+          <div class="fc-body">
+            <div class="fc-tags">
+              <span class="chip" v-for="tag in p.tags" :key="tag">{{ tag }}</span>
+              <span class="chip chip-live">{{ t.live }}</span>
+            </div>
+            <h3>{{ p.name }}</h3>
+            <p>{{ p.desc }}</p>
+            <div class="fc-stack">
+              <span class="chip chip-tech" v-for="s in p.stack" :key="s">{{ s }}</span>
+            </div>
+          </div>
+        </a>
       </div>
-    </div>
+    </section>
 
-    <!-- Timeline des projets -->
-    <div class="projects-timeline animated-entry" style="animation-delay: 0.2s;">
-      <div class="blur-effect green" style="bottom: 25%; right: 15%;"></div>
-      <div class="blur-effect cyan" style="top: 60%; left: 60%;"></div>
-      
-      <div class="timeline-line"></div>
-      
-      <div 
-        v-for="(project, index) in filteredProjects" 
-        :key="index"
-        class="project-card neon-border"
-        :class="{ 'expanded': expandedProject === index }"
-        @click="toggleProject(index)"
-      >
-        <div class="card-header-line"></div>
-        
-        <!-- Marker temporel -->
-        <div class="timeline-marker">
-          <div class="marker-dot"></div>
-          <div class="marker-date">{{ project.year }}</div>
+    <section class="other-section fu" style="animation-delay:.15s;">
+      <div class="other-header">
+        <h2 class="s-title">{{ t.otherTitle }}</h2>
+        <div class="filter-bar">
+          <button
+            v-for="cat in categories"
+            :key="cat.key"
+            class="filter-btn"
+            :class="{ active: activeFilter === cat.key }"
+            @click="activeFilter = cat.key"
+          >
+            {{ cat.label }}
+          </button>
         </div>
-        
-        <!-- Contenu principal -->
-        <div class="card-content">
-          <!-- Header compact -->
-          <div class="card-header">
-            <div class="header-left">
-              <h3 class="project-title">{{ project.title }}</h3>
-              <div class="project-meta">
-                <span class="category-badge">{{ project.category }}</span>
-                <span class="date-badge">{{ project.year }}</span>
-              </div>
+      </div>
+
+      <div class="other-grid">
+        <div
+          v-for="p in filteredProjects"
+          :key="p.name"
+          class="other-card"
+          :class="{ open: openCard === p.name }"
+          @click="toggleCard(p.name)"
+          :aria-expanded="openCard === p.name"
+        >
+          <div class="oc-top">
+            <div class="oc-icon" :style="{ background: p.iconBg, color: p.iconColor }">
+              <span v-html="p.icon"></span>
             </div>
-            
-            <div class="header-right">
-              <div class="tech-stack-preview">
-                <span 
-                  v-for="tech in project.technologies.slice(0, 3)" 
-                  :key="tech"
-                  class="tech-chip"
-                >
-                  {{ tech }}
-                </span>
-                <span v-if="project.technologies.length > 3" class="tech-more">
-                  +{{ project.technologies.length - 3 }}
-                </span>
-              </div>
-              
-              <button class="expand-btn" :class="{ 'expanded': expandedProject === index }">
-                <span class="expand-icon">▼</span>
-              </button>
+            <div class="oc-meta">
+              <span class="oc-cat">{{ p.cat }}</span>
+              <h3>{{ p.name }}</h3>
+              <p class="oc-short">{{ p.short }}</p>
+            </div>
+            <div class="oc-chevron" :class="{ rotated: openCard === p.name }">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
           </div>
-          
-          <!-- Image de prévisualisation -->
-          <div class="preview-image" v-if="project.imageSrc">
-            <img :src="project.imageSrc" :alt="project.title" />
-            <div class="image-overlay"></div>
-          </div>
-          
-          <!-- Contenu détaillé (collapsible) -->
-          <div class="detailed-content" v-show="expandedProject === index">
-            <div class="content-body">
-              <div v-for="(paragraph, idx) in project.content" :key="idx" class="content-section">
-                <p v-if="typeof paragraph === 'string'" class="text-content">{{ paragraph }}</p>
-                <div v-else-if="paragraph.type === 'image'" class="image-container">
-                  <img :src="paragraph.src" :alt="paragraph.alt" class="content-image" />
-                  <p v-if="paragraph.caption" class="image-caption">{{ paragraph.caption }}</p>
+
+          <transition name="expand">
+            <div class="oc-expand" v-if="openCard === p.name">
+              <div class="oc-expand-inner">
+                <p class="oc-desc">{{ p.desc }}</p>
+                <div class="oc-stack">
+                  <span class="chip chip-tech" v-for="s in p.stack" :key="s">{{ s }}</span>
                 </div>
-                <div v-else-if="paragraph.type === 'video'" class="video-container">
-                  <iframe 
-                    :src="paragraph.src" 
-                    width="100%" 
-                    height="400" 
-                    frameborder="0" 
-                    allowfullscreen
-                  ></iframe>
+                <div class="oc-links" v-if="p.github || p.demo">
+                  <a v-if="p.github" :href="p.github" target="_blank" rel="noopener noreferrer" class="oc-link" @click.stop>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a v-if="p.demo" :href="p.demo" target="_blank" rel="noopener noreferrer" class="oc-link demo" @click.stop>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Demo
+                  </a>
                 </div>
               </div>
             </div>
-            
-            <!-- Technologies complètes -->
-            <div class="tech-stack-full">
-              <h4 class="tech-title">Technologies utilisées</h4>
-              <div class="tech-grid">
-                <span 
-                  v-for="tech in project.technologies" 
-                  :key="tech"
-                  class="tech-badge"
-                >
-                  {{ tech }}
-                </span>
-              </div>
-            </div>
-            
-            <!-- Actions -->
-            <div class="project-actions" v-if="project.links">
-              <a 
-                v-for="link in project.links" 
-                :key="link.type"
-                :href="link.url" 
-                target="_blank"
-                class="action-btn"
-                :class="link.type"
-              >
-                <span class="btn-icon">{{ getLinkIcon(link.type) }}</span>
-                {{ link.label }}
-              </a>
-            </div>
-          </div>
+          </transition>
         </div>
       </div>
-    </div>
-    
-    <!-- Message si aucun résultat -->
-    <div v-if="filteredProjects.length === 0" class="no-results">
-      <div class="no-results-icon">🔬</div>
-      <h3>Aucun projet trouvé</h3>
-      <p>Essayez de modifier vos critères de recherche ou de filtrage.</p>
-    </div>
+    </section>
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'ProjetsPage',
+  inject: ['getLang'],
+
   data() {
     return {
-      expandedProject: null,
-      selectedCategory: '',
-      sortBy: 'date',
-      
-      projects: [
-        {
-          title: "Analyse de Match de Football par IA",
-          category: "Intelligence Artificielle",
-          year: "2025",
-          imageSrc: "football_analysis.gif",
-          technologies: ["Python", "YOLO", "OpenCV", "KMeans", "Computer Vision"],
-          content: [
-            "YOLO est un modèle de détection d'objets qui analyse chaque image de la vidéo et localise en temps réel les objets, comme des humains, un ballon ou même des voitures.",
-            "J'ai donc utilisé ce modèle pour le personnaliser dans le monde du football !",
-            "Une fois que YOLO détecte les joueurs, il faut les attribuer à une équipe. J'utilise donc le KMeans, cet algorithme de clustering permet de regrouper les joueurs en fonction des couleurs dominantes de leurs maillots.",
-            "On peut aussi détecter les lignes du terrain en utilisant HoughLines pour détecter les segments blancs du terrain. La transformation de Hough est une technique mathématique qui permet de détecter des formes géométriques, comme des lignes droites, dans une image.",
-            "C'est ici que ça devient vraiment intéressant ! En utilisant l'homographie, on peut projeter toutes les coordonnées détectées sur un plan 2D. Ce qui permet de suivre l'évolution du match et de localiser chaque événement sur un schéma, comme on peut le voir sur Whoscored.",
-            { "type": "image", "src": "match_projection.png", "alt": "Exemple de projection 2D d'un match" },
-            "Ce projet démontre qu'avec l'IA, et certains outils mathématiques, on peut aller bien au-delà de ce qu'on imagine dans l'analyse sportive."
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Code source' },
-            { type: 'demo', url: '#', label: 'Démonstration' }
-          ]
-        },
-        {
-          title: "Prédiction de Réussite des Penalties",
-          category: "Machine Learning",
-          year: "2025",
-          imageSrc: "NeymarPen.gif",
-          technologies: ["Python", "Random Forest", "Scikit-learn", "Pandas", "Data Analysis"],
-          content: [
-            "Ce projet explore l'utilisation du Machine Learning pour prédire l'issue d'un penalty dans les cinq grands championnats européens (Ligue 1, Premier League, Bundesliga, Serie A, La Liga) sur la saison 2019/2020.",
-            "Les facteurs influençant la réussite d'un penalty incluent la minute du match, la position du tireur, le lieu du match, le dernier but marqué, et si le penalty est décisif ou non.",
-            "Un modèle de Random Forest Classifier a été utilisé pour prédire si un penalty serait marqué ou non. Ce modèle a atteint une précision de 77,78% sur un jeu de test.",
-            { "type": "image", "src": "RandomForestClassifier.png", "alt": "Random Forest Classifier" },
-            { "type": "image", "src": "penalty_var.png", "alt": "Visualisation des données de penalty" }
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Repository' },
-            { type: 'paper', url: '#', label: 'Article technique' }
-          ]
-        },
-        {
-          title: "Application Web de Calcul d'Empreinte Carbone",
-          category: "Développement Web",
-          year: "2024",
-          imageSrc: "web_dev_co2.png",
-          technologies: ["Django", "PostgreSQL", "REST API", "Python", "Environmental Tech"],
-          content: [
-            "Application web dédiée au calcul de l'empreinte carbone développée dans le cadre du Master 1 Informatique de l'Université Claude Bernard Lyon 1.",
-            "Notre application vise à proposer une solution accessible et personnalisée pour le suivi des émissions de gaz à effet de serre (GES).",
-            "En tant que développeur backend, j'ai joué un rôle clé dans la réalisation de ce projet avec un système d'authentification robuste et une API fonctionnelle utilisant Django REST Framework.",
-            { "type": "image", "src": "Accueil_co2.png", "alt": "Page d'accueil" },
-            { "type": "image", "src": "web_dev_co2.png", "alt": "Dashboard" }
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Code source' },
-            { type: 'demo', url: '#', label: 'Application live' }
-          ]
-        },
-        {
-          title: "Contribution à CDlib",
-          category: "Recherche & Open Source",
-          year: "2024",
-          imageSrc: "cdlib.png",
-          technologies: ["Python", "NetworkX", "Data Visualization", "Graph Theory", "Open Source"],
-          content: [
-            "Ce projet vise à enrichir la librairie Python CDlib, spécialisée dans l'analyse des communautés dans les réseaux complexes.",
-            "Sous la supervision de Rémy Cazabet, j'ai développé de nouvelles fonctionnalités pour améliorer la visualisation des communautés.",
-            { "type": "image", "src": "cdlib_new.png", "alt": "Présentation de CDlib" },
-            { "type": "image", "src": "Figure_2_ouverture.png", "alt": "Visualisation des communautés" }
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Pull Request' },
-            { type: 'docs', url: '#', label: 'Documentation' }
-          ]
-        },
-        {
-          title: "Webscraping et Visualisation Football",
-          category: "Data Science",
-          year: "2024",
-          imageSrc: "whoscored.png",
-          technologies: ["Python", "Web Scraping", "Data Visualization", "BeautifulSoup", "Matplotlib"],
-          content: [
-            "Ce projet permet d'extraire et de visualiser les performances de joueurs de football à partir des données de match récupérées depuis WhoScored.",
-            "Il analyse les données spécifiques à chaque joueur, telles que les passes, les tirs, les dribbles, les interceptions, et génère des visualisations graphiques comme des cartes de chaleur.",
-            { "type": "image", "src": "whoscored.png", "alt": "Exemple de visualisation" }
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Repository' }
-          ]
-        },
-        {
-          title: "Prédiction Box-Office avec Machine Learning",
-          category: "Machine Learning",
-          year: "2024",
-          imageSrc: "ml_movies.png",
-          technologies: ["Python", "Decision Trees", "GridSearchCV", "Data Analysis", "Scikit-learn"],
-          content: [
-            "Ce projet se concentre sur la prédiction des revenus des films au box-office, en tenant compte des revenus domestiques, étrangers et mondiaux.",
-            "Des modèles de régression d'arbres de décision ont été employés avec optimisation par GridSearchCV.",
-            { "type": "image", "src": "metrics_analysis.png", "alt": "Analyse des métriques" },
-            { "type": "image", "src": "WorldGross_real_vs_pred.png", "alt": "Prédictions vs réalité" }
-          ],
-          links: [
-            { type: 'github', url: '#', label: 'Code & Analysis' }
-          ]
-        },
-        {
-          title: "Application ERP Immobilier",
-          category: "Développement Web",
-          year: "2023",
-          imageSrc: "diagERP.png",
-          technologies: ["Django", "Vue.js", "Stripe", "Authentication", "Fullstack"],
-          content: [
-            "Développement complet d'une application web en utilisant Django pour le backend et Vue.js pour le frontend, incluant également le déploiement final.",
-            "Système d'authentification robuste avec double authentification par email, intégration Stripe pour la gestion sécurisée des paiements.",
-            { "type": "video", "src": "https://www.youtube.com/embed/PiKLRnlXitk", "alt": "Vidéo de présentation" }
-          ],
-          links: [
-            { type: 'demo', url: '#', label: 'Application' },
-            { type: 'case-study', url: '#', label: 'Étude de cas' }
-          ]
-        }
-      ]
+      activeFilter: 'all',
+      openCard: null,
     };
   },
-  
+
   computed: {
-    categories() {
-      return [...new Set(this.projects.map(p => p.category))].sort();
-    },
-    
-    filteredProjects() {
-      let filtered = this.projects;
-      
-      // Filtrage par catégorie
-      if (this.selectedCategory) {
-        filtered = filtered.filter(p => p.category === this.selectedCategory);
-      }
-      
-      // Tri
-      switch (this.sortBy) {
-        case 'date':
-          return filtered.sort((a, b) => b.year.localeCompare(a.year));
-        case 'date-asc':
-          return filtered.sort((a, b) => a.year.localeCompare(b.year));
-        case 'title':
-          return filtered.sort((a, b) => a.title.localeCompare(b.title));
-        case 'category':
-          return filtered.sort((a, b) => a.category.localeCompare(b.category));
-        default:
-          return filtered;
-      }
-    }
-  },
-  
-  methods: {
-    toggleProject(index) {
-      this.expandedProject = this.expandedProject === index ? null : index;
-    },
-    
-    resetFilters() {
-      this.selectedCategory = '';
-      this.sortBy = 'date';
-      this.expandedProject = null;
-    },
-    
-    getLinkIcon(type) {
-      const icons = {
-        'github': '🔗',
-        'demo': '🚀',
-        'paper': '📄',
-        'docs': '📚',
-        'case-study': '📊'
+    lang() { return this.getLang(); },
+
+    t() {
+      const fr = {
+        eyebrow: 'Réalisations',
+        title: 'Projets & Travaux.',
+        sub: 'De la recherche académique aux SaaS en production — chaque projet illustre une compétence concrète.',
+        visit: 'Visiter',
+        live: 'En production',
+        otherTitle: 'Projets & Recherche',
+        filterAll: 'Tous',
+        filterAI: 'IA & ML',
+        filterWeb: 'Web & SaaS',
+        filterData: 'Data',
       };
-      return icons[type] || '🔗';
-    }
-  }
+      const en = {
+        eyebrow: 'Work',
+        title: 'Projects & Work.',
+        sub: 'From academic research to live SaaS — each project illustrates a concrete skill.',
+        visit: 'Visit',
+        live: 'Live',
+        otherTitle: 'Projects & Research',
+        filterAll: 'All',
+        filterAI: 'AI & ML',
+        filterWeb: 'Web & SaaS',
+        filterData: 'Data',
+      };
+      return this.lang === 'en' ? en : fr;
+    },
+
+    categories() {
+      return [
+        { key: 'all',  label: this.t.filterAll },
+        { key: 'ai',   label: this.t.filterAI },
+        { key: 'web',  label: this.t.filterWeb },
+        { key: 'data', label: this.t.filterData },
+      ];
+    },
+
+    featuredProjects() {
+      const fr = [
+        {
+          name: 'DiagERP',
+          url: 'https://diagerp.fr/',
+          gradient: 'linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%)',
+          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+          tags: ['SaaS B2B', 'Co-fondateur & CTO'],
+          desc: 'ERP complet pour diagnostiqueurs immobiliers. Gestion des missions et des rapports réglementaires, Stripe, facturation automatique. Utilisé activement en production par des professionnels.',
+          stack: ['Vue.js 3', 'Django', 'PostgreSQL', 'Stripe', 'AWS'],
+        },
+        {
+          name: 'DiagImmoMarchés',
+          url: 'https://diagimmomarches.fr/',
+          gradient: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%)',
+          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+          tags: ['Projet client', 'SEO Premium'],
+          desc: 'Plateforme web premium pour un client du secteur immobilier. Optimisée pour l\'acquisition SEO et la conversion. Score Lighthouse 95+, temps de chargement < 1s.',
+          stack: ['Vue.js', 'Django', 'SEO', 'Docker'],
+        },
+      ];
+      const en = [
+        {
+          name: 'DiagERP',
+          url: 'https://diagerp.fr/',
+          gradient: 'linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%)',
+          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+          tags: ['B2B SaaS', 'Co-founder & CTO'],
+          desc: 'Full ERP for real estate diagnosticians. Mission and regulatory report management, Stripe billing, automated invoicing. Actively used in production by professionals.',
+          stack: ['Vue.js 3', 'Django', 'PostgreSQL', 'Stripe', 'AWS'],
+        },
+        {
+          name: 'DiagImmoMarchés',
+          url: 'https://diagimmomarches.fr/',
+          gradient: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%)',
+          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+          tags: ['Client project', 'Premium SEO'],
+          desc: 'Premium web platform for a real estate client. Optimized for SEO acquisition and conversion. Lighthouse score 95+, load time < 1s.',
+          stack: ['Vue.js', 'Django', 'SEO', 'Docker'],
+        },
+      ];
+      return this.lang === 'en' ? en : fr;
+    },
+
+    allOtherProjects() {
+      const fr = [
+        { cat: 'IA & ML', name: 'Analyse Vidéo Football (IA)', catKey: 'ai',
+          short: 'Détection et tracking de joueurs en temps réel.',
+          desc: 'Pipeline Computer Vision avec YOLO v8 pour détecter et tracker des joueurs, arbitres et ballon en temps réel. Homographie pour mapper les positions sur un terrain 2D. Calcul de métriques de performance (distance, vitesse, possession).',
+          stack: ['Python', 'YOLO v8', 'OpenCV', 'NumPy', 'Homography'],
+          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'IA & ML', name: 'Prédiction de Penalty (ML)', catKey: 'ai',
+          short: 'Modèle ML à 77% de précision sur Kaggle.',
+          desc: 'Modèle Random Forest pour prédire l\'issue de tirs aux buts à partir de données de position, timing et comportementales. Atteint 77% de précision sur un dataset Kaggle de 15 000+ tirs.',
+          stack: ['Python', 'Scikit-learn', 'Random Forest', 'Pandas', 'Matplotlib'],
+          iconBg: '#fff7ed', iconColor: '#f59e0b',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'IA & ML', name: 'RAG & Agents LLM', catKey: 'ai',
+          short: 'Pipeline RAG privé sur base documentaire client.',
+          desc: 'Architecture RAG complète avec LangChain + OpenAI pour interroger des bases documentaires privées. Agent autonome capable de chaîner des outils (recherche web, calcul, API). Intégration avec des workflows Notion.',
+          stack: ['LangChain', 'OpenAI', 'Pinecone', 'FastAPI', 'Python'],
+          iconBg: '#eff6ff', iconColor: '#3b82f6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Data', name: 'Web Scraping Football', catKey: 'data',
+          short: 'Extraction de 50 000+ stats de joueurs.',
+          desc: 'Pipeline de scraping massif sur FBRef et Transfermarkt avec Selenium + BeautifulSoup. Extraction de plus de 50 000 entrées de statistiques joueurs sur 5 saisons. Nettoyage, normalisation et export CSV/PostgreSQL.',
+          stack: ['Python', 'Selenium', 'BeautifulSoup', 'Pandas', 'PostgreSQL'],
+          iconBg: '#f0fdf4', iconColor: '#10b981',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Data', name: 'CDlib — Contribution Open Source', catKey: 'data',
+          short: 'Contribution à une librairie Python de détection de communautés.',
+          desc: 'Contribution à CDlib (bibliothèque Python pour la détection de communautés dans les graphes). Implémentation de nouveaux algorithmes de clustering avec NetworkX. Code mergé dans la version officielle.',
+          stack: ['Python', 'NetworkX', 'CDlib', 'Graph Theory'],
+          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Web & SaaS', name: 'App Bilan Carbone (Django)', catKey: 'web',
+          short: 'Application métier REST pour le suivi d\'empreinte carbone.',
+          desc: 'Application Django REST API complète pour calculer et suivre l\'empreinte carbone d\'une entreprise. Authentification JWT, dashboard analytics, export PDF des bilans. Déployée sur AWS avec Docker.',
+          stack: ['Django', 'DRF', 'PostgreSQL', 'JWT', 'Docker', 'AWS'],
+          iconBg: '#f0fdf4', iconColor: '#10b981',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+      ];
+      const en = [
+        { cat: 'AI & ML', name: 'Football Video Analysis (AI)', catKey: 'ai',
+          short: 'Real-time player detection and tracking.',
+          desc: 'Computer Vision pipeline with YOLO v8 to detect and track players, referees and the ball in real-time. Homography to map positions onto a 2D pitch. Performance metrics calculation (distance, speed, possession).',
+          stack: ['Python', 'YOLO v8', 'OpenCV', 'NumPy', 'Homography'],
+          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'AI & ML', name: 'Penalty Prediction (ML)', catKey: 'ai',
+          short: '77% accuracy ML model on Kaggle.',
+          desc: 'Random Forest model to predict the outcome of penalty kicks from position, timing and behavioral data. Achieves 77% accuracy on a Kaggle dataset of 15,000+ shots.',
+          stack: ['Python', 'Scikit-learn', 'Random Forest', 'Pandas', 'Matplotlib'],
+          iconBg: '#fff7ed', iconColor: '#f59e0b',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'AI & ML', name: 'RAG & LLM Agents', catKey: 'ai',
+          short: 'Private RAG pipeline on client document base.',
+          desc: 'Full RAG architecture with LangChain + OpenAI to query private document bases. Autonomous agent capable of chaining tools (web search, computation, API). Integration with Notion workflows.',
+          stack: ['LangChain', 'OpenAI', 'Pinecone', 'FastAPI', 'Python'],
+          iconBg: '#eff6ff', iconColor: '#3b82f6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Data', name: 'Football Web Scraping', catKey: 'data',
+          short: 'Extraction of 50,000+ player stats.',
+          desc: 'Massive scraping pipeline on FBRef and Transfermarkt with Selenium + BeautifulSoup. Extraction of 50,000+ player stat entries over 5 seasons. Cleaning, normalization, and CSV/PostgreSQL export.',
+          stack: ['Python', 'Selenium', 'BeautifulSoup', 'Pandas', 'PostgreSQL'],
+          iconBg: '#f0fdf4', iconColor: '#10b981',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Data', name: 'CDlib — Open Source Contribution', catKey: 'data',
+          short: 'Contribution to a Python community detection library.',
+          desc: 'Contribution to CDlib (Python library for community detection in graphs). Implementation of new clustering algorithms with NetworkX. Code merged into the official release.',
+          stack: ['Python', 'NetworkX', 'CDlib', 'Graph Theory'],
+          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+        { cat: 'Web & SaaS', name: 'Carbon Footprint App (Django)', catKey: 'web',
+          short: 'Business REST application for carbon footprint tracking.',
+          desc: 'Full Django REST API to calculate and track a company\'s carbon footprint. JWT auth, analytics dashboard, PDF report export. Deployed on AWS with Docker.',
+          stack: ['Django', 'DRF', 'PostgreSQL', 'JWT', 'Docker', 'AWS'],
+          iconBg: '#f0fdf4', iconColor: '#10b981',
+          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+          github: 'https://github.com/amineitji',
+        },
+      ];
+      return this.lang === 'en' ? en : fr;
+    },
+
+    filteredProjects() {
+      if (this.activeFilter === 'all') return this.allOtherProjects;
+      return this.allOtherProjects.filter(p => p.catKey === this.activeFilter);
+    },
+  },
+
+  methods: {
+    toggleCard(name) {
+      this.openCard = this.openCard === name ? null : name;
+    },
+  },
 };
 </script>
 
 <style scoped>
-/* Variables harmonisées avec HomePage */
-:root {
-  --primary-blue: #2563eb;
-  --accent-cyan: #06b6d4;
-  --success-green: #10b981;
-  --warning-amber: #f59e0b;
-  --dark-bg: #030712;
-  --card-bg: #111827;
-  --border-color: #374151;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* Les styles restent inchangés ! */
+.projects-page { padding: 48px 0 80px; }
 
-/* Base Styles */
-.projects-container {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  padding: 40px 20px;
-}
+/* Hero */
+.page-hero { max-width: 680px; margin-bottom: 64px; }
 
-/* Particles Background - identique à HomePage */
-.particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
+/* Featured grid */
+.featured-section { margin-bottom: 72px; }
 
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="none"/><circle cx="10%" cy="20%" r="1.5" fill="%2342b883" opacity="0.7"/><circle cx="15%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="20%" cy="15%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="25%" cy="10%" r="0.5" fill="%2342b883" opacity="0.8"/></svg>');
-  animation: moveParticles 150s linear infinite;
-}
-
-@keyframes moveParticles {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.5) 0%, rgba(3, 7, 18, 0.95) 100%);
-  z-index: 1;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animated-entry {
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Panneau de contrôles simplifié */
-.controls-panel {
-  max-width: 900px;
-  margin: 0 auto 40px;
-  background: rgba(17, 24, 39, 0.8);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 24px;
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-}
-
-.filters-section {
-  display: flex;
-  flex-wrap: wrap;
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  align-items: center;
-  justify-content: center;
 }
 
-.filter-group {
-  flex: 1;
-  min-width: 160px;
-  max-width: 200px;
-}
-
-.filter-select {
-  width: 100%;
-  background: rgba(31, 41, 55, 0.8);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 12px 16px;
-  color: var(--text-primary);
-  font-size: 0.875rem;
-  transition: var(--transition);
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.reset-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
-
-.reset-btn:hover {
-  border-color: var(--primary-blue);
-  color: var(--primary-blue);
-  transform: translateY(-2px);
-}
-
-/* Timeline */
-.projects-timeline {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.timeline-line {
-  position: absolute;
-  left: 30px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--primary-blue), var(--accent-cyan));
-  opacity: 0.3;
-}
-
-.project-card {
-  position: relative;
-  margin-bottom: 40px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.timeline-marker {
-  position: absolute;
-  left: 0;
-  top: 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  z-index: 2;
-}
-
-.marker-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
-  box-shadow: 0 0 0 4px var(--dark-bg), 0 0 0 6px var(--primary-blue);
-}
-
-.marker-date {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.card-content {
-  margin-left: 80px;
-  background: rgba(17, 24, 39, 0.8);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
+.featured-card {
+  display: block;
+  text-decoration: none;
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 22px;
   overflow: hidden;
-  transition: var(--transition);
-  backdrop-filter: blur(10px);
-  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
 }
 
-.neon-border::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, var(--primary-blue), var(--accent-cyan), var(--success-green), var(--primary-blue));
-  background-size: 400% 400%;
-  z-index: -1;
-  border-radius: 26px;
-  animation: glowingBorder 8s ease infinite;
-  opacity: 0.8;
+.featured-card:hover {
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
 }
 
-@keyframes glowingBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.card-header-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: var(--gradient-primary);
-  opacity: 0.8;
-}
-
-.project-card:hover .card-content {
-  border-color: var(--primary-blue);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
-}
-
-.project-card.expanded .card-content {
-  border-color: var(--accent-cyan);
-}
-
-/* Header de carte */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.header-left {
-  flex: 1;
-}
-
-.project-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 12px 0;
-  line-height: 1.4;
-}
-
-.project-meta {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.category-badge {
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--primary-blue);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-}
-
-.date-badge {
-  background: rgba(156, 163, 175, 0.1);
-  color: var(--text-muted);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-family: monospace;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.tech-stack-preview {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.tech-chip {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--accent-cyan);
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.tech-more {
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  font-weight: 500;
-}
-
-.expand-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+.fc-visual {
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.expand-btn:hover {
-  border-color: var(--primary-blue);
-  color: var(--primary-blue);
-}
-
-.expand-icon {
-  transition: transform 0.3s ease;
-  font-size: 0.75rem;
-}
-
-.expand-btn.expanded .expand-icon {
-  transform: rotate(180deg);
-}
-
-/* Image de prévisualisation */
-.preview-image {
   position: relative;
-  height: 200px;
   overflow: hidden;
 }
 
-.preview-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.project-card:hover .preview-image img {
-  transform: scale(1.05);
-}
-
-.image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(3, 7, 18, 0.6), transparent);
-}
-
-/* Contenu détaillé */
-.detailed-content {
-  border-top: 1px solid var(--border-color);
-}
-
-.content-body {
-  padding: 24px;
-}
-
-.content-section {
-  margin-bottom: 20px;
-}
-
-.text-content {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin: 0 0 16px 0;
-  font-size: 0.95rem;
-}
-
-.image-container {
-  margin: 24px 0;
-  text-align: center;
-}
-
-.content-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.image-caption {
-  margin-top: 8px;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.video-container {
-  margin: 24px 0;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-}
-
-/* Technologies complètes */
-.tech-stack-full {
-  padding: 24px;
-  border-top: 1px solid var(--border-color);
-  background: rgba(3, 7, 18, 0.3);
-}
-
-.tech-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.tech-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tech-badge {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--accent-cyan);
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  transition: var(--transition);
-}
-
-.tech-badge:hover {
-  background: rgba(6, 182, 212, 0.2);
-  transform: translateY(-1px);
-}
-
-/* Actions */
-.project-actions {
-  padding: 20px 24px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
+.fc-logo {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: var(--transition);
-  border: 1px solid;
+  gap: 10px;
+  padding: 14px 26px;
+  background: var(--white);
+  border-radius: 100px;
+  border: 1.5px solid var(--gray-200);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--gray-800);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s var(--ease);
 }
 
-.action-btn.github {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
+.featured-card:hover .fc-logo { transform: scale(1.06); }
 
-.action-btn.github:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--text-primary);
-}
-
-.action-btn.demo {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success-green);
-  border-color: rgba(16, 185, 129, 0.2);
-}
-
-.action-btn.demo:hover {
-  background: rgba(16, 185, 129, 0.2);
-}
-
-.action-btn.paper,
-.action-btn.docs,
-.action-btn.case-study {
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--primary-blue);
-  border-color: rgba(37, 99, 235, 0.2);
-}
-
-.action-btn.paper:hover,
-.action-btn.docs:hover,
-.action-btn.case-study:hover {
-  background: rgba(37, 99, 235, 0.2);
-}
-
-/* Aucun résultat */
-.no-results {
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--text-muted);
-}
-
-.no-results-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
-
-.no-results h3 {
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.no-results p {
-  color: var(--text-muted);
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-/* Blur effects - identiques à HomePage */
-.blur-effect {
+.fc-hover {
   position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: -1;
-  opacity: 0.2;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.95rem; font-weight: 600;
+  opacity: 0; transition: opacity 0.28s; backdrop-filter: blur(3px);
+}
+.featured-card:hover .fc-hover { opacity: 1; }
+
+.fc-body { padding: 22px 24px; }
+
+.fc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+
+.fc-body h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); margin-bottom: 8px; }
+
+.fc-body p { font-size: 0.875rem; color: var(--gray-500); line-height: 1.65; margin-bottom: 14px; }
+
+.fc-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Other section */
+.other-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
 }
 
-.blur-effect.green {
-  background: var(--success-green);
-  animation: floatAnimation 8s ease-in-out infinite;
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.filter-btn {
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.filter-btn:hover { border-color: var(--gray-400); color: var(--gray-900); }
+.filter-btn.active { background: var(--gray-900); border-color: var(--gray-900); color: var(--white); }
+
+.other-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
-.blur-effect.purple {
-  background: var(--primary-blue);
-  animation: floatAnimation 10s ease-in-out infinite reverse;
+/* Expandable card */
+.other-card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.25s;
+  box-shadow: var(--shadow-sm);
+}
+.other-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow-md); }
+.other-card.open { border-color: var(--gray-400); }
+
+.oc-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 22px;
 }
 
-.blur-effect.cyan {
-  background: var(--accent-cyan);
-  animation: floatAnimation 12s ease-in-out infinite;
+.oc-icon {
+  width: 40px; height: 40px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
-@keyframes floatAnimation {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(30px, 20px); }
-  100% { transform: translate(0, 0); }
+.oc-meta { flex: 1; min-width: 0; }
+
+.oc-cat {
+  display: inline-flex;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gray-400); margin-bottom: 4px;
 }
+
+.oc-meta h3 {
+  font-size: 0.95rem; font-weight: 700; color: var(--gray-900);
+  margin-bottom: 3px; letter-spacing: -0.01em;
+}
+
+.oc-short { font-size: 0.8rem; color: var(--gray-500); line-height: 1.4; }
+
+.oc-chevron {
+  flex-shrink: 0;
+  color: var(--gray-400);
+  margin-top: 2px;
+  transition: transform 0.25s var(--ease);
+}
+.oc-chevron.rotated { transform: rotate(180deg); }
+
+/* Expand content */
+.oc-expand {}
+.oc-expand-inner {
+  padding: 0 22px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+  border-top: 1px solid var(--gray-100);
+  padding-top: 16px;
+}
+
+.oc-desc { font-size: 0.85rem; color: var(--gray-600); line-height: 1.65; }
+.oc-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.oc-links { display: flex; gap: 10px; }
+
+.oc-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-weight: 600; color: var(--gray-600);
+  padding: 5px 12px;
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 8px; text-decoration: none;
+  transition: all 0.18s ease;
+}
+.oc-link:hover { background: var(--gray-900); color: white; border-color: var(--gray-900); }
+.oc-link.demo { color: var(--blue); border-color: var(--blue-light); background: var(--blue-light); }
+.oc-link.demo:hover { background: var(--blue); border-color: var(--blue); color: white; }
+
+/* Chips */
+.chip-live {
+  background: var(--green-light); border-color: rgba(16,185,129,0.2); color: var(--green);
+}
+.chip-tech {
+  background: var(--gray-100); color: var(--gray-600);
+}
+
+/* Transition */
+.expand-enter-active { transition: max-height 0.35s var(--ease), opacity 0.3s ease; max-height: 0; overflow: hidden; }
+.expand-leave-active { transition: max-height 0.25s ease, opacity 0.2s ease; overflow: hidden; }
+.expand-enter-to     { max-height: 400px; opacity: 1; }
+.expand-leave-from   { max-height: 400px; opacity: 1; }
+.expand-enter-from   { opacity: 0; }
+.expand-leave-to     { max-height: 0; opacity: 0; }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .projects-container {
-    padding: 16px;
-  }
-  
-  .filters-section {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .filter-group {
-    min-width: unset;
-    max-width: unset;
-  }
-  
-  .timeline-line {
-    left: 20px;
-  }
-  
-  .timeline-marker {
-    left: -10px;
-  }
-  
-  .marker-date {
-    display: none;
-  }
-  
-  .card-content {
-    margin-left: 50px;
-  }
-  
-  .card-header {
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-  }
-  
-  .header-right {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .tech-stack-preview {
-    flex-wrap: wrap;
-  }
-  
-  .project-actions {
-    flex-direction: column;
-  }
-  
-  .action-btn {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .timeline-line {
-    left: 16px;
-  }
-  
-  .timeline-marker {
-    left: -14px;
-  }
-  
-  .card-content {
-    margin-left: 40px;
-  }
-  
-  .controls-panel {
-    padding: 16px;
-  }
+  .featured-grid { grid-template-columns: 1fr; }
+  .other-grid { grid-template-columns: 1fr; }
+  .other-header { flex-direction: column; align-items: flex-start; }
 }
 </style>

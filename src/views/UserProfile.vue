@@ -1,783 +1,497 @@
 <template>
-  <div class="profile-container">
-    <div class="particles-container">
-      <div class="particles"></div>
-      <div class="gradient-overlay"></div>
-    </div>
+  <div class="profile-page">
 
-    <div class="section-intro animated-entry">
-      <div class="blur-effect purple" style="top: 15%; left: 10%;"></div>
-      
-      <div class="grid">
-        <div class="info-card timeline-card neon-border">
-          <div class="card-header-line"></div>
-          <h3 class="card-title"><span class="title-icon">💼</span> Parcours Professionnel</h3>
-          <div class="timeline">
-            
-            <div class="timeline-item current">
-              <div class="timeline-marker active"></div>
-              <div class="timeline-date">Depuis Juin 2023</div>
-              <div class="timeline-content">
-                <h4>FREELANCE FULL-STACK & IA</h4>
-                <p class="company">Auto-entrepreneur</p>
-                <ul class="timeline-details">
-                  <li>Développement de sites web et applications sur mesure (Vue.js / Django)</li>
-                  <li>Création de scripts d'automatisation et d'analyse de données (Python)</li>
-                  <li>Accompagnement technique de clients et déploiement cloud</li>
-                </ul>
-                <div class="availability-badge">
-                  <span class="badge-text">Disponible pour missions</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-date">Janvier 2025 - Mars 2025</div>
-              <div class="timeline-content">
-                <h4>Stage - Digitalisation & Web</h4>
-                <p class="company">ALSTOM - Villeurbanne</p>
-                <ul class="timeline-details">
-                  <li>Digitalisation des processus d'inspection (KIZEO)</li>
-                  <li>Développement d'outils internes et reporting</li>
-                </ul>
-              </div>
-            </div>
+    <header class="profile-hero fu">
+      <span class="eyebrow">{{ t.eyebrow }}</span>
+      <h1 class="s-title" style="margin-top:12px;">{{ t.title }}</h1>
+      <p class="s-sub" style="margin-top:10px;">{{ t.sub }}</p>
+      <div class="profile-ctas">
+        <a :href="`mailto:${contactEmail}?subject=Mission freelance`" class="btn btn-dark">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          {{ t.ctaContact }}
+        </a>
+        <a href="/CV.pdf" download="CV_Amine_ITJI.pdf" class="btn btn-outline">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          {{ t.ctaCV }}
+        </a>
+      </div>
+    </header>
 
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-date">Mai 2023 - Juin 2023</div>
-              <div class="timeline-content">
-                <h4>Stage - Développeur Fullstack</h4>
-                <p class="company">ANEQQIS - Paris</p>
-                <ul class="timeline-details">
-                  <li>Création complète d'un SaaS (Django/Vue.js)</li>
-                  <li>Intégration Stripe et génération de PDF</li>
-                </ul>
-              </div>
+    <div class="timelines-grid fu" style="animation-delay:.1s;">
+
+      <div class="card">
+        <div class="card-heading">
+          <div class="card-icon work-icon">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h2>{{ t.pro.title }}</h2>
+        </div>
+        <div class="timeline">
+          <div class="tl-item" v-for="item in t.pro.items" :key="item.role" :class="{ current: item.current }">
+            <div class="tl-marker">
+              <span v-if="item.current" class="tl-dot current-dot"></span>
+              <span v-else class="tl-dot past-dot"></span>
+            </div>
+            <div class="tl-content">
+              <span class="tl-date" :class="{ highlight: item.current }">{{ item.date }}</span>
+              <h3>{{ item.role }}</h3>
+              <p class="tl-company">{{ item.company }}</p>
+              <ul class="tl-list">
+                <li v-for="b in item.bullets" :key="b">{{ b }}</li>
+              </ul>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="info-card timeline-card neon-border">
-          <div class="card-header-line"></div>
-          <h3 class="card-title"><span class="title-icon">🎓</span> Parcours Académique</h3>
-          <div class="timeline">
-            <div class="timeline-item current">
-              <div class="timeline-marker active"></div>
-              <div class="timeline-date">2024 - 2026</div>
-              <div class="timeline-content">
-                <h4>MASTER 2 INTELLIGENCE ARTIFICIELLE</h4>
-                <p class="company">Université Claude Bernard Lyon 1</p>
-                <ul class="timeline-details">
-                  <li>Spécialisation Machine Learning & Deep Learning</li>
-                  <li>Computer Vision, NLP et Data Science</li>
-                  <li>Projets de recherche appliquée</li>
-                </ul>
-              </div>
+      <div class="card">
+        <div class="card-heading">
+          <div class="card-icon edu-icon">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h2>{{ t.edu.title }}</h2>
+        </div>
+        <div class="timeline">
+          <div class="tl-item" v-for="item in t.edu.items" :key="item.degree" :class="{ current: item.current }">
+            <div class="tl-marker">
+              <span v-if="item.current" class="tl-dot current-dot"></span>
+              <span v-else class="tl-dot past-dot"></span>
             </div>
-            
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-date">2020 - 2023</div>
-              <div class="timeline-content">
-                <h4>Licence Informatique</h4>
-                <p class="company">Université Claude Bernard Lyon 1</p>
-                <ul class="timeline-details">
-                  <li>Bases solides en algorithmique et développement</li>
-                </ul>
-              </div>
+            <div class="tl-content">
+              <span class="tl-date" :class="{ highlight: item.current }">{{ item.date }}</span>
+              <h3>{{ item.degree }}</h3>
+              <p class="tl-company">{{ item.school }}</p>
+              <ul class="tl-list">
+                <li v-for="b in item.bullets" :key="b">{{ b }}</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="section-objectives animated-entry" style="animation-delay: 0.4s;">
-      <div class="info-card objectives-card neon-border">
-        <div class="card-header-line"></div>
-        <h3 class="card-title"><span class="title-icon">🎯</span> Mon Offre de Service</h3>
-        
-        <div class="objectives-grid">
-          <div class="objective-item primary">
-            <div class="objective-icon">💻</div>
-            <div class="objective-content">
-              <h4>Développement Web</h4>
-              <p>Sites vitrines modernes, plateformes E-commerce, applications SaaS. Je transforme vos idées en produits digitaux performants.</p>
+    <section class="skills-section fu" style="animation-delay:.2s;">
+      <span class="eyebrow">{{ t.skills.eyebrow }}</span>
+      <h2 class="s-title" style="margin-top:12px;margin-bottom:32px;">{{ t.skills.title }}</h2>
+      <div class="skills-grid">
+        <div class="skill-group" v-for="g in t.skills.groups" :key="g.name">
+          <div class="sg-head">
+            <div class="sg-icon" :style="{ background: g.bg, color: g.color }">
+              <span v-html="g.icon"></span>
             </div>
+            <span class="sg-name">{{ g.name }}</span>
           </div>
-          
-          <div class="objective-item">
-            <div class="objective-icon">🤖</div>
-            <div class="objective-content">
-              <h4>Solutions IA</h4>
-              <p>Intégration d'intelligence artificielle, analyse d'images (Computer Vision) ou automatisation de tâches complexes.</p>
-            </div>
+          <div class="sg-chips">
+            <span class="chip" v-for="c in g.items" :key="c">{{ c }}</span>
           </div>
-        </div>
-        
-        <div class="cta-container">
-          <a href="mailto:amineitji@gmail.com?subject=Proposition de mission" class="contact-btn primary">
-            <span class="btn-icon">📧</span>
-            <span class="btn-text">Me contacter pour un projet</span>
-          </a>
-          <a href="/CV.pdf" download="CV_Amine_ITJI.pdf" class="contact-btn cv-btn">
-            <span class="btn-icon">📄</span>
-            <span class="btn-text">Télécharger CV</span>
-          </a>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="values-section fu" style="animation-delay:.25s;">
+      <div class="values-inner">
+        <div class="values-left">
+          <span class="eyebrow">{{ t.values.eyebrow }}</span>
+          <h2 class="s-title" style="margin-top:12px;">{{ t.values.title }}</h2>
+          <p class="s-sub" style="margin-top:10px;">{{ t.values.sub }}</p>
+          <a :href="`mailto:${contactEmail}?subject=${encodeURIComponent(t.values.subject)}`" class="btn btn-dark" style="margin-top:16px;width:fit-content;">
+            {{ t.values.cta }}
+          </a>
+        </div>
+        <div class="values-right">
+          <div class="value-card" v-for="v in t.values.items" :key="v.title">
+            <span class="value-num">{{ String(v.n).padStart(2,'0') }}</span>
+            <h4>{{ v.title }}</h4>
+            <p>{{ v.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
 <script>
+const CONTACT_EMAIL = 'amineitji@gmail.com';
+
 export default {
-  name: 'UserProfile'
+  name: 'UserProfile',
+  inject: ['getLang'],
+  data() {
+    return {
+      contactEmail: CONTACT_EMAIL
+    };
+  },
+  computed: {
+    lang() { return this.getLang(); },
+    t() {
+      const data = {
+        fr: {
+          eyebrow: 'À propos',
+          title: 'Parcours & Expertise',
+          sub: 'Une double compétence académique et professionnelle au service de l\'innovation technologique.',
+          ctaContact: 'Me contacter pour un projet',
+          ctaCV: 'Télécharger mon CV',
+          pro: {
+            title: 'Parcours Professionnel',
+            items: [
+              { current: true, date: 'Depuis Fév. 2026', role: 'AI Project Manager', company: 'Michelin',
+                bullets: ['Pilotage stratégique de projets IA à grande échelle.', 'Déploiement de solutions Data innovantes en environnement industriel.'] },
+              { current: true, date: 'Depuis Juin 2023', role: 'Développeur Full-Stack & Expert IA — Freelance', company: 'Indépendant',
+                bullets: ['Applications web et SaaS sur-mesure (Vue.js / Django).', 'Agents IA, LLMs, RAG et automatisation de processus métiers.', 'Web scraping massif et pipelines data (Python).'] },
+              { current: false, date: 'Jan. – Mars 2025', role: 'Stage — Digitalisation & Web', company: 'ALSTOM — Villeurbanne',
+                bullets: ['Digitalisation des processus d\'inspection (KIZEO).', 'Développement d\'outils internes et reporting analytique.'] },
+              { current: false, date: 'Mai – Juin 2023', role: 'Stage — Développeur Full-Stack', company: 'ANEQQIS — Paris',
+                bullets: ['Architecture SaaS de zéro (Django / Vue.js).', 'Intégration paiements Stripe et génération de PDF complexes.'] },
+            ],
+          },
+          edu: {
+            title: 'Parcours Académique',
+            items: [
+              { current: true, date: 'Diplômé 2026', degree: 'Master 2 Intelligence Artificielle', school: 'Université Claude Bernard Lyon 1',
+                bullets: ['Machine Learning, Deep Learning, NLP, Computer Vision.', 'Data Science et recherche appliquée en IA.'] },
+              { current: false, date: '2020 – 2023', degree: 'Licence Informatique', school: 'Université Claude Bernard Lyon 1',
+                bullets: ['Algorithmique, architecture logicielle, bases de données.'] },
+            ],
+          },
+          skills: {
+            eyebrow: 'Technologies',
+            title: 'Stack technique.',
+            groups: [
+              { name: 'Front-end', bg: '#eff6ff', color: '#3b82f6',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+                items: ['Vue.js 3', 'Nuxt.js', 'TypeScript', 'Tailwind', 'HTML/CSS'] },
+              { name: 'Back-end', bg: '#f0fdf4', color: '#10b981',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>',
+                items: ['Django', 'FastAPI', 'PostgreSQL', 'Redis', 'REST API'] },
+              { name: 'Intelligence Artificielle', bg: '#f5f3ff', color: '#8b5cf6',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+                items: ['LangChain', 'LlamaIndex', 'OpenAI API', 'Anthropic', 'YOLO', 'Scikit-learn'] },
+              { name: 'Data & Cloud', bg: '#fff7ed', color: '#f59e0b',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+                items: ['AWS', 'Docker', 'CI/CD', 'Selenium', 'Scrapy', 'Pandas'] },
+            ],
+          },
+          values: {
+            eyebrow: 'Mon approche',
+            title: 'Pourquoi travailler avec moi.',
+            sub: 'Je ne suis pas juste un développeur. Je suis un partenaire technique qui comprend vos enjeux business.',
+            subject: 'Demande de collaboration freelance',
+            cta: 'Discutons de votre projet',
+            items: [
+              { n:1, title: 'Livraison, pas promesses', desc: 'DiagERP est en production et utilisé activement. Mon track record parle avant mes mots.' },
+              { n:2, title: 'Vision produit + technique', desc: 'Ancien stage dans une startup, CTO d\'une SaaS B2B, PM chez Michelin. Je code ET je pense produit.' },
+              { n:3, title: 'Transparence totale', desc: 'Devis détaillé, points réguliers, code documenté et livré avec les sources. Zéro mauvaise surprise.' },
+              { n:4, title: 'Réactivité garantie', desc: 'Chaque message reçoit une réponse sous 24h. Parce que votre temps a une valeur.' },
+            ],
+          },
+        },
+        en: {
+          eyebrow: 'About',
+          title: 'Background & Expertise',
+          sub: 'A dual academic and professional expertise at the service of technological innovation.',
+          ctaContact: 'Contact me for a project',
+          ctaCV: 'Download my CV',
+          pro: {
+            title: 'Professional Experience',
+            items: [
+              { current: true, date: 'Since Feb. 2026', role: 'AI Project Manager', company: 'Michelin',
+                bullets: ['Strategic management of large-scale AI projects.', 'Deployment of innovative Data solutions in an industrial environment.'] },
+              { current: true, date: 'Since June 2023', role: 'Full-Stack Developer & AI Expert — Freelance', company: 'Independent',
+                bullets: ['Custom web and SaaS applications (Vue.js / Django).', 'AI agents, LLMs, RAG and business process automation.', 'Massive web scraping and data pipelines (Python).'] },
+              { current: false, date: 'Jan. – Mar. 2025', role: 'Internship — Digitalization & Web', company: 'ALSTOM — Villeurbanne',
+                bullets: ['Digitalization of inspection processes (KIZEO).', 'Development of internal tools and analytical reporting.'] },
+              { current: false, date: 'May – Jun. 2023', role: 'Internship — Full-Stack Developer', company: 'ANEQQIS — Paris',
+                bullets: ['Full SaaS architecture from scratch (Django / Vue.js).', 'Stripe payment integration and complex PDF generation.'] },
+            ],
+          },
+          edu: {
+            title: 'Academic Background',
+            items: [
+              { current: true, date: 'Graduating 2026', degree: 'M.Sc. Artificial Intelligence', school: 'Université Claude Bernard Lyon 1',
+                bullets: ['Machine Learning, Deep Learning, NLP, Computer Vision.', 'Data Science and applied AI research.'] },
+              { current: false, date: '2020 – 2023', degree: 'B.Sc. Computer Science', school: 'Université Claude Bernard Lyon 1',
+                bullets: ['Algorithms, software architecture, databases.'] },
+            ],
+          },
+          skills: {
+            eyebrow: 'Technologies',
+            title: 'Technical stack.',
+            groups: [
+              { name: 'Front-end', bg: '#eff6ff', color: '#3b82f6',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+                items: ['Vue.js 3', 'Nuxt.js', 'TypeScript', 'Tailwind', 'HTML/CSS'] },
+              { name: 'Back-end', bg: '#f0fdf4', color: '#10b981',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>',
+                items: ['Django', 'FastAPI', 'PostgreSQL', 'Redis', 'REST API'] },
+              { name: 'Artificial Intelligence', bg: '#f5f3ff', color: '#8b5cf6',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+                items: ['LangChain', 'LlamaIndex', 'OpenAI API', 'Anthropic', 'YOLO', 'Scikit-learn'] },
+              { name: 'Data & Cloud', bg: '#fff7ed', color: '#f59e0b',
+                icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+                items: ['AWS', 'Docker', 'CI/CD', 'Selenium', 'Scrapy', 'Pandas'] },
+            ],
+          },
+          values: {
+            eyebrow: 'My approach',
+            title: 'Why work with me.',
+            sub: 'I\'m not just a developer. I\'m a technical partner who understands your business challenges.',
+            subject: 'Freelance collaboration request',
+            cta: 'Let\'s discuss your project',
+            items: [
+              { n:1, title: 'Delivery, not promises', desc: 'DiagERP is in production and actively used. My track record speaks before my words.' },
+              { n:2, title: 'Product + technical vision', desc: 'Former startup intern, CTO of a B2B SaaS, PM at Michelin. I code AND think product.' },
+              { n:3, title: 'Full transparency', desc: 'Detailed quote, regular updates, documented code delivered with sources. Zero nasty surprises.' },
+              { n:4, title: 'Guaranteed responsiveness', desc: 'Every message gets a reply within 24h. Because your time has value.' },
+            ],
+          },
+        },
+      };
+      return data[this.lang];
+    },
+  },
 };
 </script>
 
 <style scoped>
-/* Variables harmonisées avec HomePage */
-:root {
-  --primary-blue: #2563eb;
-  --accent-cyan: #06b6d4;
-  --success-green: #10b981;
-  --warning-amber: #f59e0b;
-  --dark-bg: #030712;
-  --card-bg: #111827;
-  --border-color: #374151;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --linkedin-color: #0077b5;
-  --github-color: #f5f5f5;
-  --email-color: #ea4335;
-  --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Les styles restent inchangés ! */
+.profile-page { padding: 48px 0 80px; }
+
+/* Hero */
+.profile-hero {
+  max-width: 680px;
+  margin-bottom: 64px;
+  display: flex; flex-direction: column; gap: 0;
+}
+.profile-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+
+/* Timelines grid */
+.timelines-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 64px;
 }
 
-/* Base Styles */
-.profile-container {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  padding: 40px 20px;
-}
+.card { padding: 32px; }
 
-/* Particles Background - identique à HomePage */
-.particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
-
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="none"/><circle cx="10%" cy="20%" r="1.5" fill="%2342b883" opacity="0.7"/><circle cx="15%" cy="25%" r="0.8" fill="%2342b883" opacity="0.8"/><circle cx="20%" cy="15%" r="1.2" fill="%2300d8ff" opacity="0.7"/><circle cx="25%" cy="10%" r="0.5" fill="%2342b883" opacity="0.8"/></svg>');
-  animation: moveParticles 150s linear infinite;
-}
-
-@keyframes moveParticles {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.5) 0%, rgba(3, 7, 18, 0.95) 100%);
-  z-index: 1;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animated-entry {
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Cards - style harmonisé avec HomePage */
-.info-card {
-  width: 100%;
-  background: rgba(17, 24, 39, 0.8);
-  border-radius: 24px;
-  padding: 40px;
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
-  margin-bottom: 32px;
-}
-
-.neon-border::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, var(--primary-blue), var(--accent-cyan), var(--success-green), var(--primary-blue));
-  background-size: 400% 400%;
-  z-index: -1;
-  border-radius: 26px;
-  animation: glowingBorder 8s ease infinite;
-  opacity: 0.8;
-}
-
-@keyframes glowingBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.card-header-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: var(--gradient-primary);
-  opacity: 0.8;
-}
-
-.card-title {
-  font-size: 1.5rem;
-  margin-bottom: 24px;
-  color: var(--text-primary);
+.card-heading {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 600;
+  margin-bottom: 32px;
 }
 
-.title-icon {
-  font-size: 1.8rem;
-  background: var(--gradient-primary);
-  border-radius: 12px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.card-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
+.work-icon { background: #eff6ff; color: var(--blue); }
+.edu-icon  { background: #f5f3ff; color: var(--purple); }
+
+.card-heading h2 { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); }
 
 /* Timeline */
 .timeline {
   position: relative;
-  padding-left: 32px;
-  margin-top: 24px;
+  padding-left: 20px;
 }
 
 .timeline::before {
   content: '';
   position: absolute;
-  left: 8px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--primary-blue), var(--accent-cyan), var(--success-green));
-  opacity: 0.6;
+  top: 6px; bottom: 0; left: 5px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gray-200), transparent);
 }
 
-.timeline-item {
+.tl-item {
   position: relative;
   margin-bottom: 32px;
-  padding-bottom: 24px;
 }
+.tl-item:last-child { margin-bottom: 0; }
 
-.timeline-item:not(:last-child) {
-  border-bottom: 1px dashed rgba(209, 213, 219, 0.2);
-}
-
-.timeline-item.current {
-  background: rgba(37, 99, 235, 0.05);
-  border-radius: 12px;
-  padding: 20px;
-  margin-left: -20px;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-}
-
-.timeline-marker {
+.tl-marker {
   position: absolute;
-  left: -32px;
-  width: 16px;
-  height: 16px;
+  left: -20px; top: 3px;
+}
+
+.tl-dot {
+  display: block;
   border-radius: 50%;
-  background: var(--text-muted);
-  border: 3px solid var(--card-bg);
-  margin-top: 6px;
-  transition: var(--transition);
 }
 
-.timeline-marker.active {
-  background: var(--primary-blue);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
-  animation: pulse 2s infinite;
+.current-dot {
+  width: 10px; height: 10px;
+  background: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
+  animation: blink-blue 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+@keyframes blink-blue {
+  0%,100% { box-shadow: 0 0 0 3px rgba(59,130,246,0.18); }
+  50%      { box-shadow: 0 0 0 6px rgba(59,130,246,0.07); }
 }
 
-.timeline-date {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent-cyan);
-  margin-bottom: 8px;
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(6, 182, 212, 0.2);
+.past-dot {
+  width: 8px; height: 8px;
+  background: var(--gray-300);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 1px var(--gray-200);
+  margin-top: 1px;
 }
 
-.timeline-content h4 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: var(--text-primary);
-  font-weight: 600;
-}
+.tl-content { padding-left: 8px; }
 
-.company {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-  font-style: italic;
-}
-
-.timeline-details {
-  padding-left: 0;
-  list-style: none;
-  margin-top: 12px;
-}
-
-.timeline-details li {
-  margin-bottom: 6px;
-  position: relative;
-  padding-left: 20px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.timeline-details li::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  color: var(--accent-cyan);
-  font-weight: bold;
-}
-
-.availability-badge,
-.academic-status {
-  margin-top: 12px;
+.tl-date {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.badge-text,
-.status-value {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.73rem;
   font-weight: 600;
-}
-
-.status-label {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-/* Expertise Grid */
-.expertise-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.expertise-category {
-  background: rgba(3, 7, 18, 0.5);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid var(--border-color);
-}
-
-.category-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  color: var(--gray-400);
+  padding: 3px 9px;
+  background: var(--gray-100);
+  border-radius: 100px;
+  margin-bottom: 8px;
 }
 
-.skills-list {
+.tl-date.highlight {
+  color: var(--blue);
+  background: var(--blue-light);
+}
+
+.tl-content h3 {
+  font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 3px;
+}
+
+.tl-company {
+  font-size: 0.82rem; color: var(--cyan); font-weight: 600; margin-bottom: 10px;
+}
+
+.tl-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 5px;
+}
+
+.tl-list li {
+  position: relative;
+  padding-left: 12px;
+  font-size: 0.845rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+.tl-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gray-300);
+}
+
+/* Skills */
+.skills-section { margin-bottom: 64px; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.skill-group {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
+  box-shadow: var(--shadow-sm);
+}
+.skill-group:hover { border-color: var(--gray-300); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+.sg-head { display: flex; align-items: center; gap: 10px; }
+
+.sg-icon {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.sg-name { font-size: 0.82rem; font-weight: 700; color: var(--gray-900); }
+
+.sg-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* Values */
+.values-section { }
+
+.values-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  background: var(--gray-900);
+  border-radius: 24px;
+  padding: 56px;
+}
+
+.values-left { display: flex; flex-direction: column; gap: 0; }
+.values-left .eyebrow::before { background: linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0.2)); }
+.values-left .eyebrow { color: rgba(255,255,255,0.35); }
+.values-left .s-title { color: var(--white); }
+.values-left .s-sub { color: rgba(255,255,255,0.45); }
+
+.values-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.value-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
+  transition: background 0.22s;
+}
+.value-card:hover { background: rgba(255,255,255,0.07); }
+
+.value-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.08em;
 }
 
-.skill-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(55, 65, 81, 0.3);
-}
-
-.skill-item:last-child {
-  border-bottom: none;
-}
-
-.skill-name {
+.value-card h4 {
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
 }
 
-.skill-level {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--success-green);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-/* Tech Stack */
-.tech-stack-section {
-  border-top: 1px solid var(--border-color);
-  padding-top: 24px;
-}
-
-.stack-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.tech-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tech-tag {
-  background: rgba(55, 65, 81, 0.5);
-  color: var(--text-secondary);
-  padding: 6px 12px;
-  border-radius: 16px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: var(--transition);
-  border: 1px solid var(--border-color);
-}
-
-.tech-tag.primary {
-  background: rgba(37, 99, 235, 0.2);
-  color: var(--primary-blue);
-  border-color: rgba(37, 99, 235, 0.3);
-}
-
-.tech-tag.ai {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--success-green);
-  border-color: rgba(16, 185, 129, 0.3);
-}
-
-.tech-tag:hover {
-  transform: translateY(-2px);
-}
-
-/* Objectifs */
-.objectives-grid {
-  display: grid;
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.objective-item {
-  display: flex;
-  gap: 16px;
-  padding: 20px;
-  background: rgba(3, 7, 18, 0.3);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  transition: var(--transition);
-}
-
-.objective-item:hover {
-  border-color: var(--primary-blue);
-  background: rgba(37, 99, 235, 0.05);
-}
-
-.objective-item.primary {
-  border-color: var(--accent-cyan);
-  background: rgba(6, 182, 212, 0.05);
-}
-
-.objective-icon {
-  font-size: 2rem;
-  min-width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(37, 99, 235, 0.1);
-  border-radius: 12px;
-}
-
-.objective-content h4 {
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.objective-content p {
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-.preferred-domains {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.domain-tag {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--accent-cyan);
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-/* Boutons CTA */
-.cta-container {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-color);
-}
-
-.contact-btn {
-  display: flex;
-  align-items: center;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 500;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
-  border: 1px solid;
-  background: rgba(17, 24, 39, 0.7);
-  z-index: 1;
-}
-
-.contact-btn:hover {
-  transform: translateY(-3px);
-}
-
-.contact-btn.primary {
-  background: var(--gradient-primary);
-  color: white;
-  border-color: transparent;
-}
-
-.contact-btn.primary:hover {
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
-}
-
-.contact-btn.cv-btn {
-  color: var(--accent-cyan);
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-.contact-btn.cv-btn:hover {
-  background: rgba(6, 182, 212, 0.1);
-  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.1);
-}
-
-/* Réalisations */
-.achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.achievement-item {
-  background: rgba(3, 7, 18, 0.3);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  transition: var(--transition);
-}
-
-.achievement-item:hover {
-  border-color: var(--success-green);
-  background: rgba(16, 185, 129, 0.05);
-  transform: translateY(-2px);
-}
-
-.achievement-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.achievement-icon {
-  font-size: 1.5rem;
-  background: rgba(16, 185, 129, 0.1);
-  padding: 8px;
-  border-radius: 8px;
-}
-
-.achievement-header h4 {
-  font-size: 1rem;
-  color: var(--text-primary);
-  margin: 0;
-  font-weight: 600;
-}
-
-.achievement-item p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* Grid Layout */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-}
-
-/* Blur effects - identiques à HomePage */
-.blur-effect {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: -1;
-  opacity: 0.2;
-}
-
-.blur-effect.green {
-  background: var(--success-green);
-  animation: floatAnimation 8s ease-in-out infinite;
-}
-
-.blur-effect.purple {
-  background: var(--primary-blue);
-  animation: floatAnimation 10s ease-in-out infinite reverse;
-}
-
-.blur-effect.cyan {
-  background: var(--accent-cyan);
-  animation: floatAnimation 12s ease-in-out infinite;
-}
-
-@keyframes floatAnimation {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(30px, 20px); }
-  100% { transform: translate(0, 0); }
-}
+.value-card p { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .expertise-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .profile-container {
-    padding: 16px;
-  }
-  
-  .info-card {
-    padding: 20px;
-  }
-  
-  .card-title {
-    font-size: 1.3rem;
-  }
-  
-  .timeline {
-    padding-left: 24px;
-  }
-  
-  .timeline-marker {
-    left: -24px;
-  }
-  
-  .objective-item {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .cta-container {
-    flex-direction: column;
-  }
-  
-  .contact-btn {
-    justify-content: center;
-  }
-  
-  .achievements-grid {
-    grid-template-columns: 1fr;
-  }
+  .profile-page { padding: 32px 0 60px; }
+  .timelines-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-inner { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+  .values-right { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .values-right { grid-template-columns: 1fr; }
 }
 </style>

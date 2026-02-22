@@ -1,174 +1,151 @@
 <template>
   <div class="article-card-container">
-    <!-- Carte d'article avec hover animations -->
-    <div class="article-card" @click="openModal">
-      <!-- Effet de bordure néon -->
-      <div class="card-neon-border"></div>
-      
-      <!-- Image avec overlay gradient -->
+    
+    <div class="article-card" @click="openModal" tabindex="0" @keyup.enter="openModal" role="button">
       <div class="card-image-container">
-        <img :src="imageSrc" class="card-image" alt="card image" />
-        <div class="image-overlay">
-          <div class="overlay-content">
-            <h3 class="card-title">{{ title }}</h3>
-            <div class="expand-button">
-              <span class="expand-icon">
-                <span class="arrow-line"></span>
-                <span class="arrow-line"></span>
-              </span>
-            </div>
-          </div>
+        <img :src="imageSrc" class="card-image" :alt="title" loading="lazy" />
+        <div class="image-overlay"></div>
+        <div class="card-badge" v-if="tag">
+          <span class="badge-text">{{ tag }}</span>
         </div>
       </div>
       
-      <!-- Badge avec animation flottante -->
-      <div class="card-badge">
-        <span class="badge-text">{{ tag }}</span>
+      <div class="card-content">
+        <h3 class="card-title">{{ title }}</h3>
+        <div class="card-action">
+          <span class="read-more">{{ readLabel || (lang === 'en' ? 'Read more' : 'Lire la suite') }}</span>
+          <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
       </div>
     </div>
 
-    <!-- Modal avec design modernisé -->
-    <div class="modal-backdrop" v-if="isModalOpen" @click.self="closeModal"></div>
-    <div class="article-modal" v-if="isModalOpen" ref="articleModal">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h2 class="modal-title">{{ title }}</h2>
-            <button type="button" class="close-button" @click="closeModal">
-              <span class="close-icon"></span>
-            </button>
-          </div>
-          
-          <!-- Modal Body -->
-          <div class="modal-body">
-            <div v-for="(item, index) in content" :key="index" class="content-item">
-              <p v-if="typeof item === 'string'" class="text-content">{{ item }}</p>
-              <div v-else-if="typeof item === 'object'" class="image-container">
-                <img :src="item.src" :alt="item.alt" class="modal-image" />
+    <Transition name="fade">
+      <div 
+        v-if="isModalOpen" 
+        class="modal-backdrop" 
+        @click.self="closeModal"
+      >
+        <div 
+          class="article-modal"
+          role="dialog"
+          aria-modal="true"
+          :aria-labelledby="`modal-title-${_uid}`"
+        >
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              
+              <button type="button" class="close-button" @click="closeModal" aria-label="Fermer l'article">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+
+              <div class="modal-header-image">
+                <img :src="imageSrc" :alt="title" loading="lazy" />
+                <div class="modal-badge" v-if="tag">{{ tag }}</div>
               </div>
+
+              <div class="modal-body">
+                <h2 :id="`modal-title-${_uid}`" class="modal-title">{{ title }}</h2>
+                
+                <div class="modal-text-content">
+                  <div v-if="contentHtml" v-html="contentHtml" class="html-content"></div>
+                  <p v-else class="text-content">{{ content }}</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Transition>
+    
   </div>
 </template>
 
 <script>
 export default {
   name: 'ArticleCard',
+  inject: ['getLang'],
+  
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    imageSrc: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: Array,
-      required: true,
-    },
-    tag: {
-      type: String,
-      required: true,
-    },
+    title: { type: String, required: true },
+    imageSrc: { type: String, required: true },
+    tag: { type: String, default: '' },
+    readLabel: { type: String, default: '' },
+    content: { type: String, default: '' },
+    contentHtml: { type: String, default: '' }
   },
+
   data() {
     return {
       isModalOpen: false
     };
   },
+
+  computed: {
+    lang() {
+      return this.getLang ? this.getLang() : 'fr';
+    }
+  },
+
+  watch: {
+    // Empêcher le scroll du body quand la modale est ouverte
+    isModalOpen(newValue) {
+      if (newValue) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+  },
+
   methods: {
     openModal() {
       this.isModalOpen = true;
-      document.body.style.overflow = 'hidden';
     },
     closeModal() {
       this.isModalOpen = false;
-      document.body.style.overflow = '';
     }
   },
+
   beforeUnmount() {
-    // S'assurer que le overflow est réinitialisé si le composant est démonté
+    // Sécurité : réactiver le scroll si le composant est détruit pendant que la modale est ouverte
     document.body.style.overflow = '';
   }
 };
 </script>
 
 <style scoped>
-/* Variables */
-:root {
-  --neon-green: #42b883;
-  --neon-blue: #00d8ff;
-  --neon-purple: #bd34fe;
-  --dark-bg: #0a0b13;
-  --card-bg: #12141f;
-  --text-primary: #f0f0f0;
-  --text-secondary: #b4b4b8;
-  --border-color: #2a2d36;
-  --transition-speed: 0.3s;
-}
-
-/* Container */
+/* ── Container principal ── */
 .article-card-container {
-  position: relative;
+  width: 100%;
 }
 
-/* Article Card */
+/* ── Carte ── */
 .article-card {
-  position: relative;
-  border-radius: 12px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 16px;
   overflow: hidden;
-  background: var(--card-bg);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: all 0.4s ease;
-  transform-style: preserve-3d;
+  transition: border-color 0.25s, box-shadow 0.3s, transform 0.3s var(--ease);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
-.article-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+.article-card:hover, .article-card:focus-visible {
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
 }
 
-/* Neon Border Effect */
-.card-neon-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 12px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.article-card:hover .card-neon-border::before {
-  opacity: 1;
-}
-
-.card-neon-border::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  background: linear-gradient(45deg, var(--neon-green), var(--neon-blue), var(--neon-purple)) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Image Container */
 .card-image-container {
   position: relative;
   width: 100%;
@@ -184,293 +161,247 @@ export default {
 }
 
 .article-card:hover .card-image {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-/* Overlay */
 .image-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(10, 11, 19, 0.9), rgba(10, 11, 19, 0.2));
-  opacity: 0.85;
-  transition: opacity 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.4) 0%, transparent 50%);
 }
 
-.article-card:hover .image-overlay {
-  opacity: 1;
-}
-
-.overlay-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-}
-
-/* Card Title */
-.card-title {
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-  max-width: 80%;
-  transition: transform 0.3s ease;
-}
-
-.article-card:hover .card-title {
-  transform: translateY(-5px);
-}
-
-/* Expand Button */
-.expand-button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(66, 184, 131, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.article-card:hover .expand-button {
-  background: rgba(66, 184, 131, 0.4);
-  transform: rotate(90deg);
-}
-
-.expand-icon {
-  position: relative;
-  width: 10px;
-  height: 10px;
-}
-
-.arrow-line {
-  position: absolute;
-  background: var(--neon-green);
-  height: 2px;
-  width: 10px;
-  top: 4px;
-  border-radius: 1px;
-}
-
-.arrow-line:first-child {
-  transform: rotate(45deg);
-  right: -2px;
-}
-
-.arrow-line:last-child {
-  transform: rotate(-45deg);
-  right: -2px;
-  top: 8px;
-}
-
-/* Badge */
 .card-badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-
-.article-card:hover .card-badge {
-  transform: translateY(-3px);
+  top: 16px;
+  left: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 4px 10px;
+  border-radius: 100px;
+  box-shadow: var(--shadow-sm);
 }
 
 .badge-text {
-  display: inline-block;
-  padding: 5px 12px;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-  border-radius: 20px;
-  color: white;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.card-action {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--blue);
+  transition: color 0.2s;
+}
+
+.read-more {
+  font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 0 0 10px rgba(66, 184, 131, 0.3);
-  transition: all 0.3s ease;
 }
 
-.article-card:hover .badge-text {
-  box-shadow: 0 0 15px rgba(66, 184, 131, 0.5);
+.arrow-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
 }
 
-/* Modal */
+.article-card:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* ── Modale ── */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 11, 19, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  transition: opacity 0.3s ease;
-}
-
-.article-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
   padding: 20px;
 }
 
-.modal-wrapper {
-  max-width: 800px;
+.article-modal {
   width: 100%;
+  max-width: 680px;
   max-height: 90vh;
-  animation: modalFadeIn 0.3s ease forwards;
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.modal-wrapper {
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  position: relative;
 }
 
 .modal-container {
-  background: rgba(18, 20, 31, 0.95);
-  border-radius: 12px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  max-height: 80vh;
-}
-
-.modal-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
-}
-
-/* Modal Header */
-.modal-header {
-  padding: 20px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.modal-title {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  font-weight: 600;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
 }
 
 .close-button {
-  background: transparent;
-  border: none;
-  width: 32px;
-  height: 32px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: none;
+  color: var(--gray-700);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .close-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--white);
+  color: var(--gray-900);
+  transform: scale(1.05);
 }
 
-.close-icon {
-  position: relative;
+.close-button svg {
   width: 20px;
   height: 20px;
 }
 
-.close-icon::before,
-.close-icon::after {
-  content: '';
+.modal-header-image {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.modal-header-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-badge {
   position: absolute;
-  width: 20px;
-  height: 2px;
-  background: var(--text-primary);
-  top: 10px;
-  border-radius: 1px;
-  transition: background 0.3s ease;
+  bottom: -14px;
+  left: 32px;
+  background: var(--blue);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--white);
 }
 
-.close-icon::before {
-  transform: rotate(45deg);
-}
-
-.close-icon::after {
-  transform: rotate(-45deg);
-}
-
-.close-button:hover .close-icon::before,
-.close-button:hover .close-icon::after {
-  background: var(--neon-green);
-}
-
-/* Modal Body */
 .modal-body {
-  padding: 25px;
-  overflow-y: auto;
-  max-height: calc(80vh - 75px);
+  padding: 40px 32px 32px;
 }
 
-.content-item {
-  margin-bottom: 20px;
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  margin-bottom: 24px;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
 }
 
-.text-content {
-  color: var(--text-secondary);
+.text-content, .html-content {
+  color: var(--gray-600);
   line-height: 1.8;
-  margin: 0 0 20px;
   font-size: 1rem;
 }
 
-.image-container {
-  width: 100%;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+/* Styles profonds pour le contenu HTML injecté */
+:deep(.html-content p) {
+  margin-bottom: 16px;
+}
+:deep(.html-content h3) {
+  color: var(--gray-900);
+  margin: 24px 0 12px;
+  font-size: 1.3rem;
+}
+:deep(.html-content ul) {
+  margin-bottom: 16px;
+  padding-left: 20px;
+}
+:deep(.html-content li) {
+  margin-bottom: 8px;
 }
 
-.modal-image {
-  width: 100%;
-  height: auto;
-  display: block;
+/* ── Transitions ── */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-active .modal-wrapper {
+  animation: slideUp 0.4s var(--ease) forwards;
+}
+.fade-leave-active .modal-wrapper {
+  animation: slideDown 0.3s ease forwards;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .modal-wrapper {
-    max-width: 100%;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(20px) scale(0.98); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .modal-backdrop {
+    padding: 12px;
   }
-  
+  .modal-header-image {
+    height: 200px;
+  }
+  .modal-badge {
+    left: 20px;
+  }
+  .modal-body {
+    padding: 32px 20px 24px;
+  }
   .modal-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 }
 </style>

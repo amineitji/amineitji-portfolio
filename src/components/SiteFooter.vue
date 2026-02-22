@@ -1,244 +1,209 @@
 <template>
   <footer class="footer">
-    <div class="footer-content">
-      <!-- Logo -->
-      <div class="footer-logo">
-        <div class="logo-symbol">AI</div>
-        <div class="glow-effect"></div>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand">Amine<span class="brand-dot">.</span></span>
+        <p class="brand-sub">{{ t.sub }}</p>
       </div>
-      
-      <!-- Copyright avec animation -->
-      <div class="copyright">
-        <span class="copyright-text">Amine ITJI</span>
-        <span class="copyright-symbol">&copy;</span>
-        <span class="copyright-year">{{ currentYear }}</span>
-      </div>
-      
-      <!-- Ligne décorative -->
-      <div class="footer-line"></div>
-      
-      <!-- Réseaux sociaux -->
-      <div class="social-links">
-        <a href="https://github.com/amineitji" target="_blank" class="social-link github">
-          <i class="bi bi-github"></i>
+
+      <nav class="footer-nav" aria-label="Menu de pied de page">
+        <router-link to="/">{{ t.home }}</router-link>
+        <router-link to="/profil">{{ t.about }}</router-link>
+        <router-link to="/projets">{{ t.projects }}</router-link>
+        <router-link to="/services">{{ t.services }}</router-link>
+      </nav>
+
+      <div class="footer-social">
+        <a :href="`mailto:${contactEmail}`" aria-label="Email" class="social-link">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </a>
-        <a href="https://fr.linkedin.com/in/amine-itji-5a8696268" target="_blank" class="social-link linkedin">
-          <i class="bi bi-linkedin"></i>
-        </a>
-        <a href="mailto:amineitji@gmail.com" class="social-link email">
-          <i class="bi bi-envelope-fill"></i>
+        <a href="https://github.com/amineitji" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-link">
+          <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         </a>
       </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Amine Itji. {{ t.rights }}.</p>
     </div>
   </footer>
 </template>
 
 <script>
+const CONTACT_EMAIL = 'amineitji@gmail.com';
+
 export default {
   name: 'SiteFooter',
+  inject: ['getLang'],
+  
   data() {
     return {
-      currentYear: new Date().getFullYear(),
+      contactEmail: CONTACT_EMAIL
     };
   },
+
+  computed: {
+    lang() { return this.getLang(); },
+    currentYear() {
+      // Met à jour l'année automatiquement
+      return new Date().getFullYear();
+    },
+    t() {
+      const data = {
+        fr: {
+          sub: 'AI Project Manager @ Michelin · Freelance Full-Stack & IA',
+          home: 'Accueil',
+          about: 'À propos',
+          projects: 'Projets',
+          services: 'Services',
+          rights: 'Tous droits réservés'
+        },
+        en: {
+          sub: 'AI Project Manager @ Michelin · Freelance Full-Stack & AI',
+          home: 'Home',
+          about: 'About',
+          projects: 'Work',
+          services: 'Services',
+          rights: 'All rights reserved'
+        }
+      };
+      return data[this.lang];
+    }
+  }
 };
 </script>
 
 <style scoped>
-/* Variables */
-:root {
-  --neon-green: #42b883;
-  --neon-blue: #00d8ff;
-  --dark-bg: #0a0a12;
-  --border-color: #1a1a1f;
-  --text-color: #f0f0f0;
-}
-
-/* Base Footer Styles */
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background-color: rgba(10, 10, 18, 0.9);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid var(--border-color);
-  z-index: 900;
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  padding: 64px 0 24px;
+  margin-top: 40px;
 }
 
-.footer-content {
-  max-width: 1200px;
+.footer-inner {
+  max-width: var(--max-w);
   margin: 0 auto;
-  height: 100%;
-  display: flex;
+  padding: 0 var(--px);
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 40px;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
+  margin-bottom: 48px;
 }
 
-/* Footer Logo */
-.footer-logo {
-  position: relative;
+.footer-brand {
+  grid-column: 1;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--gray-900);
+}
+
+.brand-dot { color: var(--blue); }
+
+.brand-sub {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 6px;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.footer-nav {
+  grid-column: 2;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 24px;
 }
 
-.logo-symbol {
-  width: 35px;
-  height: 35px;
+.footer-nav a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--gray-900);
+}
+
+.footer-social {
+  grid-column: 3;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-  border-radius: 8px;
-  color: white;
-  font-weight: 700;
-  font-size: 14px;
-  box-shadow: 0 0 10px rgba(66, 184, 131, 0.3);
-  transition: all 0.3s ease;
-}
-
-.footer-logo:hover .logo-symbol {
-  transform: translateY(-3px);
-  box-shadow: 0 0 15px rgba(66, 184, 131, 0.5);
-}
-
-.glow-effect {
-  position: absolute;
-  width: 35px;
-  height: 10px;
-  background: radial-gradient(ellipse at center, rgba(66, 184, 131, 0.4) 0%, rgba(66, 184, 131, 0) 70%);
-  border-radius: 50%;
-  bottom: -10px;
-  filter: blur(3px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.footer-logo:hover .glow-effect {
-  opacity: 1;
-}
-
-/* Copyright Styles */
-.copyright {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  color: var(--text-color);
-  font-size: 14px;
-}
-
-.copyright-symbol {
-  color: var(--neon-green);
-  margin: 0 3px;
-}
-
-.copyright-year {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.copyright-year::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-  transition: transform 0.3s ease;
-  transform: scaleX(0);
-}
-
-.copyright:hover .copyright-year::after {
-  transform: scaleX(1);
-}
-
-/* Footer Line */
-.footer-line {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(66, 184, 131, 0.1), 
-    rgba(66, 184, 131, 0.3), 
-    rgba(66, 184, 131, 0.5), 
-    rgba(66, 184, 131, 0.3), 
-    rgba(66, 184, 131, 0.1), 
-    transparent
-  );
-}
-
-/* Social Links */
-.social-links {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .social-link {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: var(--text-color);
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  color: var(--gray-500);
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .social-link:hover {
-  transform: translateY(-3px);
+  background: var(--gray-100);
+  border-color: var(--gray-300);
+  color: var(--gray-900);
+  transform: translateY(-2px);
 }
 
-.social-link.github:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+.footer-bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px var(--px) 0;
+  border-top: 1px solid var(--gray-100);
+  text-align: center;
 }
 
-.social-link.linkedin:hover {
-  background-color: rgba(0, 119, 181, 0.2);
-  color: #0077b5;
-  box-shadow: 0 0 8px rgba(0, 119, 181, 0.3);
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  margin: 0;
 }
 
-.social-link.email:hover {
-  background-color: rgba(234, 67, 53, 0.2);
-  color: #ea4335;
-  box-shadow: 0 0 8px rgba(234, 67, 53, 0.3);
-}
-
-/* Responsive Adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .footer-content {
-    padding: 0 15px;
+  .footer {
+    padding: 48px 0 24px;
   }
   
-  .social-links {
-    gap: 10px;
+  .footer-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    text-align: center;
+    gap: 32px;
   }
   
-  .copyright {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-logo {
-    display: none;
+  .footer-brand {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
-  .footer-content {
-    justify-content: space-between;
+  .footer-nav {
+    grid-column: 1;
+    grid-row: 2;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .footer-social {
+    grid-column: 1;
+    grid-row: 3;
+    justify-content: center;
   }
 }
 </style>

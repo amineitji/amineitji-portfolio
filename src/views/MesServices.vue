@@ -1,1836 +1,773 @@
 <template>
-  <div class="services-container">
-    <div class="particles-container">
-      <div class="particles"></div>
-      <div class="gradient-overlay"></div>
-    </div>
+  <div class="services-page">
 
-    <div class="services-header animated-entry">
-      <h1 class="main-title">
-        <span class="title-icon">🛠️</span>
-        Mes Services & Tarifs
-      </h1>
-      <p class="main-subtitle">
-        Des solutions web professionnelles adaptées à votre budget.<br/>
-        <strong>Développement sur mesure • Qualité Freelance • Suivi personnalisé</strong>
+    <header class="page-hero fu">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        {{ t.status }}
+      </div>
+      <h1 class="s-title" style="margin-top:16px;">{{ t.title }}</h1>
+      <p class="s-sub" style="margin-top:10px;">{{ t.sub }}</p>
+      <p class="disclaimer">
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        {{ t.disclaimer }}
       </p>
-    </div>
+    </header>
 
-    <div class="templates-section animated-entry" style="animation-delay: 0.2s;">
-      <h2 class="section-title">
-        <span class="section-icon">🌐</span>
-        Création de Sites Web
-      </h2>
-      
-      <div class="templates-grid">
-        
-        <div class="template-card basic-theme" @click="openPreview('basic')">
-          <div class="card-glow basic-glow"></div>
-          
-          <div class="template-header">
-            <div class="template-level">
-              <span class="level-badge basic-badge">STARTER</span>
-            </div>
-            <h2 class="template-name">Pack Présence</h2>
-            <div class="template-price">600€</div>
-            <p class="template-tagline">Idéal pour démarrer</p>
+    <section class="section fu" style="animation-delay:.08s;">
+      <div class="section-head">
+        <span class="eyebrow">{{ t.web.eyebrow }}</span>
+        <h2 class="s-title" style="margin-top:12px;">{{ t.web.title }}</h2>
+        <p class="s-sub" style="margin-top:8px;">{{ t.web.sub }}</p>
+      </div>
+
+      <div class="packs-grid">
+        <div
+          class="pack-card"
+          v-for="pack in t.web.packs"
+          :key="pack.key"
+          :class="{ featured: pack.featured }"
+          @click="openModal(pack)"
+        >
+          <div v-if="pack.featured" class="featured-ribbon">{{ t.popularLabel }}</div>
+          <div class="pack-badge" :class="`badge-${pack.key}`">{{ pack.badge }}</div>
+          <div class="pack-name">{{ pack.name }}</div>
+          <div class="pack-price">
+            <span class="pack-amount">{{ pack.price }}</span>
+            <span class="pack-delay">{{ pack.delay }}</span>
           </div>
-
-          <div class="preview-mockup">
-             <div class="browser-chrome"><div class="chrome-url">votre-site.fr</div></div>
-             <div style="padding:20px; text-align:center; color:#888;">Aperçu du site vitrine</div>
-          </div>
-
-          <div class="template-features">
-            <div class="feature-item"><span class="feature-icon">✓</span> Site One-Page ou jusqu'à 3 pages</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> Design Responsive (Mobile/PC)</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> Formulaire de contact + Maps</div>
-          </div>
-
-          <div class="template-meta">
-            <div class="meta-item"><span class="meta-icon">⏱️</span> 1 semaine</div>
-          </div>
-
-          <button class="template-cta basic-cta">
-            <span class="cta-text">Voir les détails</span>
-            <span class="cta-arrow">→</span>
-          </button>
-        </div>
-
-        <div class="template-card avance-theme" @click="openPreview('avance')">
-          <div class="card-glow avance-glow"></div>
-          
-          <div class="template-header">
-            <div class="template-level">
-              <span class="level-badge avance-badge">BUSINESS</span>
-            </div>
-            <h2 class="template-name">Pack Pro</h2>
-            <div class="template-price">950€</div>
-            <p class="template-tagline">Pour les entreprises exigeantes</p>
-          </div>
-
-          <div class="preview-mockup">
-             <div class="browser-chrome"><div class="chrome-url">votre-entreprise.com</div></div>
-             <div style="padding:20px; text-align:center; color:#888;">Aperçu du site complet</div>
-          </div>
-
-          <div class="template-features">
-            <div class="feature-item"><span class="feature-icon">✓</span> Jusqu'à 7 pages personnalisées</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> Animations & Design Premium</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> Optimisation SEO Avancée</div>
-          </div>
-
-          <div class="template-meta">
-            <div class="meta-item"><span class="meta-icon">⏱️</span> 2 semaines</div>
-          </div>
-
-          <button class="template-cta avance-cta">
-            <span class="cta-text">Voir les détails</span>
-            <span class="cta-arrow">→</span>
-          </button>
-        </div>
-
-        <div class="template-card premium-theme featured" @click="openPreview('premium')">
-          <div class="popular-ribbon">SUR MESURE</div>
-          <div class="card-glow premium-glow"></div>
-          
-          <div class="template-header">
-            <div class="template-level">
-              <span class="level-badge premium-badge">EXCELLENCE</span>
-            </div>
-            <h2 class="template-name">Pack Expert</h2>
-            <div class="template-price">Sur Devis</div>
-            <p class="template-tagline">Applications & Besoins complexes</p>
-          </div>
-
-          <div class="preview-mockup">
-             <div class="browser-chrome"><div class="chrome-url">app.votre-startup.io</div></div>
-             <div style="padding:20px; text-align:center; color:#888;">Aperçu application web</div>
-          </div>
-
-          <div class="template-features">
-            <div class="feature-item"><span class="feature-icon">✓</span> Développement Web App (SaaS)</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> E-commerce / Espace membre</div>
-            <div class="feature-item"><span class="feature-icon">✓</span> Intégration IA / API</div>
-          </div>
-
-          <div class="template-meta">
-            <div class="meta-item"><span class="meta-icon">⏱️</span> 3+ semaines</div>
-            <div class="meta-item"><span class="meta-icon">💰</span> Dès 1500€</div>
-          </div>
-
-          <button class="template-cta premium-cta">
-            <span class="cta-text">Demander un devis</span>
-            <span class="cta-arrow">→</span>
+          <p class="pack-pitch">{{ pack.pitch }}</p>
+          <ul class="pack-list">
+            <li v-for="f in pack.features" :key="f">
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ f }}
+            </li>
+          </ul>
+          <button class="pack-btn" :class="pack.featured ? 'btn-inv' : 'btn-soft'">
+            {{ pack.featured ? t.quoteBtn : t.detailsBtn }} →
           </button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="webapp-section animated-entry" style="animation-delay: 0.4s;">
-      <h2 class="section-title">
-        <span class="section-icon">💼</span>
-        Missions Freelance & TJM
-      </h2>
-      
-      <div class="webapp-card">
-        <div class="webapp-header">
-          <div class="webapp-badge">Expertise Technique</div>
-          <h3 class="webapp-title">Développement Full-Stack & Data</h3>
-          <div class="webapp-price">350€ / Jour</div>
-          <p style="color:var(--text-secondary); margin-top:5px; font-size:0.9rem;">Tarif Journalier Moyen (TJM) • Facturation à la mission possible</p>
+    <section class="section fu" style="animation-delay:.12s;">
+      <div class="section-head">
+        <span class="eyebrow">{{ t.ai.eyebrow }}</span>
+        <h2 class="s-title" style="margin-top:12px;">{{ t.ai.title }}</h2>
+        <p class="s-sub" style="margin-top:8px;">{{ t.ai.sub }}</p>
+      </div>
+
+      <div class="ai-grid">
+        <div class="ai-card" v-for="item in t.ai.items" :key="item.name">
+          <div class="ai-icon" :style="{ background: item.iconBg }">
+            <span v-html="item.icon"></span>
+          </div>
+          <div class="ai-body">
+            <div class="ai-name">{{ item.name }}</div>
+            <p class="ai-desc">{{ item.desc }}</p>
+            <div class="ai-price-row">
+              <span class="ai-price">{{ item.price }}</span>
+              <span class="ai-eta">{{ item.eta }}</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="webapp-content">
-          <div class="webapp-features">
-            <div class="webapp-col">
-              <h4>Développement Back-end</h4>
-              <ul>
-                <li>API REST Django / Python</li>
-                <li>Base de données PostgreSQL</li>
-                <li>Architecture Cloud (AWS)</li>
-              </ul>
-            </div>
-            <div class="webapp-col">
-              <h4>Développement Front-end</h4>
-              <ul>
-                <li>Vue.js 3 / JavaScript</li>
-                <li>Interfaces Réactives</li>
-                <li>Intégration Maquettes</li>
-              </ul>
-            </div>
-            <div class="webapp-col">
-              <h4>Intelligence Artificielle</h4>
-              <ul>
-                <li>Scripts d'analyse de données</li>
-                <li>Computer Vision (YOLO, OpenCV)</li>
-                <li>Intégration de modèles ML</li>
-              </ul>
-            </div>
+      <div class="ai-note">
+        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        {{ t.ai.note }}
+      </div>
+    </section>
+
+    <section class="section fu" style="animation-delay:.16s;">
+      <div class="section-head">
+        <span class="eyebrow">{{ t.tjm.eyebrow }}</span>
+        <h2 class="s-title" style="margin-top:12px;">{{ t.tjm.title }}</h2>
+        <p class="s-sub" style="margin-top:8px;">{{ t.tjm.sub }}</p>
+      </div>
+
+      <div class="tjm-block">
+        <div class="tjm-left">
+          <div class="tjm-rate">
+            <span class="tjm-val">{{ t.tjm.rate }}</span>
+            <span class="tjm-unit">{{ t.tjm.unit }}</span>
           </div>
-          
-          <div class="webapp-pricing">
-            <div class="pricing-item">
-              <span class="pricing-duration">MVP (Prototype rapide)</span>
-              <span class="pricing-amount">Sur devis (~2500€)</span>
-            </div>
-            <div class="pricing-item">
-              <span class="pricing-duration">Application Métier Complète</span>
-              <span class="pricing-amount">Sur devis (~4500€+)</span>
-            </div>
-          </div>
-          
-          <a :href="getWebAppMailto()" class="webapp-cta">
-            <span class="btn-icon">🤝</span>
-            <span class="btn-text">Discuter de votre projet</span>
+          <p class="tjm-note">{{ t.tjm.note }}</p>
+          <a :href="tjmMailto" class="btn btn-dark">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            {{ t.tjm.cta }}
           </a>
         </div>
-      </div>
-    </div>
 
-    <div v-if="selectedTemplate" class="modal-backdrop" @click="closePreview"></div>
-    <div v-if="selectedTemplate" class="template-modal">
-      <div class="modal-wrapper">
-        <button class="modal-close" @click="closePreview"><span>✕</span></button>
-        
-        <div class="modal-content">
-          <div class="modal-header" :class="`${selectedTemplate}-theme`">
-            <h2 class="modal-title">{{ getTemplateData().title }}</h2>
-            <div class="modal-price">{{ getTemplateData().price }}</div>
-          </div>
-          
-          <div class="modal-body">
-            <div class="modal-section">
-              <h3>📋 Ce qui est inclus</h3>
-              <ul class="modal-features">
-                <li v-for="(feature, idx) in getTemplateData().features" :key="idx">
-                  <span class="check">✓</span> {{ feature }}
-                </li>
+        <div class="tjm-right">
+          <div class="tjm-domains">
+            <div class="tjm-domain" v-for="d in t.tjm.domains" :key="d.title">
+              <div class="domain-title">{{ d.title }}</div>
+              <ul class="domain-list">
+                <li v-for="i in d.items" :key="i">{{ i }}</li>
               </ul>
             </div>
-            
-            <div class="modal-cta">
-              <a :href="getVitrineMailto()" class="modal-btn" :class="`${selectedTemplate}-btn`">
-                <span class="btn-icon">📩</span>
-                <span class="btn-text">Commander ce pack</span>
-              </a>
+          </div>
+          <div class="tjm-indicatifs">
+            <div class="indic" v-for="r in t.tjm.indicatifs" :key="r.label">
+              <span class="indic-label">{{ r.label }}</span>
+              <span class="indic-value">{{ r.value }}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="section fu" style="animation-delay:.2s;">
+      <div class="section-head">
+        <span class="eyebrow">{{ t.why.eyebrow }}</span>
+        <h2 class="s-title" style="margin-top:12px;">{{ t.why.title }}</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card" v-for="(w, i) in t.why.items" :key="i">
+          <span class="why-num">{{ String(i+1).padStart(2,'0') }}</span>
+          <h4>{{ w.title }}</h4>
+          <p>{{ w.desc }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-final fu" style="animation-delay:.24s;">
+      <div class="cta-final-box">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          {{ t.status }}
+        </div>
+        <h2>{{ t.cta.title }}</h2>
+        <p>{{ t.cta.sub }}</p>
+        <div class="cta-row">
+          <a :href="contactMailto" class="btn btn-dark large">{{ t.cta.btn }}</a>
+          <span class="cta-reassure">{{ t.cta.reassure }}</span>
+        </div>
+      </div>
+    </section>
+
+    <transition name="modal-fade">
+      <div v-if="activeModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal-panel">
+          <button class="modal-close" @click="closeModal" aria-label="Fermer">
+            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="modal-head">
+            <div class="modal-badge" :class="`badge-${activeModal.key}`">{{ activeModal.badge }}</div>
+            <h3>{{ activeModal.name }}</h3>
+            <div class="modal-price">{{ activeModal.price }}</div>
+          </div>
+          <div class="modal-body-section">
+            <p class="modal-pitch">{{ activeModal.pitch }}</p>
+            <div class="modal-label">{{ t.includedLabel }}</div>
+            <ul class="modal-list">
+              <li v-for="f in activeModal.features" :key="f">
+                <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ f }}
+              </li>
+            </ul>
+            <div class="modal-meta">
+              <div><span class="meta-k">{{ t.delayLabel }}</span><span class="meta-v">{{ activeModal.delay }}</span></div>
+              <div v-if="activeModal.support"><span class="meta-k">Support</span><span class="meta-v">{{ activeModal.support }}</span></div>
+            </div>
+            <a :href="activeModal.mailto" class="btn btn-dark" style="width:100%;justify-content:center;margin-top:4px;">
+              {{ t.orderBtn }} →
+            </a>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+// On centralise l'adresse email
+const CONTACT_EMAIL = 'amineitji@gmail.com';
+
 export default {
   name: 'ServicesPage',
+  inject: ['getLang'],
+
   data() {
-    return {
-      selectedTemplate: null,
-      templatesData: {
-        basic: {
-          title: 'Pack Présence - Starter',
-          price: '600€',
-          features: [
-            'Site Vitrine jusqu\'à 3 pages (Accueil, Services, Contact)',
-            'Design moderne et responsive (Mobile Friendly)',
-            'Formulaire de contact fonctionnel',
-            'Intégration Google Maps et Réseaux Sociaux',
-            'Hébergement et nom de domaine configurés',
-            'Optimisation SEO de base'
-          ]
-        },
-        avance: {
-          title: 'Pack Pro - Business',
-          price: '950€',
-          features: [
-            'Tout du Pack Présence + jusqu\'à 7 pages',
-            'Design Premium avec animations fluides',
-            'Galerie photos/projets dynamique',
-            'Blog ou section actualités simple',
-            'Optimisation SEO avancée et performances',
-            'Maintenance technique offerte 1 mois'
-          ]
-        },
-        premium: {
-          title: 'Pack Expert - Sur Mesure',
-          price: 'Sur Devis (dès 1500€)',
-          features: [
-            'Application Web complète ou Site complexe',
-            'Fonctionnalités sur mesure (Espace membre, Réservation...)',
-            'Back-office d\'administration',
-            'Intégration API ou Intelligence Artificielle',
-            'Architecture évolutive et sécurisée',
-            'Accompagnement et formation complets'
-          ]
-        }
-      }
+    return { 
+      activeModal: null,
+      email: CONTACT_EMAIL
     };
   },
+
+  computed: {
+    lang() { return this.getLang(); },
+
+    contactMailto() {
+      return this.lang === 'en'
+        ? `mailto:${this.email}?subject=New freelance project&body=Hi Amine,`
+        : `mailto:${this.email}?subject=Nouveau projet freelance&body=Bonjour Amine,`;
+    },
+
+    tjmMailto() {
+      return this.lang === 'en'
+        ? `mailto:${this.email}?subject=Freelance mission&body=Hi Amine,`
+        : `mailto:${this.email}?subject=Mission freelance&body=Bonjour Amine,`;
+    },
+
+    t() {
+      const data = {
+        fr: {
+          status: 'Disponible pour nouveaux projets',
+          title: 'Solutions sur-mesure.\nROI mesurable.',
+          sub: 'Développeur Full-Stack & Expert IA indépendant depuis 2023. Je conçois des applications performantes et des systèmes d\'automatisation intelligents.',
+          disclaimer: 'Activité freelance distincte de mon poste d\'AI Project Manager chez Michelin.',
+          popularLabel: 'Le plus demandé',
+          detailsBtn: 'Voir le détail',
+          quoteBtn: 'Demander un devis',
+          includedLabel: 'Ce qui est inclus',
+          delayLabel: 'Délai estimé',
+          orderBtn: 'Commander / Demander un devis',
+          web: {
+            eyebrow: 'Sites Web & Landing Pages',
+            title: 'Votre présence en ligne,\noptimisée pour convertir.',
+            sub: 'Chaque euro investi doit travailler pour vous. Sites SEO-first et conversion-first.',
+            packs: [
+              {
+                key: 'starter', featured: false,
+                badge: 'STARTER', name: 'Vitrine Essentielle', price: '700 €', delay: '~1 semaine',
+                pitch: 'Établissez une présence professionnelle crédible, rapidement et sans compromis.',
+                features: [
+                  'Site One-Page ou jusqu\'à 3 pages',
+                  'Design responsive Mobile / Desktop',
+                  'Formulaire de contact fonctionnel',
+                  'Google Maps + réseaux sociaux',
+                  'SEO on-page + sitemap XML',
+                  'Code source livré',
+                ],
+                support: '2 semaines de corrections offertes',
+                mailto: `mailto:${this.email}?subject=Devis Vitrine Essentielle&body=Bonjour,`,
+              },
+              {
+                key: 'business', featured: false,
+                badge: 'BUSINESS', name: 'Site Pro Optimisé', price: '1 200 €', delay: '~2 semaines',
+                pitch: 'Pour les entreprises qui veulent être trouvées sur Google et convertir.',
+                features: [
+                  'Tout du pack Vitrine + jusqu\'à 8 pages',
+                  'Design premium avec animations fluides',
+                  'Blog / Actualités dynamique',
+                  'SEO avancé — Score Lighthouse 90+',
+                  'Intégration CRM ou formulaires avancés',
+                  '1 mois de maintenance inclus',
+                ],
+                support: '1 mois de maintenance inclus',
+                mailto: `mailto:${this.email}?subject=Devis Site Pro&body=Bonjour,`,
+              },
+              {
+                key: 'premium', featured: true,
+                badge: 'SUR MESURE', name: 'Application & SaaS', price: 'Dès 2 500 €', delay: 'Selon scope',
+                pitch: 'Applications web complètes, évolutives et prêtes à scaler.',
+                features: [
+                  'Application SaaS ou Web App complète',
+                  'Authentification & espace membres',
+                  'Back-office d\'administration',
+                  'Paiements Stripe & facturation auto',
+                  'Intégration IA / agents LLM',
+                  'Architecture cloud (AWS / Docker / CI-CD)',
+                  'Documentation + formation incluses',
+                ],
+                support: 'Accompagnement post-livraison inclus',
+                mailto: `mailto:${this.email}?subject=Projet SaaS sur mesure&body=Bonjour,`,
+              },
+            ],
+          },
+          ai: {
+            eyebrow: 'Intelligence Artificielle',
+            title: 'Automatisez ce qui\nvous coûte du temps.',
+            sub: 'Agents IA 24h/24 · LLMs privés · Computer Vision · Data pipelines.',
+            note: 'Chaque mission IA comprend un cadrage gratuit de 30 minutes avant tout devis.',
+            items: [
+              {
+                name: 'Chatbot IA sur vos données (RAG)',
+                desc: 'Interrogez vos PDF et bases documentaires via un assistant IA privé. Vos données ne quittent jamais votre infrastructure.',
+                price: '1 500 – 3 500 €', eta: '2-4 semaines',
+                iconBg: '#eff6ff',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+              },
+              {
+                name: 'Agent IA autonome & Automation',
+                desc: 'Automatisez vos processus répétitifs : qualification de leads, génération de rapports, traitement d\'emails. Un agent qui agit.',
+                price: '2 000 – 5 000 €', eta: '3-6 semaines',
+                iconBg: '#f5f3ff',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+              },
+              {
+                name: 'Web Scraping & Pipeline Data',
+                desc: 'Extraction massive de données web (concurrents, marchés). Pipeline complet : collecte → nettoyage → CSV/API prête à l\'emploi.',
+                price: '800 – 2 500 €', eta: '1-3 semaines',
+                iconBg: '#f0fdf4',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+              },
+              {
+                name: 'Prompt Engineering & Intégration LLM',
+                desc: 'Optimisation de vos prompts pour GPT-4 / Claude / Mistral. Intégration d\'API IA dans vos workflows. Résultats typiques : 3x moins de corrections.',
+                price: '500 – 1 500 €', eta: '3-10 jours',
+                iconBg: '#fff7ed',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+              },
+            ],
+          },
+          tjm: {
+            eyebrow: 'Missions Freelance',
+            title: 'Renfort d\'équipe ou\nmission ponctuelle.',
+            sub: 'Senior developer pour un sprint, expert IA pour un projet critique — je m\'intègre rapidement.',
+            rate: '380 €',
+            unit: '/ jour (TJM)',
+            note: 'Tarif dégressif dès 15 jours. Facturation à la mission possible.',
+            cta: 'Discuter de votre besoin',
+            domains: [
+              { title: 'Full-Stack', items: ['Vue.js 3 / Nuxt', 'Django / FastAPI', 'PostgreSQL, Redis', 'AWS, Docker, CI/CD'] },
+              { title: 'Intelligence Artificielle', items: ['LangChain, LlamaIndex', 'OpenAI, Anthropic', 'Computer Vision (YOLO)', 'Prompt Engineering'] },
+              { title: 'Data & Scraping', items: ['Selenium, Scrapy', 'Pandas, NumPy', 'Pipelines ETL', 'Visualisation (Plotly)'] },
+            ],
+            indicatifs: [
+              { label: 'Audit technique IA (demi-journée)', value: '250 €' },
+              { label: 'MVP — Prototype fonctionnel', value: '~2 800 €' },
+              { label: 'Application métier complète', value: '~5 500 €+' },
+              { label: 'Retainer mensuel (10j/mois)', value: '~3 200 €' },
+            ],
+          },
+          why: {
+            eyebrow: 'Différenciateurs',
+            title: 'Pourquoi des clients B2B me font confiance.',
+            items: [
+              { title: 'Industrie + Startup', desc: 'AI PM chez Michelin + CTO d\'une SaaS B2B. Je comprends les enjeux des grandes entreprises ET la réactivité startup.' },
+              { title: 'Référence SaaS en production', desc: 'DiagERP tourne en ce moment. Je ne vends pas du potentiel — je livre des produits qui scalent.' },
+              { title: 'Double compétence IA + Dev', desc: 'La plupart des devs ne savent pas intégrer l\'IA. La plupart des data scientists ne savent pas construire des produits. Je fais les deux.' },
+              { title: 'Transparence totale', desc: 'Devis détaillé, points bi-hebdomadaires, code documenté livré avec les sources. Zéro surprise.' },
+            ],
+          },
+          cta: {
+            title: 'Votre prochain projet commence\npar une conversation.',
+            sub: 'Décrivez-moi votre défi en deux phrases. Réponse avec proposition claire sous 24h, sans engagement.',
+            btn: 'Envoyer un message',
+            reassure: '✓ Gratuit · ✓ Sans engagement · ✓ Réponse < 24h',
+          },
+        },
+
+        en: {
+          status: 'Available for new projects',
+          title: 'Tailored solutions.\nMeasurable ROI.',
+          sub: 'Independent Full-Stack Developer & AI Expert since 2023. I build high-performance applications and intelligent automation systems.',
+          disclaimer: 'Freelance activity, separate from my AI Project Manager role at Michelin.',
+          popularLabel: 'Most requested',
+          detailsBtn: 'See details',
+          quoteBtn: 'Request a quote',
+          includedLabel: 'What\'s included',
+          delayLabel: 'Timeline',
+          orderBtn: 'Order / Request a quote',
+          web: {
+            eyebrow: 'Websites & Landing Pages',
+            title: 'Your online presence,\nbuilt to convert.',
+            sub: 'Every euro invested must work for you. SEO-first and conversion-first websites.',
+            packs: [
+              {
+                key: 'starter', featured: false,
+                badge: 'STARTER', name: 'Essential Website', price: '€700', delay: '~1 week',
+                pitch: 'Establish a credible, professional online presence — fast and without quality compromise.',
+                features: [
+                  'One-page or up to 3 pages',
+                  'Fully responsive (Mobile / Desktop)',
+                  'Working contact form',
+                  'Google Maps + social links',
+                  'On-page SEO + XML sitemap',
+                  'Full source code delivered',
+                ],
+                support: '2 weeks of revisions included',
+                mailto: `mailto:${this.email}?subject=Quote - Essential Website&body=Hi Amine,`,
+              },
+              {
+                key: 'business', featured: false,
+                badge: 'BUSINESS', name: 'Pro SEO Website', price: '€1,200', delay: '~2 weeks',
+                pitch: 'For businesses that want to rank on Google and convert visitors into leads.',
+                features: [
+                  'Everything in Starter + up to 8 pages',
+                  'Premium design with smooth animations',
+                  'Dynamic blog / news section',
+                  'Advanced SEO — Lighthouse 90+ guaranteed',
+                  'CRM or advanced form integration',
+                  '1 month maintenance included',
+                ],
+                support: '1 month maintenance included',
+                mailto: `mailto:${this.email}?subject=Quote - Pro SEO Website&body=Hi Amine,`,
+              },
+              {
+                key: 'premium', featured: true,
+                badge: 'CUSTOM', name: 'App & SaaS', price: 'From €2,500', delay: 'Based on scope',
+                pitch: 'Complete, scalable web applications ready to handle thousands of users.',
+                features: [
+                  'Full SaaS or Web Application',
+                  'Auth & member area',
+                  'Admin back-office',
+                  'Stripe payments & auto invoicing',
+                  'Custom AI / LLM agent integration',
+                  'Cloud infra (AWS / Docker / CI-CD)',
+                  'Documentation + training included',
+                ],
+                support: 'Post-delivery support included',
+                mailto: `mailto:${this.email}?subject=Quote - Custom SaaS&body=Hi Amine,`,
+              },
+            ],
+          },
+          ai: {
+            eyebrow: 'Artificial Intelligence',
+            title: 'Automate what costs\nyou time.',
+            sub: 'AI agents 24/7 · Private LLMs · Computer Vision · Data pipelines.',
+            note: 'Every AI mission includes a free 30-minute scoping call before any quote.',
+            items: [
+              {
+                name: 'AI Chatbot on your data (RAG)',
+                desc: 'Query your PDFs and document bases via a private AI assistant. Your data never leaves your infrastructure.',
+                price: '€1,500 – €3,500', eta: '2-4 weeks',
+                iconBg: '#eff6ff',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+              },
+              {
+                name: 'Autonomous AI Agent & Automation',
+                desc: 'Automate repetitive processes: lead qualification, report generation, email processing. An agent that acts.',
+                price: '€2,000 – €5,000', eta: '3-6 weeks',
+                iconBg: '#f5f3ff',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+              },
+              {
+                name: 'Web Scraping & Data Pipeline',
+                desc: 'Massive web data extraction (competitors, markets). Full pipeline: collection → cleaning → CSV/API delivery.',
+                price: '€800 – €2,500', eta: '1-3 weeks',
+                iconBg: '#f0fdf4',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+              },
+              {
+                name: 'Prompt Engineering & LLM Integration',
+                desc: 'Optimize your prompts for GPT-4 / Claude / Mistral. Integrate AI APIs into your workflows. Typical results: 3x fewer corrections.',
+                price: '€500 – €1,500', eta: '3-10 days',
+                iconBg: '#fff7ed',
+                icon: '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+              },
+            ],
+          },
+          tjm: {
+            eyebrow: 'Freelance Missions',
+            title: 'Team reinforcement or\npunctual mission.',
+            sub: 'Senior developer for a sprint, AI expert for a critical project — I integrate quickly.',
+            rate: '€380',
+            unit: '/ day (daily rate)',
+            note: 'Discounted from 15 days. Mission-based billing available.',
+            cta: 'Discuss your needs',
+            domains: [
+              { title: 'Full-Stack', items: ['Vue.js 3 / Nuxt', 'Django / FastAPI', 'PostgreSQL, Redis', 'AWS, Docker, CI/CD'] },
+              { title: 'Artificial Intelligence', items: ['LangChain, LlamaIndex', 'OpenAI, Anthropic', 'Computer Vision (YOLO)', 'Prompt Engineering'] },
+              { title: 'Data & Scraping', items: ['Selenium, Scrapy', 'Pandas, NumPy', 'ETL Pipelines', 'Visualisation (Plotly)'] },
+            ],
+            indicatifs: [
+              { label: 'AI Technical Audit (half-day)', value: '€250' },
+              { label: 'MVP — Functional prototype', value: '~€2,800' },
+              { label: 'Full business application', value: '~€5,500+' },
+              { label: 'Monthly retainer (10d/mo)', value: '~€3,200' },
+            ],
+          },
+          why: {
+            eyebrow: 'Why me',
+            title: 'Why B2B clients trust me.',
+            items: [
+              { title: 'Industry + Startup', desc: 'AI PM at Michelin + CTO of a B2B SaaS. I understand enterprise requirements AND startup agility.' },
+              { title: 'Live SaaS proof of work', desc: 'DiagERP is running right now. I\'m not selling potential — I deliver products that scale.' },
+              { title: 'AI + Dev dual expertise', desc: 'Most devs can\'t integrate AI. Most data scientists can\'t ship products. I do both — end to end.' },
+              { title: 'Full transparency', desc: 'Detailed quote, bi-weekly updates, documented source code delivered. Zero surprises.' },
+            ],
+          },
+          cta: {
+            title: 'Your next project starts\nwith a conversation.',
+            sub: 'Describe your challenge in two sentences. Reply with a clear proposal within 24h, no commitment.',
+            btn: 'Send a message',
+            reassure: '✓ Free · ✓ No commitment · ✓ Reply < 24h',
+          },
+        },
+      };
+      return data[this.lang];
+    },
+  },
+
   methods: {
-    openPreview(template) {
-      this.selectedTemplate = template;
+    openModal(pack) {
+      this.activeModal = pack;
       document.body.style.overflow = 'hidden';
     },
-    closePreview() {
-      this.selectedTemplate = null;
+    closeModal() {
+      this.activeModal = null;
       document.body.style.overflow = '';
     },
-    getTemplateData() {
-      return this.templatesData[this.selectedTemplate];
-    },
-    getVitrineMailto() {
-      const templateName = this.selectedTemplate ? this.getTemplateData().title : '';
-      return `mailto:amineitji@gmail.com?subject=Devis - ${templateName}&body=Bonjour Amine, je suis intéressé par le ${templateName}...`;
-    },
-    getWebAppMailto() {
-      return `mailto:amineitji@gmail.com?subject=Projet Freelance&body=Bonjour Amine, j'ai un projet de développement...`;
-    }
   },
+
   beforeUnmount() {
     document.body.style.overflow = '';
-  }
+  },
 };
 </script>
 
 <style scoped>
-:root {
-  --primary-blue: #2563eb;
-  --accent-cyan: #06b6d4;
-  --success-green: #10b981;
-  --warning-amber: #f59e0b;
-  --premium-purple: #7c3aed;
-  --dark-bg: #030712;
-  --card-bg: #111827;
-  --border-color: #374151;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Les styles restent inchangés car ils correspondent parfaitement à l'UI design system du site */
+.services-page { padding: 48px 0 80px; }
+
+/* Hero */
+.page-hero { max-width: 680px; margin-bottom: 72px; display: flex; flex-direction: column; gap: 0; }
+.disclaimer {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.76rem; color: var(--gray-400);
+  padding: 7px 12px; background: var(--gray-50);
+  border: 1px solid var(--gray-200); border-radius: 8px;
+  margin-top: 14px; width: fit-content;
 }
 
-/* Base Styles */
-.services-container {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  padding: 40px 20px;
-}
+/* Section scaffolding */
+.section { margin-bottom: 80px; }
+.section-head { margin-bottom: 40px; display: flex; flex-direction: column; gap: 0; }
 
-.particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
-
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.5) 0%, rgba(3, 7, 18, 0.95) 100%);
-  z-index: 1;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animated-entry {
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Header */
-.services-header {
-  text-align: center;
-  margin-bottom: 60px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.main-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.title-icon {
-  font-size: 2.5rem;
-}
-
-.main-subtitle {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.section-icon {
-  font-size: 2rem;
-}
-
-/* Templates Section */
-.templates-section {
-  max-width: 1400px;
-  margin: 0 auto 100px;
-}
-
-.templates-grid {
+/* ── PACKS ── */
+.packs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
 }
 
-/* Template Card */
-.template-card {
-  background: rgba(17, 24, 39, 0.9);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 32px;
+.pack-card {
   position: relative;
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 20px;
+  padding: 26px;
   cursor: pointer;
-  transition: var(--transition);
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex; flex-direction: column; gap: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
 }
+.pack-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
 
-.template-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.template-card.featured {
-  border-color: var(--premium-purple);
-}
-
-.card-glow {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 0;
-  border-radius: 24px;
-}
-
-.template-card:hover .card-glow {
-  opacity: 0.1;
-}
-
-.basic-glow {
-  background: radial-gradient(circle at 50% 50%, var(--success-green), transparent 70%);
-}
-
-.avance-glow {
-  background: radial-gradient(circle at 50% 50%, var(--primary-blue), transparent 70%);
-}
-
-.premium-glow {
-  background: radial-gradient(circle at 50% 50%, var(--premium-purple), transparent 70%);
-}
-
-.popular-ribbon {
-  position: absolute;
-  top: 20px;
-  right: -30px;
-  background: linear-gradient(135deg, var(--premium-purple), var(--warning-amber));
-  color: white;
-  padding: 4px 40px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  transform: rotate(45deg);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
-
-/* Template Header */
-.template-header {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.template-level {
-  margin-bottom: 12px;
-}
-
-.level-badge {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.basic-badge {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--success-green);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.avance-badge {
-  background: rgba(37, 99, 235, 0.2);
-  color: var(--primary-blue);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-}
-
-.premium-badge {
-  background: rgba(124, 58, 237, 0.2);
-  color: var(--premium-purple);
-  border: 1px solid rgba(124, 58, 237, 0.3);
-}
-
-.template-name {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-}
-
-.template-price {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  margin-bottom: 8px;
-  font-family: monospace;
-}
-
-.template-tagline {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-}
-
-/* Preview Mockup */
-.preview-mockup {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 24px;
-  background: #1a1d2a;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.browser-chrome {
-  background: #0a0b13;
-  padding: 10px 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.chrome-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.chrome-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-
-.chrome-dots span:nth-child(1) { background: #ff5f56; }
-.chrome-dots span:nth-child(2) { background: #ffbd2e; }
-.chrome-dots span:nth-child(3) { background: #27c93f; }
-
-.chrome-url {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-.theme-toggle {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  font-size: 0.9rem;
-}
-
-/* Pages Container - Horizontal Scroll */
-.pages-container {
-  position: relative;
-  height: 350px;
-  overflow: hidden;
-}
-
-.pages-scroll {
-  display: flex;
-  gap: 0;
-  height: 100%;
-  animation: slidePages 20s ease-in-out infinite;
-}
-
-@keyframes slidePages {
-  0%, 15% { transform: translateX(0); }
-  20%, 35% { transform: translateX(-100%); }
-  40%, 55% { transform: translateX(-200%); }
-  60%, 75% { transform: translateX(-300%); }
-  80%, 95% { transform: translateX(-400%); }
-  100% { transform: translateX(0); }
-}
-
-.template-card:hover .pages-scroll {
-  animation-play-state: paused;
-}
-
-/* Page Slide */
-.page-slide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-}
-
-.page-label {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(37, 99, 235, 0.9);
-  color: white;
-  padding: 4px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.page-label.dark {
-  background: rgba(6, 182, 212, 0.9);
-}
-
-.page-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-}
-
-/* Light & Dark Themes */
-.light-theme {
-  background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
-}
-
-.light-theme.premium {
-  background: linear-gradient(135deg, #dbeafe 0%, #fef3c7 100%);
-}
-
-.dark-theme {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-}
-
-/* Page Dots */
-.page-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 10;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transition: var(--transition);
-}
-
-.dot.active {
-  background: rgba(255, 255, 255, 0.9);
-  width: 24px;
-  border-radius: 4px;
-}
-
-/* Hero Mini */
-.hero-mini {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 32px 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.hero-mini.premium {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(245, 158, 11, 0.1));
-  z-index: 1;
-}
-
-.hero-logo {
-  width: 40px;
-  height: 40px;
-  background: rgba(37, 99, 235, 0.3);
-  border-radius: 8px;
-  border: 2px solid rgba(37, 99, 235, 0.5);
-}
-
-.hero-title {
-  width: 60%;
-  height: 24px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 4px;
-}
-
-.hero-subtitle {
-  width: 70%;
-  height: 14px;
-  background: rgba(37, 99, 235, 0.15);
-  border-radius: 4px;
-}
-
-.hero-cta {
-  width: 120px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  border-radius: 8px;
-  margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.dark-theme .hero-logo {
-  background: rgba(6, 182, 212, 0.3);
-  border-color: rgba(6, 182, 212, 0.5);
-}
-
-.dark-theme .hero-title {
-  background: rgba(249, 250, 251, 0.2);
-}
-
-.dark-theme .hero-subtitle {
-  background: rgba(249, 250, 251, 0.15);
-}
-
-/* About Content */
-.about-content {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: center;
-}
-
-.about-text {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.text-bar {
-  height: 8px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 4px;
-}
-
-.text-bar.short {
-  width: 70%;
-}
-
-.about-img {
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.2));
-  border-radius: 8px;
-  border: 1px solid rgba(37, 99, 235, 0.3);
-}
-
-.dark-theme .text-bar {
-  background: rgba(249, 250, 251, 0.15);
-}
-
-.dark-theme .about-img {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2));
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-/* Services Grid */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-}
-
-.service-item {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  transition: var(--transition);
-}
-
-.service-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.service-icon {
-  width: 32px;
-  height: 32px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 50%;
-  border: 2px solid rgba(37, 99, 235, 0.4);
-}
-
-.service-title {
-  width: 80%;
-  height: 10px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 4px;
-}
-
-.service-desc {
-  width: 100%;
-  height: 6px;
-  background: rgba(37, 99, 235, 0.1);
-  border-radius: 4px;
-}
-
-.dark-theme .service-item {
-  background: rgba(31, 41, 55, 0.8);
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-.dark-theme .service-icon {
-  background: rgba(6, 182, 212, 0.2);
-  border-color: rgba(6, 182, 212, 0.4);
-}
-
-.dark-theme .service-title {
-  background: rgba(249, 250, 251, 0.2);
-}
-
-.dark-theme .service-desc {
-  background: rgba(249, 250, 251, 0.1);
-}
-
-/* Gallery Grid */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-}
-
-.gallery-item {
-  height: 70px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.2));
-  border-radius: 6px;
-  border: 1px solid rgba(37, 99, 235, 0.3);
-  transition: var(--transition);
-}
-
-.gallery-item.large {
-  grid-column: span 2;
-  grid-row: span 2;
-  height: 150px;
-}
-
-.gallery-item:hover {
-  transform: scale(1.05);
-}
-
-/* Map Container */
-.map-container {
-  width: 100%;
-  height: 160px;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
-  border-radius: 8px;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.map-marker {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background: #ef4444;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg) translate(-50%, -50%);
-  border: 2px solid white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Contact Form */
-.contact-form {
-  width: 100%;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.form-input {
-  height: 36px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-  border-radius: 6px;
-}
-
-.form-input.large {
-  height: 70px;
-}
-
-.form-submit {
-  height: 40px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  border-radius: 6px;
-  margin-top: 4px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.dark-theme .form-input {
-  background: rgba(31, 41, 55, 0.9);
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-/* Modules Grid (Premium) */
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-}
-
-.module-item {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  transition: var(--transition);
-}
-
-.module-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-}
-
-.module-icon {
-  width: 28px;
-  height: 28px;
-  background: rgba(124, 58, 237, 0.2);
-  border-radius: 6px;
-  border: 2px solid rgba(124, 58, 237, 0.4);
-}
-
-.module-title {
-  width: 70%;
-  height: 8px;
-  background: rgba(124, 58, 237, 0.2);
-  border-radius: 4px;
-}
-
-/* Team Grid */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  width: 100%;
-}
-
-.team-member {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-}
-
-.member-avatar {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(6, 182, 212, 0.3));
-  border-radius: 50%;
-  border: 2px solid rgba(37, 99, 235, 0.4);
-}
-
-.member-name {
-  width: 70%;
-  height: 10px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 4px;
-}
-
-/* Animations */
-.shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 2.5s infinite;
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-/* Template Features */
-.template-features {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 24px;
-}
-
-.feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.feature-icon {
-  color: var(--success-green);
-  font-weight: 700;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-.feature-text {
-  flex: 1;
-}
-
-/* Template Meta */
-.template-meta {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 24px;
-  padding: 16px;
-  background: rgba(3, 7, 18, 0.5);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
-.meta-icon {
-  font-size: 1.2rem;
-}
-
-/* Template CTA */
-.template-cta {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-  z-index: 1;
-}
-
-.basic-cta {
-  background: linear-gradient(135deg, var(--success-green), var(--accent-cyan));
-  color: white;
-}
-
-.avance-cta {
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  color: white;
-}
-
-.premium-cta {
-  background: linear-gradient(135deg, var(--premium-purple), var(--warning-amber));
-  color: white;
-}
-
-.template-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.cta-arrow {
-  transition: transform 0.3s ease;
-}
-
-.template-cta:hover .cta-arrow {
-  transform: translateX(4px);
-}
-
-/* WebApp Section */
-.webapp-section {
-  max-width: 1200px;
-  margin: 0 auto 100px;
-}
-
-.webapp-card {
-  background: rgba(17, 24, 39, 0.9);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-
-.webapp-header {
-  padding: 40px 40px 20px;
-  text-align: center;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
-  border-bottom: 1px solid var(--border-color);
-}
-
-.webapp-badge {
-  display: inline-block;
-  padding: 6px 16px;
-  background: rgba(37, 99, 235, 0.2);
-  color: var(--primary-blue);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-bottom: 16px;
-}
-
-.webapp-title {
-  font-size: 2rem;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-  font-weight: 700;
-}
-
-.webapp-price {
-  font-size: 1.8rem;
-  color: var(--accent-cyan);
-  font-weight: 700;
-  font-family: monospace;
-}
-
-/* WebApp Preview */
-.webapp-preview {
-  margin: 0;
-}
-
-.webapp-mockup {
-  height: 300px;
-  background: #0a0b13;
-  display: flex;
-}
-
-.webapp-sidebar {
-  width: 80px;
-  background: #0f172a;
-  border-right: 1px solid var(--border-color);
-  padding: 20px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.sidebar-item {
-  height: 40px;
-  background: rgba(37, 99, 235, 0.2);
-  border-radius: 8px;
-  border: 1px solid rgba(37, 99, 235, 0.3);
-}
-
-.webapp-main {
-  flex: 1;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.dashboard-header {
-  height: 40px;
-  background: rgba(249, 250, 251, 0.1);
-  border-radius: 8px;
-}
-
-.dashboard-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.stat-card {
-  height: 80px;
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  border-radius: 12px;
-}
-
-.dashboard-chart {
-  flex: 1;
-  background: rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  border-radius: 12px;
-}
-
-/* WebApp Content */
-.webapp-content {
-  padding: 40px;
-}
-
-.webapp-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.webapp-col h4 {
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.webapp-col ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.webapp-col li {
-  padding: 6px 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.webapp-col li::before {
-  content: '▸';
-  color: var(--accent-cyan);
-  margin-right: 8px;
-  font-weight: bold;
-}
-
-.webapp-pricing {
-  background: rgba(3, 7, 18, 0.5);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 32px;
-  border: 1px solid var(--border-color);
-}
-
-.pricing-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.pricing-item:last-child {
-  border-bottom: none;
-}
-
-.pricing-duration {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
-.pricing-amount {
-  color: var(--accent-cyan);
-  font-weight: 700;
-  font-size: 1.1rem;
-  font-family: monospace;
-}
-
-.webapp-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 32px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  transition: var(--transition);
-}
-
-.webapp-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
-}
-
-/* Portfolio Section */
-.portfolio-section {
-  max-width: 1200px;
-  margin: 0 auto 80px;
-}
-
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-.portfolio-item {
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 32px;
-  text-decoration: none;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.portfolio-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary-blue);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-}
-
-.portfolio-content {
-  position: relative;
-  z-index: 2;
-}
-
-.portfolio-title {
-  font-size: 1.3rem;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.portfolio-type {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
-}
-
-.portfolio-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.portfolio-tag {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--accent-cyan);
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.portfolio-link {
-  position: absolute;
-  bottom: 32px;
-  right: 32px;
-  color: var(--accent-cyan);
-  font-weight: 600;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.portfolio-item:hover .portfolio-link {
-  opacity: 1;
-}
-
-/* Modal */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(3, 7, 18, 0.95);
-  backdrop-filter: blur(10px);
-  z-index: 2000;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.template-modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2001;
-  padding: 20px;
-}
+.pack-card.featured { background: var(--gray-900); border-color: var(--gray-800); }
+.pack-card.featured:hover { box-shadow: 0 18px 44px rgba(15,23,42,0.26); }
 
-.modal-wrapper {
-  max-width: 800px;
-  width: 100%;
-  max-height: 90vh;
-  background: rgba(17, 24, 39, 0.98);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  position: relative;
-  animation: slideUp 0.4s ease;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+.featured-ribbon {
+  position: absolute; top: -11px; left: 24px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 100px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
 }
+
+.pack-badge {
+  display: inline-flex; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; padding: 3px 10px; border-radius: 100px; width: fit-content;
+}
+.badge-starter { background: var(--gray-100); color: var(--gray-600); }
+.badge-business { background: var(--blue-light); color: var(--blue-dark); }
+.badge-premium  { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+.pack-name { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--gray-900); }
+.pack-card.featured .pack-name { color: var(--white); }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.pack-price { display: flex; align-items: baseline; gap: 8px; }
+.pack-amount { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.04em; color: var(--gray-900); }
+.pack-card.featured .pack-amount { color: var(--white); }
+.pack-delay { font-size: 0.77rem; color: var(--gray-400); }
+.pack-card.featured .pack-delay { color: rgba(255,255,255,0.38); }
+
+.pack-pitch { font-size: 0.84rem; color: var(--gray-500); line-height: 1.55; }
+.pack-card.featured .pack-pitch { color: rgba(255,255,255,0.5); }
+
+.pack-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.pack-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; color: var(--gray-500); line-height: 1.4; }
+.pack-list li svg { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+.pack-card.featured .pack-list li { color: rgba(255,255,255,0.65); }
+.pack-card.featured .pack-list li svg { color: #34d399; }
+
+.pack-btn {
+  width: 100%; padding: 11px; border-radius: 11px;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font); text-align: center;
+  border: 1.5px solid; transition: all 0.2s ease;
+  background: transparent;
+}
+.btn-soft { color: var(--gray-900); border-color: var(--gray-200); }
+.btn-soft:hover { background: var(--gray-100); border-color: var(--gray-300); }
+.btn-inv { color: var(--gray-900); border-color: var(--white); background: var(--white); }
+.btn-inv:hover { background: var(--gray-100); }
+
+/* ── AI GRID ── */
+.ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 14px; }
+
+.ai-card {
+  display: flex; gap: 14px; padding: 20px;
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: 16px; box-shadow: var(--shadow-sm);
+  transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
+}
+.ai-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+.ai-icon {
+  width: 40px; height: 40px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.ai-body { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.ai-name { font-size: 0.92rem; font-weight: 700; color: var(--gray-900); }
+.ai-desc { font-size: 0.81rem; color: var(--gray-500); line-height: 1.6; flex: 1; }
+.ai-price-row { display: flex; align-items: center; gap: 12px; padding-top: 9px; border-top: 1px solid var(--gray-100); }
+.ai-price { font-size: 0.85rem; font-weight: 700; color: var(--gray-900); }
+.ai-eta { font-size: 0.75rem; color: var(--gray-400); }
+
+.ai-note {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.79rem; color: var(--gray-400);
+  padding: 10px 14px; background: var(--gray-50);
+  border-radius: 10px; border: 1px solid var(--gray-100);
+}
+
+/* ── TJM ── */
+.tjm-block {
+  display: grid; grid-template-columns: 250px 1fr;
+  border: 1.5px solid var(--gray-200); border-radius: 20px;
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+
+.tjm-left {
+  padding: 32px 26px; background: var(--gray-900);
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.tjm-rate { display: flex; align-items: baseline; gap: 6px; }
+.tjm-val { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.05em; color: var(--white); }
+.tjm-unit { font-size: 0.82rem; color: rgba(255,255,255,0.38); }
+.tjm-note { font-size: 0.77rem; color: rgba(255,255,255,0.35); line-height: 1.5; }
+
+.tjm-right { padding: 24px 26px; display: flex; flex-direction: column; gap: 20px; }
+
+.tjm-domains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.domain-title {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--gray-900);
+  margin-bottom: 8px; padding-bottom: 7px; border-bottom: 2px solid var(--gray-100);
+}
+.domain-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.domain-list li { font-size: 0.79rem; color: var(--gray-500); }
+
+.tjm-indicatifs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.indic {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 9px 13px; background: var(--gray-50);
+  border-radius: 10px; border: 1px solid var(--gray-100);
+}
+.indic-label { font-size: 0.77rem; color: var(--gray-500); }
+.indic-value { font-size: 0.85rem; font-weight: 700; color: var(--gray-900); white-space: nowrap; }
+
+/* ── WHY ── */
+.why-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid var(--gray-200); border-radius: 20px; overflow: hidden;
+}
+.why-card {
+  padding: 24px 20px; border-right: 1px solid var(--gray-200);
+  background: var(--white); transition: background 0.2s;
+}
+.why-card:hover { background: var(--gray-50); }
+.why-card:last-child { border-right: none; }
+.why-num { font-size: 0.63rem; font-weight: 700; color: var(--gray-200); letter-spacing: 0.1em; margin-bottom: 10px; }
+.why-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 7px; }
+.why-card p { font-size: 0.79rem; color: var(--gray-500); line-height: 1.6; }
+
+/* ── CTA final ── */
+.cta-final { margin-bottom: 0; }
+.cta-final-box {
+  background: var(--gray-900); border-radius: 22px;
+  padding: 56px 52px; display: flex; flex-direction: column; gap: 16px;
+}
+.cta-final-box h2 {
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 800;
+  letter-spacing: -0.04em; color: var(--white); line-height: 1.1;
+  white-space: pre-line;
+}
+.cta-final-box p { font-size: 0.97rem; color: rgba(255,255,255,0.4); max-width: 480px; line-height: 1.7; }
+.cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.btn.large { padding: 14px 28px; font-size: 0.93rem; }
+.cta-reassure { font-size: 0.75rem; color: rgba(255,255,255,0.28); }
+
+/* ── MODAL ── */
+.modal-fade-enter-active, .modal-fade-leave-active { transition: opacity 0.22s ease; }
+.modal-fade-enter-active .modal-panel, .modal-fade-leave-active .modal-panel { transition: transform 0.28s var(--ease), opacity 0.22s ease; }
+.modal-fade-enter-from, .modal-fade-leave-to { opacity: 0; }
+.modal-fade-enter-from .modal-panel { transform: translateY(16px) scale(0.97); opacity: 0; }
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.45); backdrop-filter: blur(6px);
+  z-index: 600; display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+
+.modal-panel {
+  position: relative; background: var(--white);
+  border-radius: 22px; width: 100%; max-width: 460px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-xl);
 }
 
 .modal-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition);
-  z-index: 10;
+  position: absolute; top: 14px; right: 14px;
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--gray-100); border: none; color: var(--gray-500);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  z-index: 10; transition: all 0.18s;
 }
+.modal-close:hover { background: var(--gray-200); color: var(--gray-900); }
 
-.modal-close:hover {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: #ef4444;
-  color: #ef4444;
-  transform: rotate(90deg);
-}
+.modal-head { padding: 28px 24px 20px; border-bottom: 1px solid var(--gray-100); }
+.modal-badge { display: inline-flex; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; padding: 3px 9px; border-radius: 100px; margin-bottom: 10px; }
+.modal-head h3 { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.03em; color: var(--gray-900); margin-bottom: 6px; }
+.modal-price { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--blue); }
 
-.modal-content {
-  overflow-y: auto;
-  max-height: 90vh;
+.modal-body-section { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 16px; }
+.modal-pitch { font-size: 0.87rem; color: var(--gray-500); line-height: 1.6; }
+.modal-label { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; color: var(--gray-400); }
+.modal-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.modal-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.85rem; color: var(--gray-700); line-height: 1.4; }
+.modal-list li svg { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+.modal-meta {
+  display: flex; gap: 18px; flex-wrap: wrap; padding: 12px 14px;
+  background: var(--gray-50); border-radius: 11px; border: 1px solid var(--gray-100);
 }
-
-.modal-header {
-  padding: 40px 40px 20px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.modal-header.basic-theme {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
-}
-
-.modal-header.avance-theme {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
-}
-
-.modal-header.premium-theme {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(245, 158, 11, 0.1));
-}
-
-.modal-title {
-  font-size: 2rem;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-  font-weight: 700;
-}
-
-.modal-price {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  font-family: monospace;
-}
-
-.modal-body {
-  padding: 40px;
-}
-
-.modal-section {
-  margin-bottom: 32px;
-}
-
-.modal-section h3 {
-  font-size: 1.2rem;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-.modal-features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.modal-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.check {
-  color: var(--success-green);
-  font-weight: 700;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.modal-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tech-badge {
-  background: rgba(6, 182, 212, 0.1);
-  color: var(--accent-cyan);
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.modal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.modal-info-item {
-  background: rgba(3, 7, 18, 0.5);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
-
-.info-label {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.info-value {
-  font-size: 1.2rem;
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.modal-cta {
-  text-align: center;
-}
-
-.modal-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 32px;
-  color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  transition: var(--transition);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.basic-btn {
-  background: linear-gradient(135deg, var(--success-green), var(--accent-cyan));
-}
-
-.avance-btn {
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-}
-
-.premium-btn {
-  background: linear-gradient(135deg, var(--premium-purple), var(--warning-amber));
-}
-
-.modal-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-}
-
-/* Cards Grid */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-  margin-top: 16px;
-}
-
-.mini-card {
-  height: 60px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
-}
-
-.mini-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.dark-theme .mini-card {
-  background: rgba(31, 41, 55, 0.8);
-  border-color: rgba(6, 182, 212, 0.3);
-}
+.modal-meta div { display: flex; flex-direction: column; gap: 2px; }
+.meta-k { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--gray-400); }
+.meta-v { font-size: 0.85rem; font-weight: 600; color: var(--gray-900); }
 
 /* Responsive */
-@media (max-width: 1200px) {
-  .templates-grid {
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  }
+@media (max-width: 1100px) {
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-card:nth-child(2) { border-right: none; }
+  .why-card:nth-child(1), .why-card:nth-child(2) { border-bottom: 1px solid var(--gray-200); }
+}
+
+@media (max-width: 960px) {
+  .packs-grid { grid-template-columns: repeat(2, 1fr); }
+  .tjm-block { grid-template-columns: 1fr; }
+  .tjm-right { padding-top: 0; }
+  .tjm-domains { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .services-container {
-    padding: 20px 16px;
-  }
-  
-  .main-title {
-    font-size: 2rem;
-    flex-direction: column;
-  }
-  
-  .main-subtitle {
-    font-size: 1rem;
-  }
-  
-  .templates-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .pages-container {
-    height: 280px;
-  }
-  
-  .cards-grid,
-  .services-grid,
-  .modules-grid,
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .gallery-item.large {
-    grid-column: span 1;
-    grid-row: span 1;
-    height: 70px;
-  }
-  
-  .about-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-label {
-    font-size: 0.7rem;
-    padding: 3px 12px;
-  }
-  
-  .webapp-features {
-    grid-template-columns: 1fr;
-  }
-  
-  .webapp-header,
-  .webapp-content {
-    padding: 24px;
-  }
-  
-  .webapp-sidebar {
-    width: 60px;
-    padding: 16px 8px;
-  }
-  
-  .webapp-main {
-    padding: 16px;
-  }
-  
-  .dashboard-stats {
-    grid-template-columns: 1fr;
-  }
-  
-  .modal-header {
-    padding: 30px 20px 20px;
-  }
-  
-  .modal-title {
-    font-size: 1.5rem;
-  }
-  
-  .modal-body {
-    padding: 20px;
-  }
-  
-  .modal-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .portfolio-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .template-card {
-    padding: 24px;
-  }
-  
-  .template-name {
-    font-size: 1.5rem;
-  }
-  
-  .template-price {
-    font-size: 2rem;
-  }
-  
-  .pages-container {
-    height: 250px;
-  }
-  
-  .cards-grid,
-  .services-grid,
-  .modules-grid,
-  .team-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-content {
-    padding: 12px;
-  }
-  
-  .hero-mini {
-    padding: 24px 12px;
-  }
-  
-  .webapp-title {
-    font-size: 1.5rem;
-  }
-  
-  .webapp-price {
-    font-size: 1.4rem;
-  }
-  
-  .modal-wrapper {
-    border-radius: 16px;
-  }
+  .services-page { padding: 32px 0 60px; }
+  .packs-grid { grid-template-columns: 1fr; }
+  .ai-grid { grid-template-columns: 1fr; }
+  .tjm-domains { grid-template-columns: 1fr; }
+  .tjm-indicatifs { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; border: none; gap: 10px; }
+  .why-card { border: 1.5px solid var(--gray-200); border-radius: 14px; }
+  .cta-final-box { padding: 36px 24px; }
+  .cta-row { flex-direction: column; align-items: flex-start; }
 }
 </style>

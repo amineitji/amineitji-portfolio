@@ -1,512 +1,426 @@
 <template>
-  <nav class="navbar">
-    <div class="logo">
-      <div class="logo-container">
-        <span class="logo-text">AI</span>
-        <div class="logo-accent"></div>
-      </div>
-    </div>
-    
-    <button class="navbar-toggler" type="button" @click="toggleNavbar" aria-label="Toggle navigation">
-      <div class="menu-icon" :class="{ 'is-active': isCollapsed }">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </button>
-    
-    <div :class="['navbar-menu', { 'is-open': isCollapsed }]">
-      <ul class="nav-links">
-        <li class="nav-item" v-for="item in navItems" :key="item.name">
-          <router-link
-            :to="item.link"
-            class="nav-link"
-            :class="{ 'active': isActive(item.link) }"
-            @click="closeMenu"
-          >
-            <span class="nav-icon">{{ item.icon }}</span>
-            <span class="nav-text">{{ item.name }}</span>
-            <div class="nav-indicator"></div>
-          </router-link>
-        </li>
-      </ul>
-      
-      <div class="mobile-contact" v-if="isCollapsed">
-        <a href="mailto:amineitji@gmail.com" class="mobile-contact-btn">
-          <span class="contact-icon">📧</span>
-          <span class="contact-text">Demander un devis</span>
+  <header class="navbar" :class="{ scrolled: isScrolled }">
+    <div class="nav-inner">
+      <router-link to="/" class="logo" @click="closeMenu">
+        Amine<span class="logo-dot">.</span>
+      </router-link>
+
+      <nav class="nav-links-wrap" aria-label="Menu principal">
+        <ul class="nav-links">
+          <li v-for="item in navItems" :key="item.to">
+            <router-link 
+              :to="item.to" 
+              class="nav-link" 
+              active-class="active" 
+              @click="closeMenu"
+            >
+              {{ lang === 'en' ? item.en : item.fr }}
+            </router-link>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-right">
+        <div class="lang-toggle">
+          <button @click="setLang('fr')" :class="{ on: lang === 'fr' }" aria-label="Passer en Français">FR</button>
+          <span class="sep" aria-hidden="true">|</span>
+          <button @click="setLang('en')" :class="{ on: lang === 'en' }" aria-label="Switch to English">EN</button>
+        </div>
+        
+        <div class="avail">
+          <span class="avail-dot"></span>
+          <span class="avail-text">{{ lang === 'en' ? 'Available' : 'Disponible' }}</span>
+        </div>
+        
+        <a :href="`mailto:${contactEmail}`" class="nav-cta">
+          Contact
         </a>
       </div>
+
+      <button 
+        class="burger" 
+        :class="{ open: menuOpen }" 
+        @click="menuOpen = !menuOpen" 
+        :aria-expanded="menuOpen"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    
-    <div class="availability-indicator">
-      <div class="status-dot"></div>
-      <span class="status-text">Disponible pour missions</span>
-    </div>
-  </nav>
+
+    <transition name="mobile-nav">
+      <div v-if="menuOpen" class="mobile-panel">
+        <nav aria-label="Menu mobile">
+          <ul class="mobile-links">
+            <li v-for="item in navItems" :key="item.to">
+              <router-link 
+                :to="item.to" 
+                class="mobile-link" 
+                active-class="active" 
+                @click="closeMenu"
+              >
+                {{ lang === 'en' ? item.en : item.fr }}
+              </router-link>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="mobile-bottom">
+          <div class="lang-toggle mobile-lang">
+            <button @click="changeLang('fr')" :class="{ on: lang === 'fr' }">FR</button>
+            <span class="sep" aria-hidden="true">|</span>
+            <button @click="changeLang('en')" :class="{ on: lang === 'en' }">EN</button>
+          </div>
+          <a :href="`mailto:${contactEmail}`" class="btn btn-dark" style="justify-content:center;" @click="closeMenu">
+            {{ lang === 'en' ? 'Contact me' : 'Me contacter' }}
+          </a>
+        </div>
+      </div>
+    </transition>
+  </header>
 </template>
 
 <script>
+const CONTACT_EMAIL = 'amineitji@gmail.com';
+
 export default {
   name: 'SiteHeader',
+  inject: ['getLang', 'setLang'],
+  
   data() {
     return {
-      isCollapsed: false,
+      isScrolled: false,
+      menuOpen: false,
+      contactEmail: CONTACT_EMAIL,
       navItems: [
-        { name: 'Accueil', link: '/', icon: '🏠' },
-        { name: 'À propos', link: '/profil', icon: '👨‍💻' },
-        { name: 'Projets', link: '/projets', icon: '🔬' },
-        { name: 'Services', link: '/services', icon: '⚡' },
+        { to: '/', fr: 'Accueil', en: 'Home' },
+        { to: '/profil', fr: 'À propos', en: 'About' },
+        { to: '/projets', fr: 'Projets', en: 'Work' },
+        { to: '/services', fr: 'Services', en: 'Services' },
       ],
     };
   },
-  methods: {
-    toggleNavbar() {
-      this.isCollapsed = !this.isCollapsed;
-      if (this.isCollapsed) {
+
+  computed: {
+    lang() { 
+      return this.getLang(); 
+    }
+  },
+
+  mounted() {
+    // Le { passive: true } est crucial pour les perfs de scroll sur Lighthouse
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
+    this.handleScroll(); // Initial check
+  },
+
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+
+  watch: {
+    // Empêche le scroll du body quand le menu mobile est ouvert
+    menuOpen(isOpen) {
+      if (isOpen) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
       }
-    },
-    isActive(link) {
-      if (link === '/') {
-        return this.$route.path === '/';
-      }
-      return this.$route.path.startsWith(link);
+    }
+  },
+
+  methods: {
+    handleScroll() {
+      this.isScrolled = window.scrollY > 15;
     },
     closeMenu() {
-      if (this.isCollapsed) {
-        this.isCollapsed = false;
-        document.body.style.overflow = '';
-      }
+      this.menuOpen = false;
+    },
+    changeLang(l) {
+      this.setLang(l);
+      this.closeMenu();
     }
   },
-  watch: {
-    $route() {
-      this.isCollapsed = false;
-      document.body.style.overflow = '';
-    }
-  },
-  beforeUnmount() {
-    document.body.style.overflow = '';
-  }
 };
 </script>
 
 <style scoped>
-/* Variables scientifiques */
-:root {
-  --primary-blue: #2563eb;
-  --accent-cyan: #06b6d4;
-  --success-green: #10b981;
-  --dark-bg: #030712;
-  --nav-bg: rgba(3, 7, 18, 0.95);
-  --border-color: #374151;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Navbar principale */
+/* ── Navbar Container ── */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 30px;
-  background: var(--nav-bg);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo scientifique */
-.logo {
-  position: relative;
-}
-
-.logo-container {
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s var(--ease);
+  height: var(--nav-h);
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  position: relative;
-  transition: var(--transition);
-  cursor: pointer;
 }
 
-.logo-container:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: var(--gray-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
-.logo-text {
-  color: white;
-  font-weight: 700;
-  font-size: 18px;
-  font-family: 'Monaco', 'Menlo', monospace;
-  z-index: 2;
-  position: relative;
+.nav-inner {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.logo-accent {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 8px;
-  height: 8px;
-  background: var(--success-green);
-  border-radius: 50%;
-  border: 2px solid var(--nav-bg);
-  animation: pulse 2s infinite;
+/* ── Logo ── */
+.logo {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--gray-900);
+  text-decoration: none;
+}
+.logo-dot {
+  color: var(--blue);
 }
 
-@keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.2); }
-  100% { opacity: 1; transform: scale(1); }
+/* ── Desktop Links ── */
+.nav-links-wrap {
+  display: flex;
 }
 
-/* Navigation Links */
 .nav-links {
   display: flex;
   list-style: none;
+  gap: 32px;
   margin: 0;
   padding: 0;
-  gap: 8px;
-}
-
-.nav-item {
-  position: relative;
 }
 
 .nav-link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-500);
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: var(--transition);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.nav-icon {
-  font-size: 1.1rem;
-  transition: var(--transition);
-}
-
-.nav-text {
+  transition: color 0.2s ease;
   position: relative;
-  z-index: 2;
-}
-
-.nav-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary-blue), var(--accent-cyan));
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-  border-radius: 1px;
+  padding: 8px 0;
 }
 
 .nav-link:hover {
-  color: var(--text-primary);
-  background: rgba(37, 99, 235, 0.1);
-}
-
-.nav-link:hover .nav-icon {
-  transform: scale(1.1);
-}
-
-.nav-link:hover .nav-indicator,
-.nav-link.active .nav-indicator {
-  width: 60%;
+  color: var(--gray-900);
 }
 
 .nav-link.active {
-  color: var(--primary-blue);
-  background: rgba(37, 99, 235, 0.15);
+  color: var(--gray-900);
 }
 
-.nav-link.active .nav-icon {
-  color: var(--accent-cyan);
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gray-900);
+  border-radius: 2px;
 }
 
-/* Indicateur de disponibilité */
-.availability-indicator {
+/* ── Right side ── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gray-400);
+}
+
+.lang-toggle button {
+  background: none;
+  border: none;
+  padding: 4px;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lang-toggle button:hover {
+  color: var(--gray-700);
+}
+
+.lang-toggle button.on {
+  color: var(--gray-900);
+}
+
+.sep {
+  opacity: 0.3;
+}
+
+.avail {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 20px;
-  font-size: 0.8rem;
-  color: var(--success-green);
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  padding: 6px 14px;
+  background: var(--gray-100);
+  border-radius: 100px;
 }
 
-.status-dot {
+.avail-dot {
   width: 8px;
   height: 8px;
-  background: var(--success-green);
   border-radius: 50%;
-  animation: pulse 2s infinite;
+  background: var(--green);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  animation: pulse-green 2s infinite;
 }
 
-.status-text {
-  white-space: nowrap;
+@keyframes pulse-green {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
 }
 
-/* Hamburger Menu */
-.navbar-toggler {
+.nav-cta {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  background: var(--gray-900);
+  padding: 8px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--gray-800);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+/* ── Mobile Burger ── */
+.burger {
   display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: var(--transition);
+  padding: 0;
+  z-index: 501;
 }
 
-.navbar-toggler:hover {
-  background: rgba(37, 99, 235, 0.1);
-}
-
-.menu-icon {
-  width: 24px;
-  height: 20px;
-  position: relative;
-  transform: rotate(0deg);
-  transition: 0.3s ease-in-out;
-}
-
-.menu-icon span {
+.burger span {
   display: block;
-  position: absolute;
   height: 2px;
   width: 100%;
-  background: var(--text-primary);
-  border-radius: 1px;
-  opacity: 1;
+  background: var(--gray-900);
+  border-radius: 2px;
+  transition: all 0.25s var(--ease);
+}
+
+.burger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile Panel ── */
+.mobile-panel {
+  position: fixed;
+  top: var(--nav-h);
   left: 0;
-  transform: rotate(0deg);
-  transition: 0.2s ease-in-out;
-}
-
-.menu-icon span:nth-child(1) {
-  top: 0px;
-}
-
-.menu-icon span:nth-child(2) {
-  top: 8px;
-}
-
-.menu-icon span:nth-child(3) {
-  top: 16px;
-}
-
-.menu-icon.is-active span:nth-child(1) {
-  top: 8px;
-  transform: rotate(135deg);
-  background: var(--text-primary);
-}
-
-.menu-icon.is-active span:nth-child(2) {
-  opacity: 0;
-  left: -60px;
-}
-
-.menu-icon.is-active span:nth-child(3) {
-  top: 8px;
-  transform: rotate(-135deg);
-  background: var(--text-primary);
-}
-
-/* Contact mobile */
-.mobile-contact {
-  padding: 20px;
-  border-top: 1px solid var(--border-color);
-  margin-top: 20px;
-}
-
-.mobile-contact-btn {
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  padding: 20px var(--px) 32px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-cyan));
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: var(--transition);
+  flex-direction: column;
+  z-index: 400;
+  border-top: 1px solid var(--gray-100);
+  overflow-y: auto;
 }
 
-.mobile-contact-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+.mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 32px 0;
+  padding: 0;
+  flex: 1;
 }
 
-.contact-icon {
+.mobile-link {
+  display: block;
+  padding: 16px 20px;
   font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gray-500);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.2s;
+  background: var(--gray-50);
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .availability-indicator {
-    display: none;
-  }
+.mobile-link:hover, .mobile-link.active {
+  background: var(--gray-100);
+  color: var(--gray-900);
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    padding: 12px 20px;
-  }
-  
-  .navbar-toggler {
-    display: block;
-    z-index: 1002;
-    background: rgba(37, 99, 235, 0.15);
-    border: 1px solid rgba(37, 99, 235, 0.3);
-  }
-  
-  .navbar-toggler:hover {
-    background: rgba(37, 99, 235, 0.2);
-  }
-  
-  .navbar-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100vh;
-    background: rgba(3, 7, 18, 0.98);
-    backdrop-filter: blur(30px);
-    transition: right 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 1000;
-  }
-  
-  .navbar-menu.is-open {
-    right: 0;
-  }
-  
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 0;
-  }
-  
-  .nav-item {
-    width: 100%;
-    margin: 8px 0;
-  }
-  
-  .nav-link {
-    width: 100%;
-    justify-content: center;
-    padding: 16px 24px;
-    font-size: 1.1rem;
-    border-radius: 12px;
-    background: rgba(17, 24, 39, 0.5);
-    border: 1px solid var(--border-color);
-  }
-  
-  .nav-link:hover,
-  .nav-link.active {
-    background: rgba(37, 99, 235, 0.2);
-    border-color: var(--primary-blue);
-  }
-  
-  .nav-indicator {
-    display: none;
-  }
+.mobile-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: auto;
 }
 
-@media (max-width: 480px) {
-  .navbar {
-    padding: 10px 16px;
-  }
-  
-  .logo-container {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .logo-text {
-    font-size: 16px;
-  }
-  
-  .nav-link {
-    padding: 14px 20px;
-    font-size: 1rem;
-  }
+.mobile-lang {
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: 12px;
 }
 
-/* Animations d'apparition */
-@keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+/* ── Transition Mobile Nav ── */
+.mobile-nav-enter-active, .mobile-nav-leave-active {
+  transition: transform 0.3s var(--ease), opacity 0.3s ease;
 }
-
-.navbar-menu.is-open .nav-item {
-  animation: slideInFromRight 0.3s ease forwards;
-}
-
-.navbar-menu.is-open .nav-item:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.navbar-menu.is-open .nav-item:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.navbar-menu.is-open .nav-item:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-.navbar-menu.is-open .nav-item:nth-child(4) {
-  animation-delay: 0.4s;
-}
-
-.navbar-menu.is-open .mobile-contact {
-  animation: slideInFromRight 0.3s ease forwards;
-  animation-delay: 0.5s;
+.mobile-nav-enter-from, .mobile-nav-leave-to {
+  transform: translateY(-10px);
   opacity: 0;
 }
 
-@keyframes slideInFromRight {
-  to {
-    opacity: 1;
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .nav-links-wrap, .nav-right {
+    display: none;
+  }
+  .burger {
+    display: flex;
   }
 }
 </style>
