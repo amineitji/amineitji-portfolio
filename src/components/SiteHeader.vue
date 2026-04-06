@@ -32,7 +32,7 @@
           <span class="avail-text">{{ lang === 'en' ? 'Available' : 'Disponible' }}</span>
         </div>
         
-        <a :href="`mailto:${contactEmail}`" class="nav-cta">
+        <a :href="`mailto:${contactEmail}`" class="nav-cta" @click.prevent="openContactComposer(lang === 'en' ? 'Header' : 'Header')">
           Contact
         </a>
       </div>
@@ -71,7 +71,12 @@
             <span class="sep" aria-hidden="true">|</span>
             <button @click="changeLang('en')" :class="{ on: lang === 'en' }">EN</button>
           </div>
-          <a :href="`mailto:${contactEmail}`" class="btn btn-dark" style="justify-content:center;" @click="closeMenu">
+          <a
+            :href="`mailto:${contactEmail}`"
+            class="btn btn-dark"
+            style="justify-content:center;"
+            @click.prevent="openContactComposer(lang === 'en' ? 'Mobile menu' : 'Menu mobile')"
+          >
             {{ lang === 'en' ? 'Contact me' : 'Me contacter' }}
           </a>
         </div>
@@ -85,7 +90,7 @@ const CONTACT_EMAIL = 'amineitji@gmail.com';
 
 export default {
   name: 'SiteHeader',
-  inject: ['getLang', 'setLang'],
+  inject: ['getLang', 'setLang', 'openEmailComposer'],
   
   data() {
     return {
@@ -135,6 +140,14 @@ export default {
     closeMenu() {
       this.menuOpen = false;
     },
+    openContactComposer(source) {
+      this.closeMenu();
+      this.openEmailComposer({
+        source,
+        intent: 'project',
+        service: 'general',
+      });
+    },
     changeLang(l) {
       this.setLang(l);
       this.closeMenu();
@@ -148,21 +161,28 @@ export default {
 .navbar {
   position: sticky;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 500;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid transparent;
-  transition: all 0.3s var(--ease);
+  /* Fond solide en fallback (backdrop-filter non supporté sur certains Android) */
+  background: #F0EAD9;
+  background: rgba(240, 234, 217, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  /* Bordure toujours visible — distingue la navbar du fond crème */
+  border-bottom: 1px solid var(--border, #D8D0BE);
+  transition: box-shadow 0.3s var(--ease);
   height: var(--nav-h);
   display: flex;
   align-items: center;
+  /* Largeur pleine garantie en position sticky */
+  width: 100%;
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  border-bottom-color: var(--gray-200);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  background: #F0EAD9;
+  background: rgba(240, 234, 217, 0.99);
+  box-shadow: 0 4px 20px rgba(17,17,24,0.07);
 }
 
 .nav-inner {
@@ -285,8 +305,8 @@ export default {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  background: #4BAF6E;
+  box-shadow: 0 0 0 2px rgba(75,175,110,0.2);
   animation: pulse-green 2s infinite;
 }
 
@@ -317,20 +337,24 @@ export default {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 24px;
-  height: 16px;
+  /* Zone tactile min 44x44px recommandée pour mobile */
+  width: 44px;
+  height: 44px;
+  padding: 14px 10px;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
   z-index: 501;
+  /* Aligne les barres au centre de la zone tactile */
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .burger span {
   display: block;
   height: 2px;
-  width: 100%;
-  background: var(--gray-900);
+  width: 20px;
+  background: var(--ink, #111118);
   border-radius: 2px;
   transition: all 0.25s var(--ease);
 }
@@ -354,7 +378,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--white);
+  background: var(--bg, #F0EAD9);
   padding: 20px var(--px) 32px;
   display: flex;
   flex-direction: column;

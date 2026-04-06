@@ -320,7 +320,6 @@ export default {
 </script>
 
 <style scoped>
-/* Les styles restent inchangés ! */
 .projects-page { padding: 48px 0 80px; }
 
 /* Hero */
@@ -338,16 +337,16 @@ export default {
 .featured-card {
   display: block;
   text-decoration: none;
-  background: var(--white);
-  border: 1.5px solid var(--gray-200);
-  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
 }
 
 .featured-card:hover {
-  border-color: var(--gray-300);
+  border-color: var(--gold);
   box-shadow: var(--shadow-lg);
   transform: translateY(-5px);
 }
@@ -366,12 +365,12 @@ export default {
   align-items: center;
   gap: 10px;
   padding: 14px 26px;
-  background: var(--white);
-  border-radius: 100px;
-  border: 1.5px solid var(--gray-200);
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   font-size: 1.15rem;
   font-weight: 300;
-  color: var(--gray-800);
+  color: var(--ink);
   box-shadow: var(--shadow-md);
   transition: transform 0.3s var(--ease);
 }
@@ -412,18 +411,18 @@ export default {
 
 .filter-btn {
   padding: 7px 16px;
-  border-radius: 100px;
+  border-radius: var(--radius);
   font-family: var(--font);
   font-size: 0.8rem;
   font-weight: 600;
-  border: 1.5px solid var(--gray-200);
-  background: var(--white);
-  color: var(--gray-500);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.18s ease;
 }
-.filter-btn:hover { border-color: var(--gray-400); color: var(--gray-900); }
-.filter-btn.active { background: var(--gray-900); border-color: var(--gray-900); color: var(--white); }
+.filter-btn:hover { border-color: var(--border-dark); color: var(--ink); }
+.filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
 .other-grid {
   display: grid;
@@ -433,16 +432,16 @@ export default {
 
 /* Expandable card */
 .other-card {
-  background: var(--white);
-  border: 1.5px solid var(--gray-200);
-  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.25s;
   box-shadow: var(--shadow-sm);
 }
-.other-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow-md); }
-.other-card.open { border-color: var(--gray-400); }
+.other-card:hover { border-color: var(--border-dark); box-shadow: var(--shadow-md); }
+.other-card.open { border-color: var(--gold); }
 
 .oc-top {
   display: flex;
@@ -452,7 +451,7 @@ export default {
 }
 
 .oc-icon {
-  width: 40px; height: 40px; border-radius: 11px;
+  width: 40px; height: 40px; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
@@ -495,22 +494,22 @@ export default {
 
 .oc-link {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.78rem; font-weight: 600; color: var(--gray-600);
+  font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
   padding: 5px 12px;
-  background: var(--gray-100); border: 1px solid var(--gray-200);
-  border-radius: 8px; text-decoration: none;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); text-decoration: none;
   transition: all 0.18s ease;
 }
-.oc-link:hover { background: var(--gray-900); color: white; border-color: var(--gray-900); }
-.oc-link.demo { color: var(--blue); border-color: var(--blue-light); background: var(--blue-light); }
-.oc-link.demo:hover { background: var(--blue); border-color: var(--blue); color: white; }
+.oc-link:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.oc-link.demo { color: var(--gold); border-color: rgba(197,154,69,0.3); background: rgba(197,154,69,0.08); }
+.oc-link.demo:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 
 /* Chips */
 .chip-live {
-  background: var(--green-light); border-color: rgba(16,185,129,0.2); color: var(--green);
+  background: rgba(197,154,69,0.10); border-color: rgba(197,154,69,0.3); color: var(--gold);
 }
 .chip-tech {
-  background: var(--gray-100); color: var(--gray-600);
+  background: var(--surface); color: var(--text-muted); border-color: var(--border);
 }
 
 /* Transition */

@@ -14,7 +14,12 @@
       </nav>
 
       <div class="footer-social">
-        <a :href="`mailto:${contactEmail}`" aria-label="Email" class="social-link">
+        <a
+          :href="`mailto:${contactEmail}`"
+          aria-label="Email"
+          class="social-link"
+          @click.prevent="openContactComposer"
+        >
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </a>
         <a href="https://github.com/amineitji" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-link">
@@ -34,7 +39,7 @@ const CONTACT_EMAIL = 'amineitji@gmail.com';
 
 export default {
   name: 'SiteFooter',
-  inject: ['getLang'],
+  inject: ['getLang', 'openEmailComposer'],
   
   data() {
     return {
@@ -68,6 +73,16 @@ export default {
         }
       };
       return data[this.lang];
+    }
+  },
+
+  methods: {
+    openContactComposer() {
+      this.openEmailComposer({
+        source: this.lang === 'en' ? 'Footer' : 'Footer',
+        intent: 'project',
+        service: 'general',
+      });
     }
   }
 };

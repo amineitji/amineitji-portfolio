@@ -6,7 +6,11 @@
       <h1 class="s-title" style="margin-top:12px;">{{ t.title }}</h1>
       <p class="s-sub" style="margin-top:10px;">{{ t.sub }}</p>
       <div class="profile-ctas">
-        <a :href="`mailto:${contactEmail}?subject=Mission freelance`" class="btn btn-dark">
+        <a
+          :href="`mailto:${contactEmail}?subject=Mission freelance`"
+          class="btn btn-dark"
+          @click.prevent="openProfileContactComposer"
+        >
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           {{ t.ctaContact }}
         </a>
@@ -76,7 +80,7 @@
       <div class="skills-grid">
         <div class="skill-group" v-for="g in t.skills.groups" :key="g.name">
           <div class="sg-head">
-            <div class="sg-icon" :style="{ background: g.bg, color: g.color }">
+            <div class="sg-icon">
               <span v-html="g.icon"></span>
             </div>
             <span class="sg-name">{{ g.name }}</span>
@@ -94,7 +98,12 @@
           <span class="eyebrow">{{ t.values.eyebrow }}</span>
           <h2 class="s-title" style="margin-top:12px;">{{ t.values.title }}</h2>
           <p class="s-sub" style="margin-top:10px;">{{ t.values.sub }}</p>
-          <a :href="`mailto:${contactEmail}?subject=${encodeURIComponent(t.values.subject)}`" class="btn btn-dark" style="margin-top:16px;width:fit-content;">
+          <a
+            :href="`mailto:${contactEmail}?subject=${encodeURIComponent(t.values.subject)}`"
+            class="btn btn-dark"
+            style="margin-top:16px;width:fit-content;"
+            @click.prevent="openValuesComposer"
+          >
             {{ t.values.cta }}
           </a>
         </div>
@@ -113,10 +122,11 @@
 
 <script>
 const CONTACT_EMAIL = 'amineitji@gmail.com';
+const MICHELIN_END = new Date('2026-08-01');
 
 export default {
   name: 'UserProfile',
-  inject: ['getLang'],
+  inject: ['getLang', 'openEmailComposer'],
   data() {
     return {
       contactEmail: CONTACT_EMAIL
@@ -124,7 +134,9 @@ export default {
   },
   computed: {
     lang() { return this.getLang(); },
+    isMichelinActive() { return new Date() < MICHELIN_END; },
     t() {
+      const isMichelinActive = this.isMichelinActive;
       const data = {
         fr: {
           eyebrow: 'À propos',
@@ -135,13 +147,13 @@ export default {
           pro: {
             title: 'Parcours Professionnel',
             items: [
-              { current: true, date: 'Depuis Fév. 2026', role: 'AI Project Manager', company: 'Michelin',
-                bullets: ['Pilotage stratégique de projets IA à grande échelle.', 'Déploiement de solutions Data innovantes en environnement industriel.'] },
+              { current: isMichelinActive, date: 'Fév. 2026 – Juil. 2026', role: 'Stage — AI Project Manager', company: 'Michelin · Lyon',
+                bullets: ['Pilotage et déploiement de projets IA au sein de l\'équipe ISPARK.', 'Déploiement de solutions Data innovantes en environnement industriel.'] },
               { current: true, date: 'Depuis Juin 2023', role: 'Développeur Full-Stack & Expert IA — Freelance', company: 'Indépendant',
                 bullets: ['Applications web et SaaS sur-mesure (Vue.js / Django).', 'Agents IA, LLMs, RAG et automatisation de processus métiers.', 'Web scraping massif et pipelines data (Python).'] },
-              { current: false, date: 'Jan. – Mars 2025', role: 'Stage — Digitalisation & Web', company: 'ALSTOM — Villeurbanne',
+              { current: false, date: 'Jan. – Mars 2025', role: 'Stage — Digitalisation des Inspections', company: 'ALSTOM — Villeurbanne',
                 bullets: ['Digitalisation des processus d\'inspection (KIZEO).', 'Développement d\'outils internes et reporting analytique.'] },
-              { current: false, date: 'Mai – Juin 2023', role: 'Stage — Développeur Full-Stack', company: 'ANEQQIS — Paris',
+              { current: false, date: 'Mai – Juin 2023', role: 'Stage — Développeur Django/Vue.js', company: 'ANEQQIS — Paris',
                 bullets: ['Architecture SaaS de zéro (Django / Vue.js).', 'Intégration paiements Stripe et génération de PDF complexes.'] },
             ],
           },
@@ -158,18 +170,18 @@ export default {
             eyebrow: 'Technologies',
             title: 'Stack technique.',
             groups: [
-              { name: 'Front-end', bg: '#eff6ff', color: '#3b82f6',
+              { name: 'Front-end',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-                items: ['Vue.js 3', 'Nuxt.js', 'TypeScript', 'Tailwind', 'HTML/CSS'] },
-              { name: 'Back-end', bg: '#f0fdf4', color: '#10b981',
+                items: ['Vue.js 3', 'HTML/CSS', 'TypeScript', 'Nuxt.js'] },
+              { name: 'Back-end',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>',
-                items: ['Django', 'FastAPI', 'PostgreSQL', 'Redis', 'REST API'] },
-              { name: 'Intelligence Artificielle', bg: '#f5f3ff', color: '#8b5cf6',
+                items: ['Django', 'FastAPI', 'PostgreSQL', 'REST API'] },
+              { name: 'Intelligence Artificielle',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
-                items: ['LangChain', 'LlamaIndex', 'OpenAI API', 'Anthropic', 'YOLO', 'Scikit-learn'] },
-              { name: 'Data & Cloud', bg: '#fff7ed', color: '#f59e0b',
+                items: ['PyTorch', 'Scikit-learn', 'OpenCV', 'YOLO', 'LangChain', 'Anthropic'] },
+              { name: 'Data & Cloud',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-                items: ['AWS', 'Docker', 'CI/CD', 'Selenium', 'Scrapy', 'Pandas'] },
+                items: ['AWS', 'Docker', 'GitHub Actions', 'Pandas', 'NumPy', 'Selenium'] },
             ],
           },
           values: {
@@ -195,13 +207,13 @@ export default {
           pro: {
             title: 'Professional Experience',
             items: [
-              { current: true, date: 'Since Feb. 2026', role: 'AI Project Manager', company: 'Michelin',
-                bullets: ['Strategic management of large-scale AI projects.', 'Deployment of innovative Data solutions in an industrial environment.'] },
+              { current: isMichelinActive, date: 'Feb. 2026 – Jul. 2026', role: 'Intern — AI Project Manager', company: 'Michelin · Lyon',
+                bullets: ['Driving and deploying AI projects within the ISPARK team.', 'Deployment of innovative Data solutions in an industrial environment.'] },
               { current: true, date: 'Since June 2023', role: 'Full-Stack Developer & AI Expert — Freelance', company: 'Independent',
                 bullets: ['Custom web and SaaS applications (Vue.js / Django).', 'AI agents, LLMs, RAG and business process automation.', 'Massive web scraping and data pipelines (Python).'] },
-              { current: false, date: 'Jan. – Mar. 2025', role: 'Internship — Digitalization & Web', company: 'ALSTOM — Villeurbanne',
-                bullets: ['Digitalization of inspection processes (KIZEO).', 'Development of internal tools and analytical reporting.'] },
-              { current: false, date: 'May – Jun. 2023', role: 'Internship — Full-Stack Developer', company: 'ANEQQIS — Paris',
+              { current: false, date: 'Jan. – Mar. 2025', role: 'Internship — Inspection Digitalisation', company: 'ALSTOM — Villeurbanne',
+                bullets: ['Digitalisation of inspection processes (KIZEO).', 'Development of internal tools and analytical reporting.'] },
+              { current: false, date: 'May – Jun. 2023', role: 'Internship — Django/Vue.js Developer', company: 'ANEQQIS — Paris',
                 bullets: ['Full SaaS architecture from scratch (Django / Vue.js).', 'Stripe payment integration and complex PDF generation.'] },
             ],
           },
@@ -218,18 +230,18 @@ export default {
             eyebrow: 'Technologies',
             title: 'Technical stack.',
             groups: [
-              { name: 'Front-end', bg: '#eff6ff', color: '#3b82f6',
+              { name: 'Front-end',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-                items: ['Vue.js 3', 'Nuxt.js', 'TypeScript', 'Tailwind', 'HTML/CSS'] },
-              { name: 'Back-end', bg: '#f0fdf4', color: '#10b981',
+                items: ['Vue.js 3', 'HTML/CSS', 'TypeScript', 'Nuxt.js'] },
+              { name: 'Back-end',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>',
-                items: ['Django', 'FastAPI', 'PostgreSQL', 'Redis', 'REST API'] },
-              { name: 'Artificial Intelligence', bg: '#f5f3ff', color: '#8b5cf6',
+                items: ['Django', 'FastAPI', 'PostgreSQL', 'REST API'] },
+              { name: 'Artificial Intelligence',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
-                items: ['LangChain', 'LlamaIndex', 'OpenAI API', 'Anthropic', 'YOLO', 'Scikit-learn'] },
-              { name: 'Data & Cloud', bg: '#fff7ed', color: '#f59e0b',
+                items: ['PyTorch', 'Scikit-learn', 'OpenCV', 'YOLO', 'LangChain', 'Anthropic'] },
+              { name: 'Data & Cloud',
                 icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-                items: ['AWS', 'Docker', 'CI/CD', 'Selenium', 'Scrapy', 'Pandas'] },
+                items: ['AWS', 'Docker', 'GitHub Actions', 'Pandas', 'NumPy', 'Selenium'] },
             ],
           },
           values: {
@@ -250,11 +262,28 @@ export default {
       return data[this.lang];
     },
   },
+
+  methods: {
+    openProfileContactComposer() {
+      this.openEmailComposer({
+        source: this.lang === 'en' ? 'About hero' : 'Profil - hero',
+        intent: 'collaboration',
+        service: 'general',
+      });
+    },
+
+    openValuesComposer() {
+      this.openEmailComposer({
+        source: this.lang === 'en' ? 'About values' : 'Profil - valeurs',
+        intent: 'collaboration',
+        service: 'consulting',
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-/* Les styles restent inchangés ! */
 .profile-page { padding: 48px 0 80px; }
 
 /* Hero */
@@ -273,7 +302,12 @@ export default {
   margin-bottom: 64px;
 }
 
-.card { padding: 32px; }
+.card {
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
 
 .card-heading {
   display: flex;
@@ -284,12 +318,12 @@ export default {
 
 .card-icon {
   width: 40px; height: 40px;
-  border-radius: 11px;
+  border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.work-icon { background: #eff6ff; color: var(--blue); }
-.edu-icon  { background: #f5f3ff; color: var(--purple); }
+.work-icon { background: rgba(197,154,69,0.10); color: var(--gold); }
+.edu-icon  { background: rgba(197,154,69,0.10); color: var(--gold); }
 
 .card-heading h2 { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); }
 
@@ -325,14 +359,14 @@ export default {
 
 .current-dot {
   width: 10px; height: 10px;
-  background: var(--blue);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
-  animation: blink-blue 2s ease-in-out infinite;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(197,154,69,0.18);
+  animation: blink-gold 2s ease-in-out infinite;
 }
 
-@keyframes blink-blue {
-  0%,100% { box-shadow: 0 0 0 3px rgba(59,130,246,0.18); }
-  50%      { box-shadow: 0 0 0 6px rgba(59,130,246,0.07); }
+@keyframes blink-gold {
+  0%,100% { box-shadow: 0 0 0 3px rgba(197,154,69,0.18); }
+  50%      { box-shadow: 0 0 0 6px rgba(197,154,69,0.07); }
 }
 
 .past-dot {
@@ -354,13 +388,13 @@ export default {
   color: var(--gray-400);
   padding: 3px 9px;
   background: var(--gray-100);
-  border-radius: 100px;
+  border-radius: var(--radius);
   margin-bottom: 8px;
 }
 
 .tl-date.highlight {
-  color: var(--blue);
-  background: var(--blue-light);
+  color: var(--gold);
+  background: rgba(197,154,69,0.10);
 }
 
 .tl-content h3 {
@@ -368,7 +402,7 @@ export default {
 }
 
 .tl-company {
-  font-size: 0.82rem; color: var(--cyan); font-weight: 600; margin-bottom: 10px;
+  font-size: 0.82rem; color: var(--gold); font-weight: 600; margin-bottom: 10px;
 }
 
 .tl-list {
@@ -403,21 +437,23 @@ export default {
 }
 
 .skill-group {
-  background: var(--white);
-  border: 1.5px solid var(--gray-200);
-  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 20px;
   display: flex; flex-direction: column; gap: 14px;
   transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
   box-shadow: var(--shadow-sm);
 }
-.skill-group:hover { border-color: var(--gray-300); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.skill-group:hover { border-color: var(--border-dark); box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
 .sg-head { display: flex; align-items: center; gap: 10px; }
 
 .sg-icon {
-  width: 34px; height: 34px; border-radius: 9px;
+  width: 34px; height: 34px; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--gold);
+  background: rgba(197,154,69,0.10);
 }
 
 .sg-name { font-size: 0.82rem; font-weight: 700; color: var(--gray-900); }
@@ -432,8 +468,8 @@ export default {
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: start;
-  background: var(--gray-900);
-  border-radius: 24px;
+  background: var(--ink);
+  border-radius: var(--radius);
   padding: 56px;
 }
 
@@ -452,7 +488,7 @@ export default {
 .value-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 20px;
   display: flex;
   flex-direction: column;

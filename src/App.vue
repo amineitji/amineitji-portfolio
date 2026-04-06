@@ -11,24 +11,40 @@
     </main>
     
     <SiteFooter />
+    <EmailComposerModal
+      :visible="emailComposer.isOpen"
+      :context="emailComposer.context"
+      :lang="lang"
+      :contact-email="contactEmail"
+      @close="closeEmailComposer"
+    />
   </div>
 </template>
 
 <script>
 import SiteHeader from './components/SiteHeader.vue';
 import SiteFooter from './components/SiteFooter.vue';
+import EmailComposerModal from './components/EmailComposerModal.vue';
+import { CONTACT_EMAIL } from './utils/emailComposer';
 
 export default {
   name: 'App',
   components: { 
     SiteHeader, 
-    SiteFooter 
+    SiteFooter,
+    EmailComposerModal,
   },
 
   data() {
     return {
       // Récupération de la langue sauvegardée, ou 'fr' par défaut
       lang: localStorage.getItem('ai_lang') || 'fr',
+      contactEmail: CONTACT_EMAIL,
+      emailComposer: {
+        isOpen: false,
+        context: {},
+      },
+      previousBodyOverflow: '',
     };
   },
 
@@ -42,12 +58,37 @@ export default {
         // Optionnel : modifier l'attribut lang de la balise HTML pour le SEO et l'accessibilité
         document.documentElement.lang = l;
       },
+      openEmailComposer: (context = {}) => this.openEmailComposer(context),
     };
+  },
+
+  methods: {
+    openEmailComposer(context = {}) {
+      this.previousBodyOverflow = document.body.style.overflow;
+      this.emailComposer = {
+        isOpen: true,
+        context: { ...context },
+      };
+      document.body.style.overflow = 'hidden';
+    },
+
+    closeEmailComposer() {
+      this.emailComposer = {
+        isOpen: false,
+        context: {},
+      };
+      document.body.style.overflow = this.previousBodyOverflow;
+      this.previousBodyOverflow = '';
+    },
   },
 
   mounted() {
     // S'assurer que la balise <html> a le bon attribut lang au chargement
     document.documentElement.lang = this.lang;
+  },
+
+  beforeUnmount() {
+    document.body.style.overflow = '';
   }
 };
 </script>
@@ -57,47 +98,60 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ══════════════════════════════════
-   DESIGN TOKENS (Variables Globales)
+   DESIGN TOKENS — Palette Crème/Cyberpunk
+   3 couleurs : Crème (#F0EAD9) · Encre (#111118) · Or (#C59A45)
 ══════════════════════════════════ */
 :root {
-  /* Palette de couleurs (Gris Neutres) */
-  --white:        #ffffff;
-  --gray-50:      #f8fafc;
-  --gray-100:     #f1f5f9;
-  --gray-200:     #e2e8f0;
-  --gray-300:     #cbd5e1;
-  --gray-400:     #94a3b8;
-  --gray-500:     #64748b;
-  --gray-600:     #475569;
-  --gray-700:     #334155;
-  --gray-800:     #1e293b;
-  --gray-900:     #0f172a;
+  /* ── Palette principale ── */
+  --bg:           #F0EAD9;   /* crème/beige (fond page) */
+  --surface:      #EDE7D6;   /* surface légèrement plus sombre (cartes) */
+  --ink:          #111118;   /* encre foncée (texte, boutons dark) */
+  --gold:         #C59A45;   /* or ambré (accent cyberpunk) */
 
-  /* Couleurs de marque */
-  --blue:         #3b82f6;
-  --blue-dark:    #2563eb;
-  --blue-light:   #eff6ff;
-  
+  /* ── Compatibilité variables existantes ── */
+  --white:        #F0EAD9;
+  --gray-50:      #F5EFE4;
+  --gray-100:     #EDE7D6;
+  --gray-200:     #DDD5C2;
+  --gray-300:     #C5B9A4;
+  --gray-400:     #988E7C;
+  --gray-500:     #786E60;
+  --gray-600:     #5A5248;
+  --gray-700:     #3C3630;
+  --gray-800:     #252018;
+  --gray-900:     #111118;
+
+  --blue:         #C59A45;
+  --blue-dark:    #A87B2E;
+  --blue-light:   #F5EDD5;
+
   --purple:       #8b5cf6;
-  
-  --cyan:         #06b6d4;
-  
-  --green:        #10b981;
-  --green-light:  #f0fdf4;
+  --cyan:         #C59A45;
 
-  /* Typographie & Layout */
+  --green:        #4BAF6E;
+  --green-light:  #EEF8F3;
+
+  /* ── Tokens sémantiques ── */
+  --border:       #D8D0BE;
+  --border-dark:  rgba(17,17,24,0.25);
+  --text-muted:   #786E60;
+
+  /* ── Typographie & Layout ── */
   --font:         'Inter', system-ui, -apple-system, sans-serif;
   --max-w:        1140px;
   --px:           24px;
   --nav-h:        72px;
 
-  /* Ombres (Shadows) */
-  --shadow-sm:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* ── Ombres ── */
+  --shadow-sm:    0 1px 2px rgba(17,17,24,0.06);
+  --shadow-md:    0 4px 12px rgba(17,17,24,0.08);
+  --shadow-lg:    0 10px 30px rgba(17,17,24,0.10);
+  --shadow-xl:    0 20px 48px rgba(17,17,24,0.12);
 
-  /* Animation */
+  /* ── Radius ── */
+  --radius:       10px;
+
+  /* ── Animation ── */
   --ease:         cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -112,18 +166,21 @@ export default {
 
 html {
   font-family: var(--font);
-  background-color: var(--white);
-  color: var(--gray-600);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(17,17,24,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17,17,24,0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--ink);
   line-height: 1.6;
-  /* Rend le texte plus net */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Scroll doux pour les ancres */
   scroll-behavior: smooth;
+  /* overflow-x ici, pas sur body — évite de casser position:sticky sur iOS Safari */
+  overflow-x: hidden;
 }
 
 body {
-  overflow-x: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -141,6 +198,7 @@ body {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--px);
+  padding-bottom: 60px;
 }
 
 /* ══════════════════════════════════
@@ -271,7 +329,7 @@ body {
   display: block;
   width: 24px;
   height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  background: var(--gold);
   border-radius: 2px;
 }
 

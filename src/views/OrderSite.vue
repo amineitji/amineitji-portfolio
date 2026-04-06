@@ -35,7 +35,7 @@
           <a :href="`mailto:${contactEmail}?subject=${encodeURIComponent('Commande : ' + site.title)}`" 
              class="btn pack-btn" 
              :class="site.featured ? 'btn-inv' : 'btn-dark'" 
-             @click.stop>
+             @click.stop.prevent="openOrderComposer(site)">
             {{ t.cta }} →
           </a>
         </div>
@@ -56,7 +56,7 @@ const CONTACT_EMAIL = 'amineitji@gmail.com';
 
 export default {
   name: 'OrderSite',
-  inject: ['getLang'],
+  inject: ['getLang', 'openEmailComposer'],
   data() {
     return {
       expandedSite: null,
@@ -196,7 +196,17 @@ export default {
   methods: {
     toggleDetails(index) {
       this.expandedSite = this.expandedSite === index ? null : index;
-    }
+    },
+    openOrderComposer(site) {
+      this.openEmailComposer({
+        source: this.lang === 'en' ? 'Website packages' : 'Formules sites internet',
+        intent: 'order',
+        service: site.featured ? 'webapp' : 'showcase',
+        offerName: site.title,
+        priceHint: site.price,
+        timelineHint: site.delay,
+      });
+    },
   }
 };
 </script>
