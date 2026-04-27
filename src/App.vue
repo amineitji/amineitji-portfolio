@@ -1,15 +1,13 @@
 <template>
   <div id="app">
     <SiteHeader />
-    
-    <main class="main-content">
+    <main>
       <router-view v-slot="{ Component, route }">
         <transition name="page" mode="out-in">
           <component :is="Component" :key="route.path" />
         </transition>
       </router-view>
     </main>
-    
     <SiteFooter />
     <EmailComposerModal
       :visible="emailComposer.isOpen"
@@ -29,259 +27,227 @@ import { CONTACT_EMAIL } from './utils/emailComposer';
 
 export default {
   name: 'App',
-  components: { 
-    SiteHeader, 
-    SiteFooter,
-    EmailComposerModal,
-  },
-
+  components: { SiteHeader, SiteFooter, EmailComposerModal },
   data() {
     return {
-      // Récupération de la langue sauvegardée, ou 'fr' par défaut
       lang: localStorage.getItem('ai_lang') || 'fr',
       contactEmail: CONTACT_EMAIL,
-      emailComposer: {
-        isOpen: false,
-        context: {},
-      },
+      emailComposer: { isOpen: false, context: {} },
       previousBodyOverflow: '',
     };
   },
-
   provide() {
     return {
-      // Fournit la langue et la méthode pour la changer à tous les composants enfants
       getLang: () => this.lang,
       setLang: (l) => {
         this.lang = l;
         localStorage.setItem('ai_lang', l);
-        // Optionnel : modifier l'attribut lang de la balise HTML pour le SEO et l'accessibilité
         document.documentElement.lang = l;
       },
       openEmailComposer: (context = {}) => this.openEmailComposer(context),
     };
   },
-
   methods: {
     openEmailComposer(context = {}) {
       this.previousBodyOverflow = document.body.style.overflow;
-      this.emailComposer = {
-        isOpen: true,
-        context: { ...context },
-      };
+      this.emailComposer = { isOpen: true, context: { ...context } };
       document.body.style.overflow = 'hidden';
     },
-
     closeEmailComposer() {
-      this.emailComposer = {
-        isOpen: false,
-        context: {},
-      };
+      this.emailComposer = { isOpen: false, context: {} };
       document.body.style.overflow = this.previousBodyOverflow;
-      this.previousBodyOverflow = '';
     },
   },
-
   mounted() {
-    // S'assurer que la balise <html> a le bon attribut lang au chargement
     document.documentElement.lang = this.lang;
   },
-
   beforeUnmount() {
     document.body.style.overflow = '';
-  }
+  },
 };
 </script>
 
 <style>
-/* Importation de la police Inter pour un rendu très propre et pro */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* ══════════════════════════════════
-   DESIGN TOKENS — Palette Crème/Cyberpunk
-   3 couleurs : Crème (#F0EAD9) · Encre (#111118) · Or (#C59A45)
-══════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
 :root {
-  /* ── Palette principale ── */
-  --bg:           #F0EAD9;   /* crème/beige (fond page) */
-  --surface:      #EDE7D6;   /* surface légèrement plus sombre (cartes) */
-  --ink:          #111118;   /* encre foncée (texte, boutons dark) */
-  --gold:         #C59A45;   /* or ambré (accent cyberpunk) */
+  /* Light */
+  --bg:           #F7F6F3;
+  --surface:      #FFFFFF;
+  --surface-2:    #F0EFEb;
 
-  /* ── Compatibilité variables existantes ── */
-  --white:        #F0EAD9;
-  --gray-50:      #F5EFE4;
-  --gray-100:     #EDE7D6;
-  --gray-200:     #DDD5C2;
-  --gray-300:     #C5B9A4;
-  --gray-400:     #988E7C;
-  --gray-500:     #786E60;
-  --gray-600:     #5A5248;
-  --gray-700:     #3C3630;
-  --gray-800:     #252018;
-  --gray-900:     #111118;
+  /* Dark sections */
+  --dark:         #0C0F0A;
+  --dark-surface: #131710;
+  --dark-border:  rgba(255,255,255,0.08);
+  --dark-muted:   rgba(255,255,255,0.45);
 
-  --blue:         #C59A45;
-  --blue-dark:    #A87B2E;
-  --blue-light:   #F5EDD5;
+  /* Forest green */
+  --forest:       #1B4332;
+  --forest-md:    #2D6A4F;
+  --forest-lt:    #D1FAE5;
+  --forest-dim:   rgba(27,67,50,0.08);
+  --forest-border:rgba(27,67,50,0.18);
 
-  --purple:       #8b5cf6;
-  --cyan:         #C59A45;
+  /* Text */
+  --ink:          #0F1612;
+  --muted:        #6B7280;
+  --subtle:       #9CA3AF;
 
-  --green:        #4BAF6E;
-  --green-light:  #EEF8F3;
+  /* UI */
+  --border:       #E5E7EB;
+  --border-dark:  rgba(15,22,18,0.12);
 
-  /* ── Tokens sémantiques ── */
-  --border:       #D8D0BE;
-  --border-dark:  rgba(17,17,24,0.25);
-  --text-muted:   #786E60;
+  /* Accents */
+  --green:        #16A34A;
+  --green-light:  #DCFCE7;
+  --amber:        #D97706;
+  --amber-light:  #FEF3C7;
+  --blue:         #1D4ED8;
+  --blue-light:   #DBEAFE;
 
-  /* ── Typographie & Layout ── */
+  /* Typography */
   --font:         'Inter', system-ui, -apple-system, sans-serif;
-  --max-w:        1140px;
-  --px:           24px;
-  --nav-h:        72px;
+  --mono:         'JetBrains Mono', 'Courier New', monospace;
 
-  /* ── Ombres ── */
-  --shadow-sm:    0 1px 2px rgba(17,17,24,0.06);
-  --shadow-md:    0 4px 12px rgba(17,17,24,0.08);
-  --shadow-lg:    0 10px 30px rgba(17,17,24,0.10);
-  --shadow-xl:    0 20px 48px rgba(17,17,24,0.12);
-
-  /* ── Radius ── */
+  /* Layout */
+  --max-w:        1160px;
+  --px:           28px;
+  --nav-h:        64px;
   --radius:       10px;
+  --radius-lg:    16px;
 
-  /* ── Animation ── */
+  /* Shadows */
+  --shadow-sm:    0 1px 3px rgba(12,15,10,0.06), 0 1px 2px rgba(12,15,10,0.04);
+  --shadow-md:    0 4px 16px rgba(12,15,10,0.08);
+  --shadow-lg:    0 12px 40px rgba(12,15,10,0.10);
+  --shadow-xl:    0 24px 64px rgba(12,15,10,0.12);
+
+  /* Animation */
   --ease:         cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in:      cubic-bezier(0.55, 0, 1, 0.45);
 }
 
-/* ══════════════════════════════════
-   RESET & BASE STYLES
-══════════════════════════════════ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ═══════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   font-family: var(--font);
-  background-color: var(--bg);
-  background-image:
-    linear-gradient(rgba(17,17,24,0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17,17,24,0.045) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  /* overflow-x ici, pas sur body — évite de casser position:sticky sur iOS Safari */
-  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: clip; /* clip avoids creating a scroll container (fixes iOS fixed positioning) */
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+#app { display: flex; flex-direction: column; min-height: 100vh; }
 
-.main-content {
+main {
   flex: 1;
+  isolation: isolate; /* scopes stacking contexts of page content below the navbar */
+  position: relative;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT SYSTEM
+   .container = constrained + padded
+   sections dark/light go full width via bg
+═══════════════════════════════════════════ */
+.container {
   width: 100%;
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--px);
-  padding-bottom: 60px;
 }
 
-/* ══════════════════════════════════
-   ACCESSIBILITÉ GLOBALE (A11Y)
-══════════════════════════════════ */
-/* Focus ring pour la navigation au clavier */
-:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.5); /* var(--blue) avec opacité */
-  outline-offset: 2px;
-  border-radius: 4px;
-}
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
-/* ══════════════════════════════════
-   SCROLLBAR PERSONNALISÉE
-══════════════════════════════════ */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--gray-50);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--gray-300);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-400);
-}
-
-/* ══════════════════════════════════
-   GLOBAL UI COMPONENTS (Boutons, Tags)
-══════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   GLOBAL BUTTONS
+═══════════════════════════════════════════ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 7px;
+  padding: 10px 22px;
   font-family: var(--font);
   font-size: 0.875rem;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
-  border: none;
-  transition: all 0.25s var(--ease);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
 }
 
-.btn-dark {
-  background: var(--gray-900);
-  color: var(--white);
+.btn-forest {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
 }
-
-.btn-dark:hover {
-  background: var(--gray-800);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22);
-  color: var(--white);
+.btn-forest:hover {
+  background: var(--forest-md);
+  border-color: var(--forest-md);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(27,67,50,0.3);
+  color: #fff;
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--gray-700);
-  border: 1.5px solid var(--gray-200);
+  color: var(--ink);
+  border-color: var(--border);
 }
-
 .btn-outline:hover {
-  border-color: var(--gray-400);
-  background: var(--gray-50);
-  color: var(--gray-900);
-  transform: translateY(-2px);
+  border-color: var(--forest-border);
+  color: var(--forest);
+  background: var(--forest-dim);
 }
 
-.btn-blue {
-  background: var(--blue);
-  color: var(--white);
+.btn-ghost-dark {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.15);
+}
+.btn-ghost-dark:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
 }
 
-.btn-blue:hover {
-  background: var(--blue-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.28);
-  color: var(--white);
+.btn-white {
+  background: #fff;
+  color: var(--forest);
+  border-color: #fff;
+}
+.btn-white:hover {
+  background: var(--forest-lt);
+  border-color: var(--forest-lt);
+  color: var(--forest);
+  transform: translateY(-1px);
+  box-shadow: none;
 }
 
 /* ── Status pill ── */
@@ -289,14 +255,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--green);
   padding: 5px 12px;
   background: var(--green-light);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(22,163,74,0.2);
   border-radius: 100px;
-  width: fit-content;
 }
 
 .status-dot {
@@ -304,98 +269,114 @@ body {
   height: 7px;
   border-radius: 50%;
   background: var(--green);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
   animation: pulse-green 2s infinite;
 }
 
 @keyframes pulse-green {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 0.6; }
 }
 
-/* ── Typographie Globale ── */
-.eyebrow {
-  font-size: 0.72rem;
-  font-weight: 700;
+/* ── Typography helpers ── */
+.label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gray-400);
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  color: var(--forest-md);
 }
-.eyebrow::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--gold);
-  border-radius: 2px;
+
+.label-dark {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.display {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.display-dark {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #fff;
 }
 
 .s-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--gray-900);
-  line-height: 1.1;
-  white-space: pre-line;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.15;
 }
 
 .s-sub {
-  font-size: 1.05rem;
-  color: var(--gray-500);
-  line-height: 1.7;
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
   max-width: 580px;
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-size: 0.7rem;
   font-weight: 600;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  color: var(--gray-600);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
 }
 
-/* ══════════════════════════════════
-   TRANSITIONS VUE-ROUTER
-══════════════════════════════════ */
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s var(--ease);
-}
-.page-enter-from {
-  opacity: 0;
-  transform: translateY(15px);
-}
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(-15px);
+.chip-forest {
+  background: var(--forest-lt);
+  border-color: var(--forest-border);
+  color: var(--forest);
 }
 
-/* ══════════════════════════════════
-   ANIMATIONS D'ENTRÉE (Fade-up)
-══════════════════════════════════ */
-.fu {
-  animation: fadeUp 0.6s var(--ease) both;
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
+
+/* ═══════════════════════════════════════════
+   VUE ROUTER TRANSITIONS
+═══════════════════════════════════════════ */
+.page-enter-active, .page-leave-active {
+  transition: opacity 0.2s ease;
+}
+.page-enter-from, .page-leave-to { opacity: 0; }
+
+/* Fade-up utility */
+.fu { animation: fadeUp 0.5s var(--ease) both; }
 
 @keyframes fadeUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════════
-   RESPONSIVE GLOBALES
-══════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
 @media (max-width: 768px) {
-  :root {
-    --px: 20px;
-    --nav-h: 64px;
-  }
+  :root { --px: 18px; --nav-h: 58px; }
+}
+@media (max-width: 480px) {
+  :root { --px: 14px; }
 }
 </style>

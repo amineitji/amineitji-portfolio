@@ -1,119 +1,167 @@
 <template>
   <div class="projects-page">
 
-    <header class="page-hero fu">
-      <span class="eyebrow">{{ t.eyebrow }}</span>
-      <h1 class="s-title" style="margin-top:12px;">{{ t.title }}</h1>
-      <p class="s-sub" style="margin-top:10px;max-width:540px;">{{ t.sub }}</p>
-    </header>
-
-    <section class="featured-section fu" style="animation-delay:.08s;">
-      <div class="featured-grid">
-        <a
-          v-for="p in featuredProjects"
-          :key="p.name"
-          :href="p.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="featured-card"
-        >
-          <div class="fc-visual" :style="{ background: p.gradient }">
-            <div class="fc-logo">
-              <span v-html="p.icon"></span>
-              <strong>{{ p.name }}</strong>
+    <!-- ══ HERO (DARK) ══ -->
+    <section class="hero-section">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="grid-overlay" aria-hidden="true"></div>
+      <div class="container">
+        <div class="page-hero fu">
+          <span class="label-dark">{{ t.eyebrow }}</span>
+          <h1 class="display-dark" style="margin-top:14px;">{{ t.title }}</h1>
+          <p class="hero-sub">{{ t.sub }}</p>
+          <div class="hero-stats">
+            <div class="hstat">
+              <span class="hstat-val">8+</span>
+              <span class="hstat-label">{{ lang === 'en' ? 'Projects' : 'Projets' }}</span>
             </div>
-            <div class="fc-hover">{{ t.visit }} →</div>
-          </div>
-          <div class="fc-body">
-            <div class="fc-tags">
-              <span class="chip" v-for="tag in p.tags" :key="tag">{{ tag }}</span>
-              <span class="chip chip-live">{{ t.live }}</span>
+            <div class="hstat-sep" aria-hidden="true"></div>
+            <div class="hstat">
+              <span class="hstat-val">3</span>
+              <span class="hstat-label">{{ lang === 'en' ? 'Live demos' : 'Démos live' }}</span>
             </div>
-            <h3>{{ p.name }}</h3>
-            <p>{{ p.desc }}</p>
-            <div class="fc-stack">
-              <span class="chip chip-tech" v-for="s in p.stack" :key="s">{{ s }}</span>
+            <div class="hstat-sep" aria-hidden="true"></div>
+            <div class="hstat">
+              <span class="hstat-val">1</span>
+              <span class="hstat-label">{{ lang === 'en' ? 'SaaS in prod' : 'SaaS en prod' }}</span>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 
-    <section class="other-section fu" style="animation-delay:.15s;">
-      <div class="other-header">
-        <h2 class="s-title">{{ t.otherTitle }}</h2>
-        <div class="filter-bar">
-          <button
-            v-for="cat in categories"
-            :key="cat.key"
-            class="filter-btn"
-            :class="{ active: activeFilter === cat.key }"
-            @click="activeFilter = cat.key"
-          >
-            {{ cat.label }}
-          </button>
+    <!-- ══ FEATURED ══ -->
+    <section class="featured-section">
+      <div class="container">
+        <div class="section-label fu" style="animation-delay:.04s;">
+          <span class="label">{{ lang === 'en' ? 'Featured' : 'À la une' }}</span>
         </div>
-      </div>
-
-      <div class="other-grid">
-        <div
-          v-for="p in filteredProjects"
-          :key="p.name"
-          class="other-card"
-          :class="{ open: openCard === p.name }"
-          @click="toggleCard(p.name)"
-          :aria-expanded="openCard === p.name"
-        >
-          <div class="oc-top">
-            <div class="oc-icon" :style="{ background: p.iconBg, color: p.iconColor }">
-              <span v-html="p.icon"></span>
-            </div>
-            <div class="oc-meta">
-              <span class="oc-cat">{{ p.cat }}</span>
-              <h3>{{ p.name }}</h3>
-              <p class="oc-short">{{ p.short }}</p>
-            </div>
-            <div class="oc-chevron" :class="{ rotated: openCard === p.name }">
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-            </div>
-          </div>
-
-          <transition name="expand">
-            <div class="oc-expand" v-if="openCard === p.name">
-              <div class="oc-expand-inner">
-                <p class="oc-desc">{{ p.desc }}</p>
-                <div class="oc-stack">
-                  <span class="chip chip-tech" v-for="s in p.stack" :key="s">{{ s }}</span>
-                </div>
-                <div class="oc-links" v-if="p.github || p.demo">
-                  <a v-if="p.github" :href="p.github" target="_blank" rel="noopener noreferrer" class="oc-link" @click.stop>
-                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a v-if="p.demo" :href="p.demo" target="_blank" rel="noopener noreferrer" class="oc-link demo" @click.stop>
-                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    Demo
-                  </a>
+        <div class="featured-grid fu" style="animation-delay:.08s;">
+          <div v-for="p in featuredProjects" :key="p.name" class="featured-card">
+            <div class="fc-cover" :style="p.coverImg ? {} : { background: p.coverBg }">
+              <img v-if="p.coverImg" :src="p.coverImg" :alt="p.name" class="fc-screenshot" />
+              <div v-if="!p.coverImg" class="fc-cover-inner">
+                <div class="fc-icon-wrap">
+                  <span class="fc-emoji">{{ p.emoji }}</span>
+                  <strong class="fc-name-cover">{{ p.name }}</strong>
                 </div>
               </div>
+              <div class="fc-badges">
+                <span class="fc-badge" v-for="tag in p.tags" :key="tag">{{ tag }}</span>
+              </div>
             </div>
-          </transition>
+            <div class="fc-body">
+              <h3 class="fc-title">{{ p.name }}</h3>
+              <p class="fc-desc">{{ p.desc }}</p>
+              <div class="fc-stack">
+                <span class="chip" v-for="s in p.stack" :key="s">{{ s }}</span>
+              </div>
+              <div class="fc-links">
+                <a v-if="p.url" :href="p.url" target="_blank" rel="noopener noreferrer" class="fc-link fc-link-primary">
+                  {{ t.visit }} ↗
+                </a>
+                <button v-if="p.demo" class="fc-link fc-link-demo" @click="openDemo(p)">
+                  ▶ {{ t.demo }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- ══ ALL PROJECTS ══ -->
+    <section class="all-section">
+      <div class="container">
+        <div class="all-header fu" style="animation-delay:.04s;">
+          <div>
+            <span class="label">{{ lang === 'en' ? 'All work' : 'Tous les projets' }}</span>
+            <h2 class="all-title">{{ t.allTitle }}</h2>
+          </div>
+          <div class="filter-bar">
+            <button
+              v-for="cat in categories"
+              :key="cat.key"
+              class="filter-btn"
+              :class="{ active: activeFilter === cat.key }"
+              @click="activeFilter = cat.key"
+            >{{ cat.label }}</button>
+          </div>
+        </div>
+
+        <div class="cards-grid fu" style="animation-delay:.1s;">
+          <div
+            v-for="p in filteredProjects"
+            :key="p.name"
+            class="pcard"
+            :class="{ open: openCard === p.name }"
+            @click="toggleCard(p.name)"
+          >
+            <div class="pcard-top">
+              <div class="pcard-icon" :style="{ background: p.iconBg, color: p.iconColor }">
+                <span v-html="p.icon"></span>
+              </div>
+              <div class="pcard-meta">
+                <span class="pcard-cat">{{ p.cat }}</span>
+                <h3 class="pcard-name">{{ p.name }}</h3>
+                <p class="pcard-short">{{ p.short }}</p>
+              </div>
+              <div class="pcard-chevron" :class="{ rotated: openCard === p.name }">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </div>
+            </div>
+
+            <transition name="expand">
+              <div class="pcard-expand" v-if="openCard === p.name">
+                <div class="pcard-expand-inner" @click.stop>
+                  <p class="pcard-desc">{{ p.desc }}</p>
+                  <div class="pcard-stack">
+                    <span class="chip" v-for="s in p.stack" :key="s">{{ s }}</span>
+                  </div>
+                  <div class="pcard-links">
+                    <a v-if="p.github" :href="p.github" target="_blank" rel="noopener noreferrer" class="plink plink-gh">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                      GitHub
+                    </a>
+                    <button v-if="p.demo" class="plink plink-demo" @click="openDemo(p)">▶ Démo</button>
+                    <a v-if="p.url" :href="p.url" target="_blank" rel="noopener noreferrer" class="plink plink-url">Voir ↗</a>
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ VIDEO MODAL ══ -->
+    <VideoModal
+      :visible="!!activeDemo"
+      :video-id="activeDemo ? activeDemo.videoId : ''"
+      :title="activeDemo ? activeDemo.name : ''"
+      :tag="activeDemo ? activeDemo.cat : 'Démo'"
+      :description="activeDemo ? activeDemo.demoDesc : ''"
+      @close="activeDemo = null"
+    />
 
   </div>
 </template>
 
 <script>
+import VideoModal from '@/components/VideoModal.vue';
+
 export default {
   name: 'ProjetsPage',
+  components: { VideoModal },
   inject: ['getLang'],
 
   data() {
     return {
       activeFilter: 'all',
       openCard: null,
+      activeDemo: null,
     };
   },
 
@@ -121,31 +169,9 @@ export default {
     lang() { return this.getLang(); },
 
     t() {
-      const fr = {
-        eyebrow: 'Réalisations',
-        title: 'Projets & Travaux.',
-        sub: 'De la recherche académique aux SaaS en production — chaque projet illustre une compétence concrète.',
-        visit: 'Visiter',
-        live: 'En production',
-        otherTitle: 'Projets & Recherche',
-        filterAll: 'Tous',
-        filterAI: 'IA & ML',
-        filterWeb: 'Web & SaaS',
-        filterData: 'Data',
-      };
-      const en = {
-        eyebrow: 'Work',
-        title: 'Projects & Work.',
-        sub: 'From academic research to live SaaS — each project illustrates a concrete skill.',
-        visit: 'Visit',
-        live: 'Live',
-        otherTitle: 'Projects & Research',
-        filterAll: 'All',
-        filterAI: 'AI & ML',
-        filterWeb: 'Web & SaaS',
-        filterData: 'Data',
-      };
-      return this.lang === 'en' ? en : fr;
+      return this.lang === 'en'
+        ? { eyebrow: 'Work', title: 'Projects & Work.', sub: 'From academic research to live SaaS — each project illustrates a concrete, measurable skill.', visit: 'Visit', demo: 'Watch demo', allTitle: 'All projects', filterAll: 'All', filterAI: 'AI & GenAI', filterWeb: 'Web & SaaS', filterData: 'Data' }
+        : { eyebrow: 'Réalisations', title: 'Projets & Travaux.', sub: 'De la recherche académique aux SaaS en production — chaque projet illustre une compétence concrète et mesurable.', visit: 'Visiter', demo: 'Voir la démo', allTitle: 'Tous les projets', filterAll: 'Tous', filterAI: 'IA & GenAI', filterWeb: 'Web & SaaS', filterData: 'Data' };
     },
 
     categories() {
@@ -158,156 +184,155 @@ export default {
     },
 
     featuredProjects() {
-      const fr = [
+      const isEn = this.lang === 'en';
+      return [
         {
           name: 'DiagERP',
-          url: 'https://diagerp.fr/',
-          gradient: 'linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%)',
-          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-          tags: ['SaaS B2B', 'Co-fondateur & CTO'],
-          desc: 'ERP complet pour diagnostiqueurs immobiliers. Gestion des missions et des rapports réglementaires, Stripe, facturation automatique. Utilisé activement en production par des professionnels.',
-          stack: ['Vue.js 3', 'Django', 'PostgreSQL', 'Stripe', 'AWS'],
+          emoji: '🏠',
+          coverImg: '/diagERP.png',
+          coverBg: null,
+          tags: [isEn ? 'B2B SaaS · Live' : 'SaaS B2B · En production', isEn ? 'Co-Founder & CTO' : 'Co-Fondateur & CTO'],
+          desc: isEn
+            ? 'Platform automating ERP compliance reports for French real estate professionals. Built end-to-end: Django backend, Vue.js frontend, PostgreSQL, Stripe, AWS + Docker + CI/CD. Report generation reduced from hours to minutes.'
+            : 'Plateforme automatisant la génération de rapports ERP pour les professionnels de l\'immobilier. Développé de A à Z : backend Django, frontend Vue.js, PostgreSQL, Stripe, AWS + Docker + CI/CD. Génération réduite de plusieurs heures à quelques minutes.',
+          stack: ['Django', 'Vue.js 3', 'PostgreSQL', 'Stripe', 'AWS', 'Docker', 'CI/CD'],
+          url: 'https://diagerp.fr',
+          demo: null,
         },
         {
-          name: 'DiagImmoMarchés',
-          url: 'https://diagimmomarches.fr/',
-          gradient: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%)',
-          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-          tags: ['Projet client', 'SEO Premium'],
-          desc: 'Plateforme web premium pour un client du secteur immobilier. Optimisée pour l\'acquisition SEO et la conversion. Score Lighthouse 95+, temps de chargement < 1s.',
-          stack: ['Vue.js', 'Django', 'SEO', 'Docker'],
+          name: isEn ? 'AInsights @ Michelin' : 'AInsights @ Michelin',
+          emoji: '🔍',
+          coverImg: null,
+          coverBg: 'linear-gradient(135deg, #0C0F0A 0%, #1B4332 100%)',
+          tags: ['RAG · GenAI', 'Michelin – DOTI/ISPARK'],
+          desc: isEn
+            ? 'Strategic intelligence system designed and shipped at Michelin. Full RAG pipeline: Tavily-based web ingestion, vector embeddings, semantic retrieval, LLM-powered automated report generation. Also developed an AI-powered Dunning Rules webapp with dynamic email tone adaptation per customer profile.'
+            : 'Système de veille stratégique conçu et déployé chez Michelin. Pipeline RAG complet : ingestion web via Tavily, vector embeddings, recherche sémantique et génération automatisée de contenu par LLM. Développement d\'une webapp Dunning Rules avec adaptation dynamique du ton des e-mails selon le profil client.',
+          stack: ['RAG', 'LLM', 'Tavily', 'Embeddings', 'Python', 'FastAPI'],
+          url: null,
+          demo: null,
         },
       ];
-      const en = [
-        {
-          name: 'DiagERP',
-          url: 'https://diagerp.fr/',
-          gradient: 'linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%)',
-          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-          tags: ['B2B SaaS', 'Co-founder & CTO'],
-          desc: 'Full ERP for real estate diagnosticians. Mission and regulatory report management, Stripe billing, automated invoicing. Actively used in production by professionals.',
-          stack: ['Vue.js 3', 'Django', 'PostgreSQL', 'Stripe', 'AWS'],
-        },
-        {
-          name: 'DiagImmoMarchés',
-          url: 'https://diagimmomarches.fr/',
-          gradient: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%)',
-          icon: '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
-          tags: ['Client project', 'Premium SEO'],
-          desc: 'Premium web platform for a real estate client. Optimized for SEO acquisition and conversion. Lighthouse score 95+, load time < 1s.',
-          stack: ['Vue.js', 'Django', 'SEO', 'Docker'],
-        },
-      ];
-      return this.lang === 'en' ? en : fr;
     },
 
-    allOtherProjects() {
-      const fr = [
-        { cat: 'IA & ML', name: 'Analyse Vidéo Football (IA)', catKey: 'ai',
-          short: 'Détection et tracking de joueurs en temps réel.',
-          desc: 'Pipeline Computer Vision avec YOLO v8 pour détecter et tracker des joueurs, arbitres et ballon en temps réel. Homographie pour mapper les positions sur un terrain 2D. Calcul de métriques de performance (distance, vitesse, possession).',
-          stack: ['Python', 'YOLO v8', 'OpenCV', 'NumPy', 'Homography'],
-          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
-          github: 'https://github.com/amineitji',
+    allProjects() {
+      const isEn = this.lang === 'en';
+      const gh = 'https://github.com/amineitji';
+      return [
+        {
+          cat: isEn ? 'AI & GenAI' : 'IA & GenAI', catKey: 'ai',
+          name: isEn ? 'Educational LLM – Python Tutor' : 'LLM Éducatif – Tuteur Python',
+          short: isEn ? 'LLM teaching Python through adaptive conversation.' : 'LLM enseignant Python par conversation adaptative.',
+          desc: isEn
+            ? 'Educational LLM system that teaches Python programming through interactive conversations. Adaptive feedback, RAG-based knowledge base with Python documentation, exercises graded in real time.'
+            : 'Système LLM pédagogique qui enseigne la programmation Python par conversation interactive. Feedback adaptatif, base de connaissance RAG sur la doc Python, exercices corrigés en temps réel.',
+          stack: ['Python', 'LLM', 'RAG', 'LangChain', 'OpenAI'],
+          iconBg: '#EFF6FF', iconColor: '#2563EB',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
+          github: gh,
+          demo: 'hfNYvwSKEj8',
+          demoDesc: isEn ? 'Demo of the educational LLM system teaching Python through adaptive conversation.' : 'Démonstration du LLM éducatif enseignant la programmation Python par conversation adaptative.',
         },
-        { cat: 'IA & ML', name: 'Prédiction de Penalty (ML)', catKey: 'ai',
-          short: 'Modèle ML à 77% de précision sur Kaggle.',
-          desc: 'Modèle Random Forest pour prédire l\'issue de tirs aux buts à partir de données de position, timing et comportementales. Atteint 77% de précision sur un dataset Kaggle de 15 000+ tirs.',
-          stack: ['Python', 'Scikit-learn', 'Random Forest', 'Pandas', 'Matplotlib'],
-          iconBg: '#fff7ed', iconColor: '#f59e0b',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-          github: 'https://github.com/amineitji',
+        {
+          cat: isEn ? 'AI & GenAI' : 'IA & GenAI', catKey: 'ai',
+          name: isEn ? 'Multi-Agent Tourist Guide System' : 'Système Multi-Agents Guide Touristique',
+          short: isEn ? 'Multi-agent architecture for intelligent museum visitor guidance.' : 'Architecture multi-agents pour le guidage intelligent de visiteurs.',
+          desc: isEn
+            ? 'Multi-agent system orchestrating specialized AI agents: a museum guide agent, a tourist group manager, and a planning/scheduling agent. Collaborative decision-making for intelligent visitor routing inside a museum.'
+            : 'Système multi-agents orchestrant des agents IA spécialisés : agent guide de musée, agent gestionnaire de groupes touristiques, agent planification et scheduling. Prise de décision collaborative pour le guidage intelligent des visiteurs.',
+          stack: ['Python', 'Multi-Agents', 'LLM', 'LangChain', 'OpenAI'],
+          iconBg: '#F5F3FF', iconColor: '#7C3AED',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+          github: gh,
+          demo: 'cBz44VUF8AM',
+          demoDesc: isEn ? 'Demo of the multi-agent system for intelligent museum visitor management and guidance.' : 'Démonstration du système multi-agents pour la gestion et le guidage intelligent de visiteurs de musée.',
         },
-        { cat: 'IA & ML', name: 'RAG & Agents LLM', catKey: 'ai',
-          short: 'Pipeline RAG privé sur base documentaire client.',
-          desc: 'Architecture RAG complète avec LangChain + OpenAI pour interroger des bases documentaires privées. Agent autonome capable de chaîner des outils (recherche web, calcul, API). Intégration avec des workflows Notion.',
-          stack: ['LangChain', 'OpenAI', 'Pinecone', 'FastAPI', 'Python'],
-          iconBg: '#eff6ff', iconColor: '#3b82f6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
-          github: 'https://github.com/amineitji',
+        {
+          cat: isEn ? 'AI & GenAI' : 'IA & GenAI', catKey: 'ai',
+          name: isEn ? 'Skeleton-Guided Image Generation (GAN)' : 'Génération d\'Images Guidée par Squelette (GAN)',
+          short: isEn ? 'Conditional WGAN-GP replacing random noise with skeleton pose.' : 'WGAN-GP conditionnel remplaçant le bruit aléatoire par la pose squelette.',
+          desc: isEn
+            ? 'Progressive exploration of posture-guided image synthesis: nearest-neighbor baseline, two vanilla neural architectures, and a conditional WGAN-GP where the target skeleton replaces random noise. Architecture: U-Net encoder, PatchGAN discriminator, composite loss (Adversarial + L1 + VGG perceptual). Dataset: Taichi videos (4,989 skeleton-image pairs).'
+            : 'Exploration progressive de la synthèse d\'images guidée par la posture : baseline nearest-neighbor, deux architectures neuronales vanilla, puis un GAN conditionnel (WGAN-GP) où le squelette cible remplace le bruit aléatoire. Architecture U-Net, discriminateur PatchGAN, loss composite (Adversarial + L1 + VGG perceptual). Dataset : vidéos Taichi (4 989 paires squelette-image).',
+          stack: ['PyTorch', 'WGAN-GP', 'U-Net', 'PatchGAN', 'Computer Vision', 'Python'],
+          iconBg: '#FFF7ED', iconColor: '#EA580C',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
+          github: 'https://github.com/amineitji/Posture-guided_image_synthesis_of_a_person',
+          demo: 'y5_ZFsp0C6I',
+          demoDesc: isEn ? 'Demo of the conditional GAN system generating realistic human images guided by skeleton pose.' : 'Démonstration du GAN conditionnel générant des images humaines réalistes guidées par la pose squelette.',
         },
-        { cat: 'Data', name: 'Web Scraping Football', catKey: 'data',
-          short: 'Extraction de 50 000+ stats de joueurs.',
-          desc: 'Pipeline de scraping massif sur FBRef et Transfermarkt avec Selenium + BeautifulSoup. Extraction de plus de 50 000 entrées de statistiques joueurs sur 5 saisons. Nettoyage, normalisation et export CSV/PostgreSQL.',
+        {
+          cat: isEn ? 'AI & GenAI' : 'IA & GenAI', catKey: 'ai',
+          name: isEn ? 'Football Video Analysis (Computer Vision)' : 'Analyse Vidéo Football (Computer Vision)',
+          short: isEn ? 'Real-time player detection, tracking and tactical mapping.' : 'Détection, tracking et cartographie tactique en temps réel.',
+          desc: isEn
+            ? 'Computer Vision pipeline: YOLOv8/v10 for real-time player, referee and ball detection. Jersey color clustering (KMeans) for team assignment. Pitch line extraction (HoughLines) and homographic projection to map positions onto a 2D pitch. Performance metrics: distance, speed, ball possession.'
+            : 'Pipeline Computer Vision : détection temps réel de joueurs, arbitres et ballon avec YOLOv8/v10. Clustering couleur maillot (KMeans) pour l\'attribution des équipes. Extraction des lignes de terrain (HoughLines) et projection homographique 2D. Calcul de métriques : distance, vitesse, possession du ballon.',
+          stack: ['YOLOv8', 'YOLOv10', 'OpenCV', 'KMeans', 'Python', 'Homography'],
+          iconBg: '#ECFDF5', iconColor: '#16A34A',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
+          github: 'https://github.com/amineitji/football-video-detection',
+          demo: null,
+        },
+        {
+          cat: 'Data', catKey: 'data',
+          name: isEn ? 'Football Web Scraping – WhoScored & SofaScore' : 'Web Scraping Football – WhoScored & SofaScore',
+          short: isEn ? 'Automated extraction of 50,000+ player stats from major football analytics platforms.' : 'Extraction automatisée de 50 000+ stats joueurs sur les plateformes d\'analyse football.',
+          desc: isEn
+            ? 'Automated scraping pipelines for WhoScored and SofaScore (JavaScript-heavy SPAs). Selenium + BeautifulSoup for dynamic content extraction, anti-bot evasion, and session management. Data: player ratings, match stats, heat maps, passing networks — across 5+ seasons. Cleaning, normalization, and export to CSV/PostgreSQL for downstream ML analysis.'
+            : 'Pipelines de scraping automatisés sur WhoScored et SofaScore (SPAs JavaScript-heavy). Selenium + BeautifulSoup pour l\'extraction de contenu dynamique, gestion anti-bot et sessions. Données : notes joueurs, statistiques de match, heat maps, réseaux de passes — sur 5+ saisons. Nettoyage, normalisation et export CSV/PostgreSQL pour analyses ML.',
           stack: ['Python', 'Selenium', 'BeautifulSoup', 'Pandas', 'PostgreSQL'],
-          iconBg: '#f0fdf4', iconColor: '#10b981',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-          github: 'https://github.com/amineitji',
+          iconBg: '#F0FDF4', iconColor: '#16A34A',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+          github: gh,
+          demo: null,
         },
-        { cat: 'Data', name: 'CDlib — Contribution Open Source', catKey: 'data',
-          short: 'Contribution à une librairie Python de détection de communautés.',
-          desc: 'Contribution à CDlib (bibliothèque Python pour la détection de communautés dans les graphes). Implémentation de nouveaux algorithmes de clustering avec NetworkX. Code mergé dans la version officielle.',
+        {
+          cat: isEn ? 'AI & GenAI' : 'IA & GenAI', catKey: 'ai',
+          name: isEn ? 'Penalty Outcome Prediction (ML)' : 'Prédiction de l\'Issue d\'un Penalty (ML)',
+          short: isEn ? '77% accuracy Random Forest on 15,000+ penalty kicks.' : 'Random Forest 77% de précision sur 15 000+ tirs au but.',
+          desc: isEn
+            ? 'Random Forest model predicting penalty kick outcomes from position, run-up angle, goalkeeper behavior, and timing features. 77% accuracy on a Kaggle dataset of 15,000+ shots. Feature engineering, cross-validation, and SHAP-based explainability.'
+            : 'Modèle Random Forest prédisant l\'issue des tirs au but à partir de features de position, angle de course, comportement du gardien et timing. 77% de précision sur 15 000+ tirs (Kaggle). Feature engineering, cross-validation et explainabilité SHAP.',
+          stack: ['Python', 'Scikit-learn', 'Random Forest', 'SHAP', 'Pandas'],
+          iconBg: '#FFF7ED', iconColor: '#F59E0B',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+          github: gh,
+          demo: null,
+        },
+        {
+          cat: 'Web & SaaS', catKey: 'web',
+          name: 'DiagImmoMarchés',
+          short: isEn ? 'Premium SEO web platform for a real estate client.' : 'Plateforme web premium SEO pour client immobilier.',
+          desc: isEn
+            ? 'Premium web platform for a real estate professional. Optimized for SEO acquisition and conversion. Lighthouse score 95+, load time < 1s. Django backend, Vue.js frontend, Docker deployment.'
+            : 'Plateforme web premium pour un professionnel de l\'immobilier. Optimisée pour l\'acquisition SEO et la conversion. Score Lighthouse 95+, temps de chargement < 1s. Backend Django, frontend Vue.js, déploiement Docker.',
+          stack: ['Vue.js', 'Django', 'SEO', 'Docker', 'Nginx'],
+          iconBg: '#F0FDF4', iconColor: '#16A34A',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+          url: 'https://diagimmomarches.fr/',
+          github: null,
+          demo: null,
+        },
+        {
+          cat: 'Data', catKey: 'data',
+          name: isEn ? 'CDlib – Open Source Contribution' : 'CDlib – Contribution Open Source',
+          short: isEn ? 'Contribution to a community detection library for graph analysis.' : 'Contribution à une librairie de détection de communautés dans les graphes.',
+          desc: isEn
+            ? 'Contribution to CDlib, a Python library for community detection in graphs. Implementation of new clustering algorithms using NetworkX. Code merged into the official release.'
+            : 'Contribution à CDlib, bibliothèque Python pour la détection de communautés dans les graphes. Implémentation de nouveaux algorithmes de clustering avec NetworkX. Code mergé dans la version officielle.',
           stack: ['Python', 'NetworkX', 'CDlib', 'Graph Theory'],
-          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'Web & SaaS', name: 'App Bilan Carbone (Django)', catKey: 'web',
-          short: 'Application métier REST pour le suivi d\'empreinte carbone.',
-          desc: 'Application Django REST API complète pour calculer et suivre l\'empreinte carbone d\'une entreprise. Authentification JWT, dashboard analytics, export PDF des bilans. Déployée sur AWS avec Docker.',
-          stack: ['Django', 'DRF', 'PostgreSQL', 'JWT', 'Docker', 'AWS'],
-          iconBg: '#f0fdf4', iconColor: '#10b981',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
-          github: 'https://github.com/amineitji',
+          iconBg: '#F5F3FF', iconColor: '#7C3AED',
+          icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+          github: 'https://github.com/amineitji/cdlib',
+          demo: null,
         },
       ];
-      const en = [
-        { cat: 'AI & ML', name: 'Football Video Analysis (AI)', catKey: 'ai',
-          short: 'Real-time player detection and tracking.',
-          desc: 'Computer Vision pipeline with YOLO v8 to detect and track players, referees and the ball in real-time. Homography to map positions onto a 2D pitch. Performance metrics calculation (distance, speed, possession).',
-          stack: ['Python', 'YOLO v8', 'OpenCV', 'NumPy', 'Homography'],
-          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'AI & ML', name: 'Penalty Prediction (ML)', catKey: 'ai',
-          short: '77% accuracy ML model on Kaggle.',
-          desc: 'Random Forest model to predict the outcome of penalty kicks from position, timing and behavioral data. Achieves 77% accuracy on a Kaggle dataset of 15,000+ shots.',
-          stack: ['Python', 'Scikit-learn', 'Random Forest', 'Pandas', 'Matplotlib'],
-          iconBg: '#fff7ed', iconColor: '#f59e0b',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'AI & ML', name: 'RAG & LLM Agents', catKey: 'ai',
-          short: 'Private RAG pipeline on client document base.',
-          desc: 'Full RAG architecture with LangChain + OpenAI to query private document bases. Autonomous agent capable of chaining tools (web search, computation, API). Integration with Notion workflows.',
-          stack: ['LangChain', 'OpenAI', 'Pinecone', 'FastAPI', 'Python'],
-          iconBg: '#eff6ff', iconColor: '#3b82f6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><circle cx="12" cy="12" r="10"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'Data', name: 'Football Web Scraping', catKey: 'data',
-          short: 'Extraction of 50,000+ player stats.',
-          desc: 'Massive scraping pipeline on FBRef and Transfermarkt with Selenium + BeautifulSoup. Extraction of 50,000+ player stat entries over 5 seasons. Cleaning, normalization, and CSV/PostgreSQL export.',
-          stack: ['Python', 'Selenium', 'BeautifulSoup', 'Pandas', 'PostgreSQL'],
-          iconBg: '#f0fdf4', iconColor: '#10b981',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'Data', name: 'CDlib — Open Source Contribution', catKey: 'data',
-          short: 'Contribution to a Python community detection library.',
-          desc: 'Contribution to CDlib (Python library for community detection in graphs). Implementation of new clustering algorithms with NetworkX. Code merged into the official release.',
-          stack: ['Python', 'NetworkX', 'CDlib', 'Graph Theory'],
-          iconBg: '#f5f3ff', iconColor: '#8b5cf6',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-        { cat: 'Web & SaaS', name: 'Carbon Footprint App (Django)', catKey: 'web',
-          short: 'Business REST application for carbon footprint tracking.',
-          desc: 'Full Django REST API to calculate and track a company\'s carbon footprint. JWT auth, analytics dashboard, PDF report export. Deployed on AWS with Docker.',
-          stack: ['Django', 'DRF', 'PostgreSQL', 'JWT', 'Docker', 'AWS'],
-          iconBg: '#f0fdf4', iconColor: '#10b981',
-          icon: '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
-          github: 'https://github.com/amineitji',
-        },
-      ];
-      return this.lang === 'en' ? en : fr;
     },
 
     filteredProjects() {
-      if (this.activeFilter === 'all') return this.allOtherProjects;
-      return this.allOtherProjects.filter(p => p.catKey === this.activeFilter);
+      if (this.activeFilter === 'all') return this.allProjects;
+      return this.allProjects.filter(p => p.catKey === this.activeFilter);
     },
   },
 
@@ -315,215 +340,226 @@ export default {
     toggleCard(name) {
       this.openCard = this.openCard === name ? null : name;
     },
+    openDemo(project) {
+      this.activeDemo = {
+        videoId: project.demo,
+        name: project.name,
+        cat: project.cat,
+        demoDesc: project.demoDesc || '',
+      };
+    },
   },
 };
 </script>
 
 <style scoped>
-.projects-page { padding: 48px 0 80px; }
-
-/* Hero */
-.page-hero { max-width: 680px; margin-bottom: 64px; }
-
-/* Featured grid */
-.featured-section { margin-bottom: 72px; }
-
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+/* ══ HERO ══ */
+.hero-section {
+  background: var(--dark);
+  position: relative; overflow: hidden;
+  padding: 72px 0 60px;
 }
+.hero-glow {
+  position: absolute; top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 400px;
+  background: radial-gradient(ellipse, rgba(27,67,50,0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+.grid-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px; pointer-events: none;
+}
+.page-hero { position: relative; max-width: 720px; }
+.hero-sub {
+  font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+  margin-top: 14px; max-width: 560px;
+}
+.hero-stats {
+  display: flex; align-items: center; gap: 24px;
+  margin-top: 28px; flex-wrap: wrap;
+}
+.hstat { display: flex; flex-direction: column; gap: 2px; }
+.hstat-val { font-size: 1.6rem; font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1; }
+.hstat-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); font-family: var(--mono); letter-spacing: 0.05em; text-transform: uppercase; }
+.hstat-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
 
-.featured-card {
-  display: block;
-  text-decoration: none;
+/* ══ FEATURED ══ */
+.featured-section {
+  padding: 64px 0 56px;
   background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.section-label { margin-bottom: 20px; }
+.featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.featured-card {
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.22s, box-shadow 0.28s, transform 0.28s var(--ease);
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s var(--ease);
 }
+.featured-card:hover { box-shadow: var(--shadow-lg); border-color: var(--forest-border); transform: translateY(-2px); }
 
-.featured-card:hover {
-  border-color: var(--gold);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-5px);
-}
-
-.fc-visual {
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.fc-cover {
+  height: 180px;
   position: relative;
   overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: space-between;
+  padding: 20px;
 }
+.fc-screenshot {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: 0.92;
+}
+.fc-cover-inner {
+  display: flex; align-items: center; gap: 10px;
+  position: relative; z-index: 1;
+}
+.fc-emoji { font-size: 2rem; }
+.fc-name-cover { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.fc-badges {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  position: relative; z-index: 1; margin-top: auto;
+}
+.fc-badge {
+  font-size: 0.63rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 4px;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9); letter-spacing: 0.02em;
+}
+.fc-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.fc-title { font-size: 1rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+.fc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+.fc-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.fc-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.fc-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 6px;
+  text-decoration: none; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.18s ease;
+}
+.fc-link-primary { background: var(--forest); color: #fff; border-color: var(--forest); }
+.fc-link-primary:hover { background: var(--forest-md); border-color: var(--forest-md); }
+.fc-link-demo { background: transparent; color: var(--forest); border-color: var(--forest-border); }
+.fc-link-demo:hover { background: var(--forest-lt); }
 
-.fc-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 26px;
+/* ══ ALL PROJECTS ══ */
+.all-section {
+  padding: 64px 0 80px;
   background: var(--bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  font-size: 1.15rem;
-  font-weight: 300;
-  color: var(--ink);
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s var(--ease);
 }
-
-.featured-card:hover .fc-logo { transform: scale(1.06); }
-
-.fc-hover {
-  position: absolute;
-  inset: 0;
-  background: rgba(15,23,42,0.55);
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 0.95rem; font-weight: 600;
-  opacity: 0; transition: opacity 0.28s; backdrop-filter: blur(3px);
+.all-header {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 16px;
+  margin-bottom: 28px; flex-wrap: wrap;
 }
-.featured-card:hover .fc-hover { opacity: 1; }
-
-.fc-body { padding: 22px 24px; }
-
-.fc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-
-.fc-body h3 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); margin-bottom: 8px; }
-
-.fc-body p { font-size: 0.875rem; color: var(--gray-500); line-height: 1.65; margin-bottom: 14px; }
-
-.fc-stack { display: flex; flex-wrap: wrap; gap: 6px; }
-
-/* Other section */
-.other-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
+.all-title {
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--ink); margin-top: 6px;
 }
-
 .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
-
 .filter-btn {
-  padding: 7px 16px;
-  border-radius: var(--radius);
-  font-family: var(--font);
-  font-size: 0.8rem;
-  font-weight: 600;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.18s ease;
+  padding: 6px 14px; border-radius: 6px;
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  cursor: pointer; transition: all 0.18s ease;
 }
-.filter-btn:hover { border-color: var(--border-dark); color: var(--ink); }
-.filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.filter-btn:hover { border-color: var(--forest-border); color: var(--forest); }
+.filter-btn.active { background: var(--forest); border-color: var(--forest); color: #fff; }
 
-.other-grid {
+.cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
-
-/* Expandable card */
-.other-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.25s;
-  box-shadow: var(--shadow-sm);
+.pcard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  cursor: pointer; transition: border-color 0.2s, box-shadow 0.22s;
 }
-.other-card:hover { border-color: var(--border-dark); box-shadow: var(--shadow-md); }
-.other-card.open { border-color: var(--gold); }
-
-.oc-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 20px 22px;
-}
-
-.oc-icon {
-  width: 40px; height: 40px; border-radius: var(--radius);
+.pcard:hover { border-color: var(--forest-border); box-shadow: var(--shadow-md); }
+.pcard.open { border-color: var(--forest-border); }
+.pcard-top { display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px; }
+.pcard-icon {
+  width: 38px; height: 38px; border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-
-.oc-meta { flex: 1; min-width: 0; }
-
-.oc-cat {
-  display: inline-flex;
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--gray-400); margin-bottom: 4px;
+.pcard-meta { flex: 1; min-width: 0; }
+.pcard-cat {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 3px; font-family: var(--mono);
 }
+.pcard-name { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.pcard-short { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+.pcard-chevron { flex-shrink: 0; color: var(--muted); margin-top: 2px; transition: transform 0.22s var(--ease); }
+.pcard-chevron.rotated { transform: rotate(180deg); }
 
-.oc-meta h3 {
-  font-size: 0.95rem; font-weight: 700; color: var(--gray-900);
-  margin-bottom: 3px; letter-spacing: -0.01em;
+.pcard-expand-inner {
+  padding: 0 20px 18px; border-top: 1px solid var(--border);
+  padding-top: 14px; display: flex; flex-direction: column; gap: 10px;
 }
-
-.oc-short { font-size: 0.8rem; color: var(--gray-500); line-height: 1.4; }
-
-.oc-chevron {
-  flex-shrink: 0;
-  color: var(--gray-400);
-  margin-top: 2px;
-  transition: transform 0.25s var(--ease);
-}
-.oc-chevron.rotated { transform: rotate(180deg); }
-
-/* Expand content */
-.oc-expand {}
-.oc-expand-inner {
-  padding: 0 22px 20px;
-  display: flex; flex-direction: column; gap: 12px;
-  border-top: 1px solid var(--gray-100);
-  padding-top: 16px;
-}
-
-.oc-desc { font-size: 0.85rem; color: var(--gray-600); line-height: 1.65; }
-.oc-stack { display: flex; flex-wrap: wrap; gap: 5px; }
-
-.oc-links { display: flex; gap: 10px; }
-
-.oc-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
-  padding: 5px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius); text-decoration: none;
+.pcard-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+.pcard-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.pcard-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.plink {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.75rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 6px;
+  text-decoration: none; cursor: pointer;
+  border: 1px solid var(--border); background: var(--bg); color: var(--muted);
   transition: all 0.18s ease;
 }
-.oc-link:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.oc-link.demo { color: var(--gold); border-color: rgba(197,154,69,0.3); background: rgba(197,154,69,0.08); }
-.oc-link.demo:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.plink:hover { background: var(--surface); color: var(--ink); border-color: #9CA3AF; }
+.plink-demo { color: var(--forest); border-color: var(--forest-border); background: var(--forest-lt); }
+.plink-demo:hover { background: var(--forest); color: #fff; border-color: var(--forest); }
+.plink-url { color: var(--forest); }
+.plink-url:hover { background: var(--forest-lt); border-color: var(--forest-border); }
 
-/* Chips */
-.chip-live {
-  background: rgba(197,154,69,0.10); border-color: rgba(197,154,69,0.3); color: var(--gold);
-}
-.chip-tech {
-  background: var(--surface); color: var(--text-muted); border-color: var(--border);
-}
-
-/* Transition */
-.expand-enter-active { transition: max-height 0.35s var(--ease), opacity 0.3s ease; max-height: 0; overflow: hidden; }
-.expand-leave-active { transition: max-height 0.25s ease, opacity 0.2s ease; overflow: hidden; }
-.expand-enter-to     { max-height: 400px; opacity: 1; }
-.expand-leave-from   { max-height: 400px; opacity: 1; }
+/* Expand transition */
+.expand-enter-active { transition: max-height 0.32s var(--ease), opacity 0.28s ease; max-height: 0; overflow: hidden; }
+.expand-leave-active { transition: max-height 0.22s ease, opacity 0.18s ease; overflow: hidden; }
+.expand-enter-to     { max-height: 500px; opacity: 1; }
+.expand-leave-from   { max-height: 500px; opacity: 1; }
 .expand-enter-from   { opacity: 0; }
 .expand-leave-to     { max-height: 0; opacity: 0; }
 
-/* Responsive */
+/* ══ RESPONSIVE ══ */
 @media (max-width: 768px) {
+  .hero-section { padding: 52px 0 44px; }
+  .featured-section { padding: 48px 0 40px; }
+  .all-section { padding: 48px 0 64px; }
   .featured-grid { grid-template-columns: 1fr; }
-  .other-grid { grid-template-columns: 1fr; }
-  .other-header { flex-direction: column; align-items: flex-start; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .all-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .hstat-sep { display: none; }
+  /* horizontal scroll on filter bar — easier to tap than wrapped rows */
+  .filter-bar { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; }
+}
+@media (max-width: 480px) {
+  .hero-section { padding: 40px 0 36px; }
+  .hero-sub { font-size: 0.92rem; }
+  .hero-stats { gap: 16px; flex-wrap: wrap; }
+  .hstat-val { font-size: 1.3rem; }
+  .filter-btn { padding: 6px 12px; font-size: 0.7rem; }
+  .fc-body { padding: 14px; }
+  .fc-cover { height: 160px; }
+  .fc-links { flex-direction: column; }
+  .fc-link { justify-content: center; }
+  .pcard-top { padding: 13px 14px; }
+  .pcard-expand-inner { padding: 0 14px 13px; padding-top: 12px; }
+  .pcard-name { font-size: 0.85rem; }
 }
 </style>
