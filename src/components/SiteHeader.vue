@@ -36,6 +36,9 @@
       </button>
     </div>
 
+  </header>
+
+  <Teleport to="body">
     <transition name="mobile-nav">
       <div v-if="menuOpen" class="mobile-panel">
         <nav aria-label="Menu mobile">
@@ -60,7 +63,7 @@
         </div>
       </div>
     </transition>
-  </header>
+  </Teleport>
 </template>
 
 <script>
@@ -132,9 +135,6 @@ export default {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   transition: box-shadow 0.25s ease;
-  /* Force a stacking context above all page content */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 .navbar.scrolled {
@@ -283,7 +283,20 @@ export default {
 .burger.open span:nth-child(2) { opacity: 0; }
 .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile panel */
+/* Transitions (opacity only — no transform to avoid stacking context issues) */
+.mobile-nav-enter-active, .mobile-nav-leave-active {
+  transition: opacity 0.22s ease;
+}
+.mobile-nav-enter-from, .mobile-nav-leave-to { opacity: 0; }
+
+@media (max-width: 900px) {
+  .nav-links-wrap, .nav-right { display: none; }
+  .burger { display: flex; }
+}
+</style>
+
+<!-- Mobile panel is teleported to <body> so these styles must be global (not scoped) -->
+<style>
 .mobile-panel {
   position: fixed;
   top: var(--nav-h);
@@ -292,7 +305,7 @@ export default {
   padding: 16px var(--px) env(safe-area-inset-bottom, 24px);
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 1001;
   border-top: 1px solid var(--border);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -333,17 +346,6 @@ export default {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-}
-
-/* Transitions (opacity only — no transform to avoid stacking context issues) */
-.mobile-nav-enter-active, .mobile-nav-leave-active {
-  transition: opacity 0.22s ease;
-}
-.mobile-nav-enter-from, .mobile-nav-leave-to { opacity: 0; }
-
-@media (max-width: 900px) {
-  .nav-links-wrap, .nav-right { display: none; }
-  .burger { display: flex; }
 }
 
 @media (max-width: 480px) {
